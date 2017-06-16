@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="pref_height_options">
+        <item>@string/pref_units_label_feet</item>
+        <item>@string/pref_units_label_centi</item>
+    </string-array>
+    <string-array name="pref_height_values">
+        <item>@string/pref_units_feet</item>
+        <item>@string/pref_units_Centimeter</item>
+    </string-array>
+
+
+    <string-array name="pref_weight_options">
+        <item>@string/pref_units_label_pound</item>
+        <item>@string/pref_units_label_kg</item>
+    </string-array>
+    <string-array name="pref_weight_values">
+        <item>@string/pref_units_pound</item>
+        <item>@string/pref_units_kg</item>
+    </string-array>
+
+    <string-array name="pref_distance_options">
+        <item>@string/pref_units_label_km</item>
+        <item>@string/pref_units_label_mile</item>
+    </string-array>
+    <string-array name="pref_distance_values">
+        <item>@string/pref_units_km</item>
+        <item>@string/pref_units_mile</item>
+    </string-array>
+</resources>

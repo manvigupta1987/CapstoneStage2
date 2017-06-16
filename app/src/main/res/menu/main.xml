@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/share"
+        android:orderInCategory="1"
+        android:icon="@drawable/ic_share_symbol"
+        android:title="@string/share"
+        app:showAsAction="ifRoom">
+    </item>
+    <item
+        android:id="@+id/action"
+        android:orderInCategory="2"
+        android:icon="@drawable/ic_vertical_dots"
+        android:title="@string/options"
+        app:showAsAction="always">
+    </item>
+</menu>

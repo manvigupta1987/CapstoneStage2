@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="permission_rationale">يتم استخدام بيانات الموقع كجزء من غوغل فيت أبي</string>
+    <string name="ok">حسنا</string>
+    <string name="permission_denied_explanation">تم رفض الإذن، ولكن هناك حاجة للوظائف الأساسية.</string>
+    <string name="settings">إعدادات</string>
+    <string name="remainingSteps"> الخطوات المتبقية: <xliff:g example="1000" id="steps">%1$d</xliff:g></string>
+    <string name="list_item_distance">مشى <xliff:g example="1000" id="steps">%1$s</xliff:g>km</string>
+    <string name="list_item_steps">خطوات  <xliff:g example="1000" id="steps">%1$d</xliff:g>;</string>
+    <string name="today">اليوم</string>
+    <string name="total">إجمالي الخطوات</string>
+
+    <string name="openDrawer">درج مفتوح</string>
+    <string name="closeDrawer">إغلاق درج</string>
+
+    <string name="Home">الصفحة الرئيسية</string>
+    <string name="history_data">بيانات التاريخ</string>
+    <string name="dailygoal">الهدف اليومي</string>
+
+
+    <string name="action_logout">الخروج</string>
+    <string name="daily_goal">تعيين الهدف اليومي</string>
+    <string name="empty_list">لم يتم العثور على بيانات لياقة بدنية</string>
+    <string name="action_history">تحليل البيانات</string>
+    <string name="string_weeks">أسبوع</string>
+    <string name="string_months">شهر</string>
+    <string name="string_year">عام</string>
+
+    <string name="yAxis_string">خطوات</string>
+    <string name="setting_title">وحدات</string>
+    <string name="setting_history">بيانات التاريخ</string>
+
+    <string name="pref_height_label">ارتفاع</string>
+    <string name="pref_weight_label">وزن</string>
+    <string name="pref_distance_label">مسافه: بعد</string>
+    <string name="pref_history_label">حذف بيانات السجل</string>
+    <string name="pref_history_summary_off">تاريخ إيقاف</string>
+    <string name="pref_history_summary_on">التاريخ على</string>
+    <string name="pref_units_label_feet">قدم و بوصة</string>
+    <string name="pref_units_label_centi">سنتيمتر</string>
+    <string name="pref_units_label_kg">كجم</string>
+    <string name="pref_units_label_pound">جنيه أو رطل للوزن</string>
+    <string name="pref_units_label_km">كيلومتر (كم)</string>
+    <string name="pref_units_label_mile">ميل (مليون)</string>
+
+    <string name="basic_info">معلومات اساسية</string>
+    <string name="height_info">ارتفاع</string>
+    <string name="centimeter">سم</string>
+    <string name="weight_info">وزن</string>
+    <string name="enter_height">أدخل الارتفاع</string>
+    <string name="enter_weight">أدخل الوزن</string>
+
+    <string name="invaild_value">قيمة غير صالحة</string>
+    <string name="feet_message">أدخل قيمة للقدم بين 1 و 8</string>
+    <string name="weight_message">أدخل قيمة للوزن بين 1 و 1000</string>
+    <string name="centimeter_message">أدخل قيمة تتراوح بين 30 و 272 سنتيمتر</string>
+    <string name="kg_message">أدخل قيمة للكيلوغرام بين 1 و 450</string>
+    <string name="enter_mandatory_info">المعلومات أدناه إلزامية للتطبيق للعمل </string>
+
+    <string name="send_to">إرسال نص إلى ..</string>
+    <string name="graph_description">خطوات على مدار الفترة</string>
+    <string name="ads">عرض الإعلانات</string>
+
+
+    <string name="a11y_remaining_step">الخطوات المتبقية لهذا اليوم <xliff:g id="condition">%1$s</xliff:g></string>
+    <string name="a11y_daily_steps">الخطوات اليوم <xliff:g id="condition">%1$d</xliff:g></string>
+    <string name="a11y_daily_distance">المسافة التي تغطيها اليوم <xliff:g id="high">%1$f</xliff:g></string>
+    <string name="a11y_daily_calorie">حرق السعرات الحرارية اليوم <xliff:g id="low">%1$d</xliff:g></string>
+    <string name="a11y_content_distance">مسافه: بعد</string>
+    <string name="a11y_content_calorie">السعرات الحرارية</string>
+    <string name="a11y_content_duration">Duration</string>
+    <string name="a11y_content_bmi">المدة الزمنية</string>
+    <string name="a11y_list_item_distance">مشى <xliff:g example="1000" id="steps">%1$s</xliff:g> km</string>
+    <string name="a11y_list_item_steps">خطوات<xliff:g example="1000" id="steps">%1$d</xliff:g>;</string>
+    <string name="a11y_bmi">مؤشر كتلة الجسم الخاص بك هو <xliff:g id="humidity">%1$s</xliff:g></string>
+    <string name="a11y_today_date">تاريخ <xliff:g id="pressure">%1$s</xliff:g></string>
+    <string name="a11y_profile_picture">الصوره الشخصيه</string>
+    <string name="a11y_previous_screen">العودة إلى الشاشة الرئيسية</string>
+    <string name="a11_height_in_Feet">الارتفاع هو <xliff:g id="humidity">%1$s</xliff:g></string>
+    <string name="a11_height_in_Inch">بوصة  <xliff:g id="humidity">%1$s</xliff:g></string>
+    <string name="a11_weight">وزن  <xliff:g id="humidity">%1$f</xliff:g></string>
+    <string name="edit_profile">تعديل الملف الشخصي</string>
+    <string name="analyze_data">تحليل البيانات</string>
+    <string name="totalSteps"> <xliff:g example="1000" id="steps">%1$d</xliff:g></string>
+
+    <string name="distance">مسافه: بعد</string>
+    <string name="calories">سعرات حراريه</string>
+    <string name="duration">المدة الزمنية</string>
+    <string name="bmi">مؤشر كتلة الجسم</string>
+
+    <string name="underweight">(نقص الوزن)</string>
+    <string name="normal">(عادي)</string>
+    <string name="overweight">(زيادة الوزن)</string>
+    <string name="Ok">حسنا</string>
+     <string name="cancel">@android:string/cancel</string>
+    <string name="a11y_list_item_calories"><xliff:g example="1000" id="steps">%1$d</xliff:g></string>s
+    <string name="congratulations">تهانينا!!!</string>
+    <string name="message">لقد وصلت إلى هدفك. هل تريد زيادة الهدف ليوم واحد؟</string>
+    <string name="sign_in_unsuccessful">غير ناجح تسجيل الدخول</string>
+    <string name="a11y_target_acheived">تحقق الهدف</string>
+    <string name="a11y_name"><xliff:g id="pressure">%1$s</xliff:g></string>
+    <string name="a11y_emailId"><xliff:g id="pressure">%1$s</xliff:g></string>
+    <string name="total_distance"><xliff:g id="100.12">%1$.2f</xliff:g> km</string>
+    <string name="total_calories"><xliff:g id="distance">%1$d</xliff:g> kcal</string>
+    <string name="total_bmi"><xliff:g id="100.12">%1$.2f</xliff:g></string>
+    <string name="no_internet">يرجى التحقق من الإعدادات.</string>
+    <string name="no_Connectivity">لا يوجد اتصال إنترنت</string>
+    <string name="total_duration"><xliff:g id="100">%1$.0f</xliff:g> min</string>
+
+    <string name="height_summary">تغيير وحدات الطول</string>
+    <string name="weight_summary">تغيير وحدات الوزن</string>
+    <string name="distance_summary">تغيير وحدات المسافة</string>
+    <string name="target_complete_message">مهلا، لقد أكملت<xliff:g id="steps">%1$d</xliff:g>خطوات. ما هو العد الخاص بك؟ يتيح المشي أكثر الأصدقاء.</string>
+    <string name="logout">خروج المستخدم!</string>
+
+</resources>

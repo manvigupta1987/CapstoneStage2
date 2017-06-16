@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/widget"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shape"
+    android:padding="@dimen/widget_margin">
+
+    <ImageView
+        android:id="@+id/widget_icon"
+        android:layout_width="@dimen/widget_today_default_width"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="@dimen/four_dp"
+        android:layout_marginTop="@dimen/four_dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/app_name"
+        android:maxWidth="@dimen/widget_today_default_width"
+        android:minHeight="@dimen/widget_today_min_width"
+        android:src="@drawable/ic_pedestrian_walking"
+        tools:ignore="RtlHardcoded" />
+
+    <LinearLayout
+        android:id="@+id/widget_calories_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/four_dp"
+        android:layout_marginEnd="@dimen/eight_dp"
+        android:layout_marginLeft="@dimen/margin_left"
+        android:layout_marginRight="@dimen/eight_dp"
+        android:layout_marginStart="@dimen/margin_left"
+        android:layout_marginTop="@dimen/four_dp"
+        android:layout_toLeftOf="@+id/widget_icon"
+        android:layout_toStartOf="@+id/widget_icon"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        tools:ignore="RelativeOverlap,RtlHardcoded">
+
+        <TextView
+            android:id="@+id/widget_steps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="@android:color/white"
+            tools:text="100" />
+
+        <TextView
+            android:id="@+id/widget_calories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="@android:color/white"
+            tools:text="100" />
+    </LinearLayout>
+</RelativeLayout>
+

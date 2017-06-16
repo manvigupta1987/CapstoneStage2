@@ -1,0 +1,50 @@
+package com.example.manvi.walkmore.utils;
+
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.support.v4.app.ActivityCompat;
+
+import timber.log.Timber;
+
+/**
+ * Created by manvi on 2/6/17.
+ */
+
+@SuppressWarnings("DefaultFileTemplate")
+public class ConstantUtils {
+    public static final int WEEK_TAB = 0;
+    public static final int MONTH_TAB = 1;
+    public static final int YEAR_TAB = 2;
+
+    public static final int TIME_MIN = 59;
+    public static final int TIME_SEC = 58;
+    public static final int TIME_HOUR = 23;
+
+    public static final String FIRST_TIME = "first_time";
+    public static final String ACTION_DATA_UPDATED= "com.example.manvi.walkmore.ACTION_DATA_UPDATED";
+    public static final String ACTION_DATA_STARTED= "com.example.manvi.walkmore.ACTION_DATA_STARTED";
+    public static final String ACTION_DATA_STOPED= "com.example.manvi.walkmore.ACTION_CLIENT_STOPED";
+
+    public static boolean checkPermissions(Context context) {
+        int permissionState = ActivityCompat.checkSelfPermission(context,
+                Manifest.permission.ACCESS_FINE_LOCATION);
+        return (permissionState == PackageManager.PERMISSION_GRANTED);
+    }
+
+    public static boolean isConnectedToInternet(Context context) {
+        try {
+            if (context != null) {
+                ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+                return networkInfo != null && networkInfo.isConnected();
+            }
+            return false;
+        } catch (Exception e) {
+            Timber.e("network Crash", e.getMessage());
+            return false;
+        }
+    }
+}

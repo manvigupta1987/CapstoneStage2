@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="default_daily_goal">10000</integer>
+    <integer name="centimeter_text">140</integer>
+    <integer name="inch_text_width">70</integer>
+    <dimen name="margin_left">16dp</dimen>
+    <dimen name="margin_right">16dp</dimen>
+    <dimen name="nav_header_vertical_spacing">16dp</dimen>
+    <dimen name="nav_header_height">170dp</dimen>
+    <dimen name="margin_top">16dp</dimen>
+    <dimen name="margin_bottom">16dp</dimen>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="profile_width">64dp</dimen>
+    <dimen name="profile_height">64dp</dimen>
+    <dimen name="list_item_extra_padding">0dp</dimen>
+    <dimen name="list_icon">40dp</dimen>
+    <dimen name="date_space">8dp</dimen>
+    <dimen name="progress_bar_dimen">42dp</dimen>
+    <dimen name="graph_margin_right">8dp</dimen>
+    <dimen name="four_dp">4dp</dimen>
+    <dimen name="eight_dp">8dp</dimen>
+    <dimen name="circle_height">220dp</dimen>
+    <dimen name="line_margin_top">32dp</dimen>
+
+    <!--
+Refer to App Widget Documentation for margin information
+http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
+    -->
+    <dimen name="widget_margin">8dp</dimen>
+    <dimen name="widget_today_default_width">110dp</dimen>
+    <dimen name="widget_today_min_width">100dp</dimen>
+    <dimen name="widget_today_default_height">40dp</dimen>
+    <dimen name="widget_today_min_resize_width">40dp</dimen>
+    <dimen name="widget_today_min_resize_height">@dimen/widget_today_default_height</dimen>
+    <dimen name="arc_progress_width">10dp</dimen>
+    <dimen name="app_bar_elevation">4dp</dimen>
+    <dimen name="switch_elevation">1dp</dimen>
+    <dimen name="civ_boarder_width">2dp</dimen>
+
+    <dimen name="image_height">35dp</dimen>
+    <dimen name="target_image_height">70dp</dimen>
+</resources>

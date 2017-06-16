@@ -1,0 +1,142 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.manvi.walkmore.ui.activity.EditActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar1"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/primary"
+        android:elevation="@dimen/app_bar_elevation"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        tools:ignore="UnusedAttribute" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_right"
+        android:layout_marginLeft="@dimen/margin_left"
+        android:layout_marginRight="@dimen/margin_right"
+        android:layout_marginStart="@dimen/margin_left"
+        android:layout_marginTop="@dimen/date_space"
+        android:contentDescription="@string/basic_info"
+        android:text="@string/basic_info"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:textStyle="bold"
+        tools:ignore="RtlHardcoded"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_right"
+        android:layout_marginLeft="@dimen/margin_left"
+        android:layout_marginRight="@dimen/margin_right"
+        android:layout_marginStart="@dimen/margin_left"
+        android:layout_marginTop="@dimen/line_margin_top"
+        android:contentDescription="@string/height_info"
+        android:text="@string/height_info"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@android:color/secondary_text_light"
+        tools:ignore="RtlHardcoded"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_right"
+        android:layout_marginLeft="@dimen/margin_left"
+        android:layout_marginRight="@dimen/margin_right"
+        android:layout_marginStart="@dimen/margin_left"
+        android:orientation="horizontal"
+        tools:ignore="RtlHardcoded">
+
+        <EditText
+            android:id="@+id/edit_text1"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_top"
+            android:digits="0123456789."
+            android:hint="@string/hint"
+            android:inputType="numberDecimal" />
+
+        <EditText
+            android:id="@+id/edit_text2"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_top"
+            android:digits="0123456789."
+            android:hint="@string/hint"
+            android:inputType="numberDecimal" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Spinner
+            android:id="@+id/HeightSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|right|end"
+            android:entries="@array/pref_height_options"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:prompt="@string/enter_height"/>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_right"
+        android:layout_marginLeft="@dimen/margin_left"
+        android:layout_marginRight="@dimen/margin_right"
+        android:layout_marginStart="@dimen/margin_left"
+        android:layout_marginTop="@dimen/line_margin_top"
+        android:contentDescription="@string/weight_info"
+        android:text="@string/weight_info"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@android:color/secondary_text_light"
+        tools:ignore="RtlHardcoded"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_right"
+        android:layout_marginLeft="@dimen/margin_left"
+        android:layout_marginRight="@dimen/margin_right"
+        android:layout_marginStart="@dimen/margin_left"
+        android:orientation="horizontal"
+        tools:ignore="RtlHardcoded">
+
+        <EditText
+            android:id="@+id/weight_edit_Text"
+            android:labelFor="@+id/weight_edit_Text"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_top"
+            android:digits="0123456789."
+            android:inputType="numberDecimal"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Spinner
+            android:id="@+id/WeightSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:entries="@array/pref_weight_options"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:prompt="@string/enter_weight" />
+    </LinearLayout>
+</LinearLayout>
