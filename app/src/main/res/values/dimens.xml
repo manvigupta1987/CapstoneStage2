@@ -15,10 +15,8 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="profile_width">64dp</dimen>
     <dimen name="profile_height">64dp</dimen>
-    <dimen name="list_item_extra_padding">0dp</dimen>
     <dimen name="list_icon">40dp</dimen>
     <dimen name="date_space">8dp</dimen>
-    <dimen name="progress_bar_dimen">42dp</dimen>
     <dimen name="graph_margin_right">8dp</dimen>
     <dimen name="four_dp">4dp</dimen>
     <dimen name="eight_dp">8dp</dimen>

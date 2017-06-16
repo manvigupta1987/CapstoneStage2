@@ -13,13 +13,11 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.manvi.walkmore.R;
@@ -61,7 +59,6 @@ import com.google.android.gms.fitness.request.SensorRequest;
 import com.google.android.gms.fitness.result.DailyTotalResult;
 import com.google.android.gms.fitness.result.DataSourcesResult;
 
-import java.text.DateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -372,9 +369,6 @@ public class MainActivityFragment extends Fragment implements
 
     private void showDataSet(DataSet dataSet) {
         if (dataSet != null) {
-            DateFormat dateFormat = DateFormat.getDateInstance();
-            DateFormat timeFormat = DateFormat.getTimeInstance();
-
             for (DataPoint dp : dataSet.getDataPoints()) {
                 for (Field field : dp.getDataType().getFields()) {
                     Timber.i("\tField: " + field.getName() +

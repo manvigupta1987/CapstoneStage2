@@ -24,7 +24,7 @@ public class DistanceUtils {
         return (float) (miles * milesToKmConversion);
     }
 
-    public static float convertKiloMetersToMiles(float kilo){
+    private static float convertKiloMetersToMiles(float kilo){
         return (float)(kilo*kilosToMilesConversion);
     }
 }

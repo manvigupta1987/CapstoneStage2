@@ -180,6 +180,6 @@
     <string name="height_summary">change the units of height</string>
     <string name="weight_summary">change the units of weight</string>
     <string name="distance_summary">change the units of distance</string>
-    <string name="target_complete_message">Hey, I have completed<xliff:g id="steps">%1$d</xliff:g>steps. What is your count? Lets walk more buddy.</string>
+    <string name="target_complete_message" tools:ignore="PluralsCandidate">Hey, I have completed<xliff:g id="steps">%1$d</xliff:g>steps. What is your count? Lets walk more buddy.</string>
     <string name="logout">Logout user!</string>
 </resources>

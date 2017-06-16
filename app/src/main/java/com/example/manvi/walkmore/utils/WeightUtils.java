@@ -37,7 +37,7 @@ public class WeightUtils {
         if(!isKilos){
             return distanceInMiles;
         }else {
-            return (float) (DistanceUtils.convertMilesToKiloMeter(distanceInMiles));
+            return DistanceUtils.convertMilesToKiloMeter(distanceInMiles);
         }
     }
 

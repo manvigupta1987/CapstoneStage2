@@ -1,6 +1,7 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -24,5 +25,6 @@
             android:paddingRight="@dimen/margin_right"
             android:paddingStart="@dimen/margin_left"
             android:paddingTop="@dimen/margin_top"
-            android:text="@string/empty_list" />
+            android:text="@string/empty_list"
+            tools:ignore="RtlHardcoded" />
 </FrameLayout>

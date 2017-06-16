@@ -48,10 +48,6 @@ public final class FitnessDataProvider extends ContentProvider {
         sFitnessQueryBuilder.setTables(FitnessContract.fitnessDataEntry.TABLE_NAME);
     }
 
-    private static final String sFitnessDataDaySelection =
-            FitnessContract.fitnessDataEntry.TABLE_NAME +
-                    "." + FitnessContract.fitnessDataEntry.COLUMN_DATE + " >= ? ";
-
     @Nullable
     @Override
     public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String orderBy) {

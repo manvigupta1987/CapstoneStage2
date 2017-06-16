@@ -112,5 +112,6 @@
     <string name="distance_summary">تغيير وحدات المسافة</string>
     <string name="target_complete_message">مهلا، لقد أكملت<xliff:g id="steps">%1$d</xliff:g>خطوات. ما هو العد الخاص بك؟ يتيح المشي أكثر الأصدقاء.</string>
     <string name="logout">خروج المستخدم!</string>
+    <string name="total_distanceInmiles"><xliff:g id="100.12">%1$.2f</xliff:g> mi</string>
 
 </resources>

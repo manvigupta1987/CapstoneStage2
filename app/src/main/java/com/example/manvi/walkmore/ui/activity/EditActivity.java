@@ -200,7 +200,7 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
                 if(heighInInch.equals("") && (mEditText2.isEnabled()) || (heighInInch.equals("."))){
                     heighInInch = "0";
                 }
-                height = (float) HeightUtils.convertFeetToInch(Float.parseFloat(heightInFeet), Float.parseFloat(heighInInch));
+                height = HeightUtils.convertFeetToInch(Float.parseFloat(heightInFeet), Float.parseFloat(heighInInch));
                 message = getString(R.string.feet_message);
                 mEditText2.setContentDescription(getString(R.string.a11_height_in_Inch,heighInInch));
 
