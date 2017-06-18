@@ -45,6 +45,7 @@
                 android:id="@+id/distance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/distance1"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
             <TextView
@@ -92,6 +93,7 @@
                 android:id="@+id/calorie_Count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/calorie1"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
             <TextView
@@ -139,6 +141,7 @@
                 android:id="@+id/duration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/duration1"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
             <TextView

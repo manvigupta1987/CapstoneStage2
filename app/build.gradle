@@ -4,9 +4,9 @@ apply plugin: 'android-apt'
 android {
     signingConfigs {
         config {
-            keyAlias 'MyAndroidKey'
+            keyAlias 'walkmore'
             keyPassword 'walkmore'
-            storeFile file('/home/manvi/keystores/walkmore.jks')
+            storeFile file("$rootDir/keystore.jks")
             storePassword 'walkmore'
         }
     }

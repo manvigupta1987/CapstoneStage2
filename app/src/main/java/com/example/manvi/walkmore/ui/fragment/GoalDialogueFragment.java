@@ -42,7 +42,7 @@ public class GoalDialogueFragment extends DialogFragment {
                 String srt = input.getEditableText().toString();
                 if(!srt.equals("")) {
                     WalkMorePreferences.editDailyGoal(getActivity(), Integer.parseInt(srt));
-                    Toast.makeText(getActivity(), "Daily Goal Updated", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),getString(R.string.goal_updated), Toast.LENGTH_SHORT).show();
                 }
             } // End of onClick(DialogInterface dialog, int whichButton)
         }); //End of alert.setPositiveButton

@@ -182,4 +182,11 @@
     <string name="distance_summary">change the units of distance</string>
     <string name="target_complete_message" tools:ignore="PluralsCandidate">Hey, I have completed<xliff:g id="steps">%1$d</xliff:g>steps. What is your count? Lets walk more buddy.</string>
     <string name="logout">Logout user!</string>
+
+    <string name="goal_updated">Daily Goal Updated</string>
+    <string name="remainingSteps1"> Remaining Steps:0</string>
+    <string name="totalSteps1">0</string>
+    <string name="distance1">0 km</string>
+    <string name="calorie1">0 kcal</string>
+    <string name="duration1">0 min</string>
 </resources>

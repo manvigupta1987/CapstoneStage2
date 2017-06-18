@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/remainingSteps_Count"
                 android:layout_marginTop="@dimen/line_margin_top"
-                android:text="@string/remainingSteps"
+                android:text="@string/remainingSteps1"
                 android:layout_gravity="center_vertical|center_horizontal|clip_horizontal"/>
 
             <ImageView
@@ -73,7 +73,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/total_Steps"
-            android:text="@string/totalSteps"
+            android:text="@string/totalSteps1"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:layout_gravity="center"/>
         </LinearLayout>

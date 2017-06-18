@@ -32,7 +32,7 @@ public class DialogueUtill {
                 String srt = input.getEditableText().toString();
                 if(!srt.equals("")) {
                     WalkMorePreferences.editDailyGoal(context, Integer.parseInt(srt));
-                    Toast.makeText(context, "Daily Goal Updated", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context,context.getString(R.string.goal_updated), Toast.LENGTH_SHORT).show();
                 }
             } // End of onClick(DialogInterface dialog, int whichButton)
         }); //End of alert.setPositiveButton

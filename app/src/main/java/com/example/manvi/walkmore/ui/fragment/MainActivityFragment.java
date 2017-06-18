@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
@@ -66,6 +67,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
+import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
 import static com.example.manvi.walkmore.utils.WeightUtils.calculateDistanceFromSteps;
 
 
@@ -112,9 +115,10 @@ public class MainActivityFragment extends Fragment implements
     private DataSet mDataSet;
     private float mHeightInInch;
     private float mWeightInPounds;
-    private boolean mConfiguration = false;
     private Context mContext;
     private static boolean isKilos;
+    private static final int REQUEST_OATH = 1;
+    private boolean authInProgress = false;
 
     private OnDataPointListener mListenerSteps;
 
@@ -145,10 +149,10 @@ public class MainActivityFragment extends Fragment implements
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_main_activity, container, false);
-        ButterKnife.bind(this,rootView);
-        AdView mAdView = (AdView) rootView.findViewById(R.id.adView);
+        ButterKnife.bind(this, rootView);
 
-        if (!mConfiguration) {
+        AdView mAdView = (AdView) rootView.findViewById(R.id.adView);
+        if (mAdView != null) {
             MobileAds.initialize(getActivity(), "ca-app-pub-4862241919033566~1207803733");
             AdRequest adRequest = new AdRequest.Builder()
                     .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
@@ -156,23 +160,16 @@ public class MainActivityFragment extends Fragment implements
                     .build();
             mAdView.loadAd(adRequest);
         }
-        return rootView;
-    }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        //noinspection RedundantIfStatement
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            mConfiguration = true;
-        } else {
-            mConfiguration = false;
-        }
+        return rootView;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            authInProgress = savedInstanceState.getBoolean(AUTH_PENDING);
+        }
         progressDialog = new ProgressDialog(getActivity());
 
         Context context = getContext();
@@ -194,14 +191,14 @@ public class MainActivityFragment extends Fragment implements
     }
 
 
-    private void readDataFromLocalStorage(){
+    private void readDataFromLocalStorage() {
         mDailyStepsGoal = WalkMorePreferences.getDailyGoal(getActivity());
         mHeightInInch = WalkMorePreferences.getUserHeight(getActivity());
         mWeightInPounds = WalkMorePreferences.getUserWeight(getActivity());
         isKilos = WalkMorePreferences.isKiloMeter(getActivity());
     }
 
-    private void updateTodaysDate(){
+    private void updateTodaysDate() {
         Date date = new Date();
         long timeInMilli = date.getTime();
         if (!DateUtils.isDateNormalized(timeInMilli)) {
@@ -374,7 +371,7 @@ public class MainActivityFragment extends Fragment implements
                     Timber.i("\tField: " + field.getName() +
                             " Value: " + dp.getValue(field));
                     if (dp.getValue(Field.FIELD_DISTANCE) != null) {
-                        mTotalDailyDistance = DistanceUtils.covertMetersToKiloMeters(Float.parseFloat(dp.getValue(Field.FIELD_DISTANCE).asString()), isKilos);
+                        mTotalDailyDistance = DistanceUtils.covertMetersToKiloMeters(dp.getValue(Field.FIELD_DISTANCE).asFloat(), isKilos);
                         if (isKilos) {
                             mDistance.setText(getString(R.string.total_distance, mTotalDailyDistance));
                         } else {
@@ -452,6 +449,16 @@ public class MainActivityFragment extends Fragment implements
         WalkMorePreferences.updateLoginRequired(getActivity(), true);
         if (!connectionResult.hasResolution()) {
             mApiAvailability.getErrorDialog(getActivity(), connectionResult.getErrorCode(), 0).show();
+        }
+        if( !authInProgress ) {
+            try {
+                authInProgress = true;
+                connectionResult.startResolutionForResult(getActivity(), REQUEST_OATH);
+            }catch(IntentSender.SendIntentException e ) {
+
+            }
+        } else {
+            Timber.e( "GoogleFit", "authInProgress" );
         }
     }
 
@@ -567,5 +574,21 @@ public class MainActivityFragment extends Fragment implements
 
     public int getmDailyStepsCount() {
         return mDailyStepsCount;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if( requestCode == REQUEST_OATH ) {
+            authInProgress = false;
+            if( resultCode == RESULT_OK ) {
+                if( !mApiClient.isConnecting() && !mApiClient.isConnected() ) {
+                    mApiClient.connect();
+                }
+            } else if( resultCode == RESULT_CANCELED ) {
+                Timber.e( "GoogleFit", "RESULT_CANCELED" );
+            }
+        } else {
+            Timber.e("GoogleFit", "requestCode NOT request_oauth");
+        }
     }
 }

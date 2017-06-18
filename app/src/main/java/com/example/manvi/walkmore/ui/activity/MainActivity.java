@@ -116,6 +116,7 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
     private boolean saveInstance = false;
 
     private static boolean mPermissionGranted = false;
+    private static int REQUEST_OATH = 1;
 
 
     @Override
@@ -201,15 +202,30 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
         String personName = bundle.getString(getString(R.string.person_name_key));
         String personEmail = bundle.getString(getString(R.string.person_email_key));
         String personPhoto =  bundle.getString(getString(R.string.person_photo_key));
-        txtName.setText(personName);
-        txtName.setContentDescription(getString(R.string.a11y_name, personName));
-        txtEmail.setText(personEmail);
-        txtEmail.setContentDescription(getString(R.string.a11y_emailId, personEmail));
-        // Loading profile image
-        Picasso.with(this).load(personPhoto)
-                .placeholder(R.drawable.profile_pic)
-                .error(R.drawable.profile_pic)
-                .into(imgProfile);
+        if(!personName.equals("")) {
+            txtName.setText(personName);
+            txtName.setContentDescription(getString(R.string.a11y_name, personName));
+        } else{
+            txtName.setText("");
+            txtName.setContentDescription(getString(R.string.a11y_name, ""));
+        }
+
+        if(!personEmail.equals("")) {
+            txtEmail.setText(personEmail);
+            txtEmail.setContentDescription(getString(R.string.a11y_emailId, personEmail));
+        }else {
+            txtEmail.setText("");
+            txtEmail.setContentDescription(getString(R.string.a11y_emailId, ""));
+        }
+        if(!personPhoto.equals("")) {
+            // Loading profile image
+            Picasso.with(this).load(personPhoto)
+                    .placeholder(R.drawable.profile_pic)
+                    .error(R.drawable.profile_pic)
+                    .into(imgProfile);
+        } else {
+            imgProfile.setImageResource(R.drawable.profile_pic);
+        }
     }
 
     private void buildGoogleClient(){
@@ -594,6 +610,10 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
                 CURRENT_TAG = TAG_HOME;
             }
             loadHomeFragment();
+        } else if(requestCode == REQUEST_OATH ) {
+            if(mMainFragment!=null){
+                mMainFragment.onActivityResult(requestCode, resultCode, data);
+            }
         }
     }
 
@@ -618,17 +638,22 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
                 String personEmail = acct.getEmail();
                 Uri personPhoto = acct.getPhotoUrl();
                 WalkMorePreferences.storePersonformation(this, personName);
-                WalkMorePreferences.storeEmailformation(this,personEmail);
-                WalkMorePreferences.storePhotoLinkformation(this,personPhoto);
+                WalkMorePreferences.storeEmailformation(this, personEmail);
+                WalkMorePreferences.storePhotoLinkformation(this, personPhoto);
+
                 txtName.setText(personName);
                 txtName.setContentDescription(getString(R.string.a11y_name, personName));
                 txtEmail.setText(personEmail);
                 txtEmail.setContentDescription(getString(R.string.a11y_emailId, personEmail));
                 // Loading profile image
-                Picasso.with(this).load(personPhoto)
-                        .placeholder(R.drawable.profile_pic)
-                        .error(R.drawable.profile_pic)
-                        .into(imgProfile);
+                if(!personPhoto.equals("")) {
+                    Picasso.with(this).load(personPhoto)
+                            .placeholder(R.drawable.profile_pic)
+                            .error(R.drawable.profile_pic)
+                            .into(imgProfile);
+                }else {
+                    imgProfile.setImageResource(R.drawable.profile_pic);
+                }
             }
         } else {
             if(ConstantUtils.isConnectedToInternet(this)) {

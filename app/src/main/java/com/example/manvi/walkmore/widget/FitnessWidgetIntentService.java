@@ -183,7 +183,6 @@ public class FitnessWidgetIntentService extends IntentService implements OnDataP
             final Value value = dataPoint.getValue(field);
             if (field.getName().equals("steps")) {
                 int steps = value.asInt();
-                Timber.i("=====================================Timeis=============================" + System.currentTimeMillis() + "Steps are "+ value.asInt());
                 WalkMorePreferences.updateLastDaySteps(this, steps);
                 WalkMorePreferences.setTotalSteps(this, steps);
                 int lastDaySteps = WalkMorePreferences.getLastDayTotalSteps(this);

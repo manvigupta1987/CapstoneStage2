@@ -243,25 +243,32 @@ public class WalkMorePreferences {
         editor.apply();
     }
 
-    public static void storePersonformation(Context context, String personName){
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putString(context.getString(R.string.person_name_key), personName);
-        editor.apply();
+    public static void storePersonformation(Context context, String personName) {
+        if (!personName.equals("")) {
+            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putString(context.getString(R.string.person_name_key), personName);
+            editor.apply();
+        }
     }
 
-    public static void storeEmailformation(Context context, String personEmail){
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putString(context.getString(R.string.person_email_key), personEmail);
-        editor.apply();
+
+    public static void storeEmailformation(Context context, String personEmail) {
+        if (!personEmail.equals("")) {
+            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putString(context.getString(R.string.person_email_key), personEmail);
+            editor.apply();
+        }
     }
 
-    public static void storePhotoLinkformation(Context context, Uri personEmail){
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putString(context.getString(R.string.person_photo_key), personEmail.toString());
-        editor.apply();
+    public static void storePhotoLinkformation(Context context, Uri personPhoto){
+        if(!personPhoto.equals("")) {
+            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putString(context.getString(R.string.person_photo_key), personPhoto.toString());
+            editor.apply();
+        }
     }
 
 
