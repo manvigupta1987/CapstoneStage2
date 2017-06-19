@@ -185,8 +185,36 @@
 
     <string name="goal_updated">Daily Goal Updated</string>
     <string name="remainingSteps1"> Remaining Steps:0</string>
-    <string name="totalSteps1">0</string>
+    <string name="totalSteps1" translatable="false">0</string>
     <string name="distance1">0 km</string>
     <string name="calorie1">0 kcal</string>
     <string name="duration1">0 min</string>
+    <string name="wait">Wait.....</string>
+    <string name="steps_key" translatable="false">steps</string>
+
+    <string name="ActivityPREF1_key" translatable="false">ActivityPREF1</string>
+    <string name="firstTimeValue_key" translatable="false">firstTimeValue</string>
+    <string name="firstTimeLogin_key" translatable="false">firstTimeLogin</string>
+
+    <string name="daily_goal_key" translatable="false">daily_goal</string>
+    <string name="total_steps_key" translatable="false">total_steps</string>
+    <string name="last_total_steps_key" translatable="false">last_total_steps</string>
+    <string name="ActivityPREF_key" translatable="false">ActivityPREF</string>
+    <string name="firstRun_key" translatable="false">firstRun</string>
+
+    <string name="jan">Jan</string>
+    <string name="feb">Feb</string>
+    <string name="mar">Mar</string>
+    <string name="apr">Apr</string>
+    <string name="may">May</string>
+    <string name="june">Jun</string>
+    <string name="jul">Jul</string>
+    <string name="aug">Aug</string>
+    <string name="sep">Sep</string>
+    <string name="oct">Oct</string>
+    <string name="nov">Nov</string>
+    <string name="dec">Dec</string>
+
+    <string name="no_thanks">No,thanks.</string>
+    <string name="yes">Yes!</string>
 </resources>

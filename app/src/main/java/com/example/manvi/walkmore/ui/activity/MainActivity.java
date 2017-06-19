@@ -202,7 +202,7 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
         String personName = bundle.getString(getString(R.string.person_name_key));
         String personEmail = bundle.getString(getString(R.string.person_email_key));
         String personPhoto =  bundle.getString(getString(R.string.person_photo_key));
-        if(!personName.equals("")) {
+        if(personName!=null && !personName.isEmpty()) {
             txtName.setText(personName);
             txtName.setContentDescription(getString(R.string.a11y_name, personName));
         } else{
@@ -210,14 +210,14 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
             txtName.setContentDescription(getString(R.string.a11y_name, ""));
         }
 
-        if(!personEmail.equals("")) {
+        if(personEmail!=null && !personEmail.isEmpty()) {
             txtEmail.setText(personEmail);
             txtEmail.setContentDescription(getString(R.string.a11y_emailId, personEmail));
         }else {
             txtEmail.setText("");
             txtEmail.setContentDescription(getString(R.string.a11y_emailId, ""));
         }
-        if(!personPhoto.equals("")) {
+        if(personPhoto!=null && !personPhoto.isEmpty()) {
             // Loading profile image
             Picasso.with(this).load(personPhoto)
                     .placeholder(R.drawable.profile_pic)
@@ -286,8 +286,8 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
     }
 
     private void SetupEditUserProfileActivity(){
-        SharedPreferences pref = getSharedPreferences("ActivityPREF", Context.MODE_PRIVATE);
-        boolean firstRun = pref.getBoolean("firstRun", true);
+        SharedPreferences pref = getSharedPreferences(getString(R.string.ActivityPREF_key), Context.MODE_PRIVATE);
+        boolean firstRun = pref.getBoolean(getString(R.string.firstRun_key), true);
         if (firstRun) {
             Intent intent = new Intent(this, EditActivity.class);
             intent.setAction(ConstantUtils.FIRST_TIME);
@@ -295,9 +295,9 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
 
             startActivityForResult(intent, INSTRUCTIONS_CODE);
 
-            SharedPreferences settings = getSharedPreferences("ActivityPREF", Context.MODE_PRIVATE);
+            SharedPreferences settings = getSharedPreferences(getString(R.string.ActivityPREF_key), Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = settings.edit();
-            editor.putBoolean("firstRun", false);
+            editor.putBoolean(getString(R.string.firstRun_key), false);
             editor.apply();
         }
     }
@@ -646,7 +646,7 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
                 txtEmail.setText(personEmail);
                 txtEmail.setContentDescription(getString(R.string.a11y_emailId, personEmail));
                 // Loading profile image
-                if(!personPhoto.equals("")) {
+                if(personPhoto!=null && !personPhoto.equals(Uri.EMPTY)) {
                     Picasso.with(this).load(personPhoto)
                             .placeholder(R.drawable.profile_pic)
                             .error(R.drawable.profile_pic)

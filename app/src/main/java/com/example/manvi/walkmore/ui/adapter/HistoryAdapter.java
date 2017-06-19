@@ -97,5 +97,4 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.historyA
         notifyDataSetChanged();
         mEmptyView.setVisibility(getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
-
 }

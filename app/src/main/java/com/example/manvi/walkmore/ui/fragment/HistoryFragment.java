@@ -134,7 +134,6 @@ public class HistoryFragment extends Fragment implements LoaderManager.LoaderCal
     @Override
     public void onResume() {
         super.onResume();
-        Timber.d("resume called");
         getLoaderManager().restartLoader(HISTORY_LOADER, null, this);
     }
 
@@ -156,5 +155,4 @@ public class HistoryFragment extends Fragment implements LoaderManager.LoaderCal
     public void onLoaderReset(Loader<Cursor> loader) {
         mHistoryAdapter.swapCursor(null);
     }
-
 }

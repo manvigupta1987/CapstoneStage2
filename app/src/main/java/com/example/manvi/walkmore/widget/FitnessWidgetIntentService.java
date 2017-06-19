@@ -173,7 +173,7 @@ public class FitnessWidgetIntentService extends IntentService implements OnDataP
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Timber.d("=======================================onConnectionFailed()=========================" + connectionResult.getErrorCode());
+        Timber.d(""+ connectionResult.getErrorCode());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)

@@ -34,7 +34,7 @@ public class WalkMorePreferences {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sp.edit();
 
-        editor.putInt(PREF_DAILY_GOAL, dailyGoal);
+        editor.putInt(context.getString(R.string.daily_goal_key), dailyGoal);
         editor.apply();
     }
 
@@ -53,7 +53,7 @@ public class WalkMorePreferences {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sp.edit();
 
-        editor.putInt(PREF_TOTAL_STEPS_VALUE, totalSteps);
+        editor.putInt(context.getString(R.string.total_steps_key), totalSteps);
         editor.apply();
     }
 
@@ -72,7 +72,7 @@ public class WalkMorePreferences {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sp.edit();
 
-        editor.putInt(PREF_LAST_TOTAL_STEPS_VALUE, totalSteps);
+        editor.putInt(context.getString(R.string.last_total_steps_key), totalSteps);
         editor.apply();
     }
 
@@ -86,7 +86,7 @@ public class WalkMorePreferences {
      */
     public static int getTotalSteps(Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        return sp.getInt(PREF_TOTAL_STEPS_VALUE, -1);
+        return sp.getInt(context.getString(R.string.total_steps_key), -1);
     }
 
     /**
@@ -99,7 +99,7 @@ public class WalkMorePreferences {
      */
     public static int getLastDayTotalSteps(Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        return sp.getInt(PREF_LAST_TOTAL_STEPS_VALUE, -1);
+        return sp.getInt(context.getString(R.string.last_total_steps_key), -1);
     }
 
     /**
@@ -113,7 +113,7 @@ public class WalkMorePreferences {
      */
     public static int getDailyGoal(Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        return sp.getInt(PREF_DAILY_GOAL, context.getResources().getInteger(R.integer.default_daily_goal));
+        return sp.getInt(context.getString(R.string.daily_goal_key), context.getResources().getInteger(R.integer.default_daily_goal));
     }
 
     public static void setHeightUnit(Context context, String unit) {
@@ -206,13 +206,13 @@ public class WalkMorePreferences {
     }
 
     public static void updateLastDaySteps(Context context, int stepsCountToday) {
-        SharedPreferences pref = context.getSharedPreferences("ActivityPREF1", Context.MODE_PRIVATE);
-        boolean firstRun = pref.getBoolean("firstTimeValue", true);
+        SharedPreferences pref = context.getSharedPreferences(context.getString(R.string.ActivityPREF1_key), Context.MODE_PRIVATE);
+        boolean firstRun = pref.getBoolean(context.getString(R.string.firstTimeValue_key), true);
         if (firstRun) {
             WalkMorePreferences.setLastDayTotalSteps(context, stepsCountToday);
-            SharedPreferences settings = context.getSharedPreferences("ActivityPREF1", Context.MODE_PRIVATE);
+            SharedPreferences settings = context.getSharedPreferences(context.getString(R.string.ActivityPREF1_key), Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = settings.edit();
-            editor.putBoolean("firstTimeValue", false);
+            editor.putBoolean(context.getString(R.string.firstTimeValue_key), false);
             editor.apply();
         }
     }
@@ -232,14 +232,14 @@ public class WalkMorePreferences {
 
 
     public static boolean loginRequired(Context context) {
-        SharedPreferences pref = context.getSharedPreferences("ActivityPREF1", Context.MODE_PRIVATE);
-        return (pref.getBoolean("firstTimeLogin", true));
+        SharedPreferences pref = context.getSharedPreferences(context.getString(R.string.ActivityPREF1_key), Context.MODE_PRIVATE);
+        return (pref.getBoolean(context.getString(R.string.firstTimeLogin_key), true));
     }
 
     public static void updateLoginRequired(Context context, boolean required) {
-        SharedPreferences settings = context.getSharedPreferences("ActivityPREF1", Context.MODE_PRIVATE);
+        SharedPreferences settings = context.getSharedPreferences(context.getString(R.string.ActivityPREF1_key), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putBoolean("firstTimeLogin", required);
+        editor.putBoolean(context.getString(R.string.firstTimeLogin_key), required);
         editor.apply();
     }
 
@@ -263,7 +263,7 @@ public class WalkMorePreferences {
     }
 
     public static void storePhotoLinkformation(Context context, Uri personPhoto){
-        if(!personPhoto.equals("")) {
+        if(personPhoto!=null && !personPhoto.equals(Uri.EMPTY)){
             SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
             SharedPreferences.Editor editor = pref.edit();
             editor.putString(context.getString(R.string.person_photo_key), personPhoto.toString());

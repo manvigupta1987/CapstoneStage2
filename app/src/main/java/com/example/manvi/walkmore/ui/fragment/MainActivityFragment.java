@@ -248,7 +248,7 @@ public class MainActivityFragment extends Fragment implements
         if (progressDialog == null) {
             return;
         }
-        progressDialog.setMessage("Wait.....");
+        progressDialog.setMessage(getString(R.string.wait));
         progressDialog.show();
 
         if (mApiClient == null && ConstantUtils.checkPermissions(getActivity())) {
@@ -396,7 +396,7 @@ public class MainActivityFragment extends Fragment implements
                             @RequiresApi(api = Build.VERSION_CODES.N)
                             @Override
                             public void run() {
-                                if (field.getName().equals("steps")) {
+                                if (field.getName().equals(getString(R.string.steps_key))) {
                                     int steps = value.asInt();
                                     WalkMorePreferences.updateLastDaySteps(getActivity(), steps);
                                     WalkMorePreferences.setTotalSteps(getActivity(), steps);
@@ -493,7 +493,7 @@ public class MainActivityFragment extends Fragment implements
             }
         }
         mDistance.setContentDescription(getString(R.string.a11y_daily_distance, mTotalDailyDistance));
-        double timeInMin = (mDailyStepsCount / 80);
+        double timeInMin = (mDailyStepsCount / getResources().getInteger(R.integer.steps_per_min));
         mDuration.setText(getString(R.string.total_duration, timeInMin));
     }
 

@@ -273,32 +273,32 @@ public class DateUtils {
         }
     }
 
-    public static String changeMonthFormat(String month) {
+    public static String changeMonthFormat(Context context, String month) {
         switch (month){
             case "01":
-                return "Jan";
+                return context.getString(R.string.jan);
             case "02":
-                return "Feb";
+                return context.getString(R.string.feb);
             case "03":
-                return "Mar";
+                return context.getString(R.string.mar);
             case "04":
-                return "Apr";
+                return context.getString(R.string.apr);
             case "05":
-                return "May";
+                return context.getString(R.string.may);
             case "06":
-                return "Jun";
+                return context.getString(R.string.june);
             case "07":
-                return "Jul";
+                return context.getString(R.string.jul);
             case "08":
-                return "Aug";
+                return context.getString(R.string.aug);
             case "09":
-                return "Sep";
+                return context.getString(R.string.sep);
             case "10":
-                return "Oct";
+                return context.getString(R.string.oct);
             case "11":
-                return "Nov";
+                return context.getString(R.string.nov);
             case "12":
-                return "Dec";
+                return context.getString(R.string.dec);
             default:
                 return null;
         }

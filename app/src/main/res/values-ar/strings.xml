@@ -115,4 +115,25 @@
     <string name="total_distanceInmiles"><xliff:g id="100.12">%1$.2f</xliff:g> mi</string>
     <string name="goal_updated">تم تحديث الهدف اليومي</string>
     <string name="remainingSteps1"> الخطوات المتبقية: 0</string>
+
+    <string name="distance1">0 كم</string>
+    <string name="calorie1">0 سعر </string>
+    <string name="duration1">0 دقيقة</string>
+    <string name="wait">انتظر.....</string>
+
+    <string name="jan">يناير</string>
+    <string name="feb">فبراير</string>
+    <string name="mar">مارس</string>
+    <string name="apr">أبريل</string>
+    <string name="may">قد</string>
+    <string name="june">يونيو</string>
+    <string name="jul">يوليو</string>
+    <string name="aug">أغسطس</string>
+    <string name="sep">سبتمبر</string>
+    <string name="oct">أكتوبر</string>
+    <string name="nov">نوفمبر</string>
+    <string name="dec">ديسمبر</string>
+
+    <string name="no_thanks">لا شكرا.</string>
+    <string name="yes">نعم حقا</string>
 </resources>

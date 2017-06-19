@@ -182,7 +182,7 @@ public class GraphFragment extends Fragment implements LoaderManager.LoaderCallb
                     if(mTabPosition!= ConstantUtils.YEAR_TAB) {
                         datesList.add(DateUtils.changeDateFormat(date, mTabPosition));
                     }else {
-                        datesList.add(DateUtils.changeMonthFormat(date));
+                        datesList.add(DateUtils.changeMonthFormat(getActivity(),date));
                     }
                     barEntriesList.add(new BarEntry(i++, data.getInt(data.getColumnIndex(FitnessContract.fitnessDataEntry.COLUMN_STEPS))));
                 }

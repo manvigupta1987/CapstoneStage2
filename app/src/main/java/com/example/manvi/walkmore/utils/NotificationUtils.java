@@ -93,7 +93,7 @@ public class NotificationUtils {
                 ignoreReminderIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         return new Action(R.drawable.ic_cancel,
-                "No,thanks.",
+                context.getString(R.string.no_thanks),
                 ignoreReminderPendingIntent);
     }
 
@@ -107,7 +107,7 @@ public class NotificationUtils {
                 PendingIntent.FLAG_CANCEL_CURRENT);
 
         return new Action(R.drawable.ic_target,
-                "Yes!",
+                context.getString(R.string.yes),
                 incrementWaterPendingIntent);
     }
 
