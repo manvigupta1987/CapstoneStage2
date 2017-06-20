@@ -8,10 +8,11 @@ stores the information in a client side database.
 <br /><br />
 **Documentaion**<br />
 
-https://github.com/manvigupta1987/Capstone-Project/blob/master/Capstone_Stage1.pdf
+https://github.com/manvigupta1987/Capstone-Project/blob/master/Capstone_Stage1.pdf <br />
 
 
 #Screenshots
+<br />
 <img src="https://github.com/manvigupta1987/CapstoneStage2/blob/master/ScreenShots/MainScreen.png" height=480 width =270/> 
 <img src="https://github.com/manvigupta1987/CapstoneStage2/blob/master/ScreenShots/NavigationDrawer.png" height=480 width =270/> <br />
 <img src="https://github.com/manvigupta1987/CapstoneStage2/blob/master/ScreenShots/SettingScreen.png" height=480 width =270/>
