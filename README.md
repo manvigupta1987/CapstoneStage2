@@ -10,54 +10,19 @@ stores the information in a client side database.
 
 https://github.com/manvigupta1987/Capstone-Project/blob/master/Capstone_Stage1.pdf
 
-<br /><br />
-**Main Screen**<br />
-![alt tag](https://github.com/manvigupta1987/CapstoneStage2/blob/master/ScreenShots/MainScreen.png)
 
-
-<br /><br />
-**Main Screen With Navigation drawer**<br />
-![alt tag](https://github.com/manvigupta1987/CapstoneStage2/blob/master/ScreenShots/NavigationDrawer.png)
-
-<br /><br />
-**Setting Screen**<br />
-![alt tag](https://github.com/manvigupta1987/CapstoneStage2/blob/master/ScreenShots/SettingScreen.png)
-
-<br /><br />
-**Setting Screen with list**<br />
-![alt tag](https://github.com/manvigupta1987/CapstoneStage2/blob/master/ScreenShots/SettingScreensWithList.png)
-
-<br /><br />
-**User's data**<br />
-![alt tag](https://github.com/manvigupta1987/CapstoneStage2/blob/master/ScreenShots/HistoryScreen.png)
-
-
-<br /><br />
-**Goal Setting Dialogue**<br />
-![alt tag](https://github.com/manvigupta1987/CapstoneStage2/blob/master/ScreenShots/GoalScreen.png)
-
-<br /><br />
-**Main Screen with edit user profile option**<br />
-![alt tag](https://github.com/manvigupta1987/CapstoneStage2/blob/master/ScreenShots/MainScreenWithMenu.png)
-
-
-<br /><br />
-**User Profile Information**<br />
-![alt tag](https://github.com/manvigupta1987/CapstoneStage2/blob/master/ScreenShots/EditUserProfile.png)
-
-
-
-<br /><br />
-**Graph Screen which shows the user data over a week, month and year**<br />
-![alt tag](https://github.com/manvigupta1987/CapstoneStage2/blob/master/ScreenShots/BarGraphScreen.png)
-
-<br /><br />
-**Share data**<br />
-![alt tag](https://github.com/manvigupta1987/CapstoneStage2/blob/master/ScreenShots/ShareProgress.png)
-
-
-
-
+#Screenshots
+<img src="https://github.com/manvigupta1987/CapstoneStage2/blob/master/ScreenShots/MainScreen.png" height=480 width =270/>
+<img src="https://github.com/manvigupta1987/CapstoneStage2/blob/master/ScreenShots/NavigationDrawer.png" height=480 width =270/>
+<img src="https://github.com/manvigupta1987/CapstoneStage2/blob/master/ScreenShots/SettingScreen.png" height=480 width =270/>
+<img src="https://github.com/manvigupta1987/CapstoneStage2/blob/master/ScreenShots/SettingScreensWithList.png" height=480 width =270/>
+<img src="https://github.com/manvigupta1987/CapstoneStage2/blob/master/ScreenShots/HistoryScreen.png" height=480 width =270/>
+<img src="https://github.com/manvigupta1987/CapstoneStage2/blob/master/ScreenShots/GoalScreen.png	" height=480 width =270/>
+<img src="https://github.com/manvigupta1987/CapstoneStage2/blob/master/ScreenShots/MainScreenWithMenu.png	" height=480 width =270/>
+<img src="https://github.com/manvigupta1987/CapstoneStage2/blob/master/ScreenShots/EditUserProfile.png	" height=480 width =270/>
+<img src="https://github.com/manvigupta1987/CapstoneStage2/blob/master/ScreenShots/BarGraphScreen.png	" height=480 width =270/>
+<img src="https://github.com/manvigupta1987/CapstoneStage2/blob/master/ScreenShots/ShareProgress.png	" height=480 width =270/>
+<img src="https://github.com/manvigupta1987/WalkMore/blob/master/ScreenShots/Widget.png	" height=480 width =270/>
 
 
 
