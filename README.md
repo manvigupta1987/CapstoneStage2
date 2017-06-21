@@ -1,4 +1,4 @@
-Walkmore:
+##Walkmore:
 
 WalkMore is a simple app to record and display: ​ the number of steps, calories, distance, duration,
 and BMI. A user can view the above information in a graph.​ WalkMore App supports English
