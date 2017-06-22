@@ -217,4 +217,6 @@
 
     <string name="no_thanks">No,thanks.</string>
     <string name="yes">Yes!</string>
+
+    <string name="Edit_goal_hint">Enter your daily steps target.</string>
 </resources>

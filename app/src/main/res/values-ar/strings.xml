@@ -136,4 +136,5 @@
 
     <string name="no_thanks">لا شكرا.</string>
     <string name="yes">نعم حقا</string>
+    <string name="Edit_goal_hint">أدخل الخطوات اليومية المستهدفة.</string>
 </resources>
