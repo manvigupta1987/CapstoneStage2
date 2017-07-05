@@ -16,6 +16,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -286,8 +287,8 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
     }
 
     private void SetupEditUserProfileActivity(){
-        SharedPreferences pref = getSharedPreferences(getString(R.string.ActivityPREF_key), Context.MODE_PRIVATE);
-        boolean firstRun = pref.getBoolean(getString(R.string.firstRun_key), true);
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean firstRun = pref.getBoolean("firstRun", true);
         if (firstRun) {
             Intent intent = new Intent(this, EditActivity.class);
             intent.setAction(ConstantUtils.FIRST_TIME);
@@ -295,9 +296,9 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
 
             startActivityForResult(intent, INSTRUCTIONS_CODE);
 
-            SharedPreferences settings = getSharedPreferences(getString(R.string.ActivityPREF_key), Context.MODE_PRIVATE);
+            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
             SharedPreferences.Editor editor = settings.edit();
-            editor.putBoolean(getString(R.string.firstRun_key), false);
+            editor.putBoolean("firstRun", false);
             editor.apply();
         }
     }

@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 
 import com.example.manvi.walkmore.R;
+import com.google.common.base.Preconditions;
+
 
 /**
  * Created by manvi on 22/5/17.
@@ -206,13 +208,13 @@ public class WalkMorePreferences {
     }
 
     public static void updateLastDaySteps(Context context, int stepsCountToday) {
-        SharedPreferences pref = context.getSharedPreferences(context.getString(R.string.ActivityPREF1_key), Context.MODE_PRIVATE);
-        boolean firstRun = pref.getBoolean(context.getString(R.string.firstTimeValue_key), true);
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        boolean firstRun = pref.getBoolean("firstTimeValue", true);
         if (firstRun) {
             WalkMorePreferences.setLastDayTotalSteps(context, stepsCountToday);
-            SharedPreferences settings = context.getSharedPreferences(context.getString(R.string.ActivityPREF1_key), Context.MODE_PRIVATE);
+            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
             SharedPreferences.Editor editor = settings.edit();
-            editor.putBoolean(context.getString(R.string.firstTimeValue_key), false);
+            editor.putBoolean("firstTimeValue", false);
             editor.apply();
         }
     }
@@ -232,12 +234,12 @@ public class WalkMorePreferences {
 
 
     public static boolean loginRequired(Context context) {
-        SharedPreferences pref = context.getSharedPreferences(context.getString(R.string.ActivityPREF1_key), Context.MODE_PRIVATE);
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);  //context.getSharedPreferences(context.getString(R.string.ActivityPREF1_key), Context.MODE_PRIVATE);
         return (pref.getBoolean(context.getString(R.string.firstTimeLogin_key), true));
     }
 
     public static void updateLoginRequired(Context context, boolean required) {
-        SharedPreferences settings = context.getSharedPreferences(context.getString(R.string.ActivityPREF1_key), Context.MODE_PRIVATE);
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context); //context.getSharedPreferences(context.getString(R.string.ActivityPREF1_key), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean(context.getString(R.string.firstTimeLogin_key), required);
         editor.apply();

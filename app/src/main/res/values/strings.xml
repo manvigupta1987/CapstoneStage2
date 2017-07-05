@@ -219,4 +219,5 @@
     <string name="yes">Yes!</string>
 
     <string name="Edit_goal_hint">Enter your daily steps target.</string>
+    <string name="enter_valid_goal">Please enter vaild target range. Daily Goals cant be zero</string>
 </resources>
