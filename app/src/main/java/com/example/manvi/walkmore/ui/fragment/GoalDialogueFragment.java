@@ -74,7 +74,7 @@ public class GoalDialogueFragment extends DialogFragment {
                                 Toast.makeText(getActivity(), getString(R.string.goal_updated), Toast.LENGTH_SHORT).show();
                                 dismissAllowingStateLoss();
                             } else {
-                                mDailyGoals.setError("please enter the goal greater than 0");
+                                mDailyGoals.setError(getString(R.string.enter_goal_error));
                             }
                         }
 
