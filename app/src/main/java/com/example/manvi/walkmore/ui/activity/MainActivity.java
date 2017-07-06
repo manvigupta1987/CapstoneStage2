@@ -67,8 +67,9 @@ import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.common.base.Optional;
+import com.google.common.base.Preconditions;
 import com.squareup.picasso.Picasso;
-
+import com.google.common.collect.Range;
 import java.util.Calendar;
 
 import butterknife.BindView;
@@ -190,7 +191,8 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
     }
 
     private void showAlterDiaglogueBox(Intent intent){
-        if (intent != null && intent.getAction() != null)
+        Preconditions.checkNotNull(intent, "intent cant be null");
+        if (intent.getAction() != null)
         {
             if(intent.getAction().equals(ReminderTask.ACTION_INCREMENT_GOAL)){
                 DialogueUtill.showDialogue(MainActivity.this);
@@ -308,9 +310,8 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         if (requestCode == REQUEST_PERMISSIONS_REQUEST_CODE) {
-            if (grantResults.length <= 0) {
-                Timber.d("Array is empty");
-            } else if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            Preconditions.checkArgument(grantResults.length<=0, "Array is empty");
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 mPermissionGranted = true;
                 SetupEditUserProfileActivity();
             } else {
@@ -439,12 +440,12 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
                     setToolbarTitle();
                 } else {
                     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    if (fragment != null) {
+                    Preconditions.checkNotNull(fragment, "fragment can't be null");
                         Slide slide = new Slide(Gravity.RIGHT | Gravity.END);
                         slide.setDuration(500);
                         fragment.setEnterTransition(slide);
                         fragmentTransaction.replace(R.id.frame, fragment, CURRENT_TAG);
-                    }
+
                     fragmentTransaction.commitAllowingStateLoss();
                 }
             }
@@ -499,9 +500,8 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
     }
 
     private void setToolbarTitle() {
-        if(getSupportActionBar()!=null) {
-            getSupportActionBar().setTitle(activityTitles[navItemIndex]);
-        }
+        Preconditions.checkNotNull(getSupportActionBar(),"Cant be null");
+        getSupportActionBar().setTitle(activityTitles[navItemIndex]);
     }
 
     private void selectNavMenu() {

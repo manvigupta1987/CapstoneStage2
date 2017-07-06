@@ -33,9 +33,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
-import com.google.common.base.Preconditions;
+import com.google.common.collect.Range;
 
-public final class EditActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public final class EditActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     @BindView(R.id.toolbar1)
     Toolbar mToolBar;
@@ -55,7 +55,10 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
     private static boolean WRONG_HEIGHT_VALUE = false;
     private static boolean WRONG_WEIGHT_VALUE = false;
     private static boolean mFirstTimeInstallation = false;
-
+    Range<Double> feetRange = Range.closed(1.0, 8.0);
+    Range<Double> weightRange = Range.closed(1.0, 1000.0);
+    Range<Double> centimeterRange = Range.closed(30.0, 272.0);
+    Range<Double> kiloRange = Range.closed(1.0, 450.0);
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -80,7 +83,7 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
             } else {
                 mFirstTimeInstallation = false;
             }
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             Timber.e(e.getMessage(), "intent can't be null");
         }
 
@@ -97,48 +100,48 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
         fetchPreviousEditTextData();
     }
 
-    private void fetchPreviousEditTextData(){
+    private void fetchPreviousEditTextData() {
         float heightInInch = WalkMorePreferences.getUserHeight(this);
         Preconditions.checkArgument(heightInInch > 0, "height should be more than 0");
 
-            if (WalkMorePreferences.isFeetNInch(this)) {
-                int feet = (int)(heightInInch/ 12);
-                float inch = heightInInch % 12;
-                mEditText1.setText(String.valueOf(feet));
-                mEditText2.setText(String.valueOf(inch));
-                HeightSpinner.setSelection(0);
-            }else {
-                float cm = HeightUtils.convertInchToCentimeter(heightInInch);
-                mEditText1.setText(String.valueOf(cm));
-                HeightSpinner.setSelection(1);
-            }
+        if (WalkMorePreferences.isFeetNInch(this)) {
+            int feet = (int) (heightInInch / 12);
+            float inch = heightInInch % 12;
+            mEditText1.setText(String.valueOf(feet));
+            mEditText2.setText(String.valueOf(inch));
+            HeightSpinner.setSelection(0);
+        } else {
+            float cm = HeightUtils.convertInchToCentimeter(heightInInch);
+            mEditText1.setText(String.valueOf(cm));
+            HeightSpinner.setSelection(1);
+        }
         float weightInPound = WalkMorePreferences.getUserWeight(this);
         Preconditions.checkArgument(weightInPound > 0, "weight should be more than 0");
-            if (WalkMorePreferences.isPound(this)) {
-                mWeightEditText.setText(String.format(Locale.getDefault(),"%.1f", weightInPound));
-                WeightSpinner.setSelection(0);
-            }else {
-                float weight = WeightUtils.convertPoundsToKilo(weightInPound);
-                mWeightEditText.setText(String.format(Locale.getDefault(),"%.1f",weight));
-                WeightSpinner.setSelection(1);
-            }
+        if (WalkMorePreferences.isPound(this)) {
+            mWeightEditText.setText(String.format(Locale.getDefault(), "%.1f", weightInPound));
+            WeightSpinner.setSelection(0);
+        } else {
+            float weight = WeightUtils.convertPoundsToKilo(weightInPound);
+            mWeightEditText.setText(String.format(Locale.getDefault(), "%.1f", weight));
+            WeightSpinner.setSelection(1);
+        }
 
     }
 
-    private void addOnFocusChangeListenerOnWeight(){
+    private void addOnFocusChangeListenerOnWeight() {
 
         mWeightEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
-                if(!hasFocus){
+                if (!hasFocus) {
                     String message;
-                    if(WalkMorePreferences.isPound(EditActivity.this)) {
+                    if (WalkMorePreferences.isPound(EditActivity.this)) {
                         message = getString(R.string.weight_message);
                     } else {
                         message = getString(R.string.kg_message);
                     }
-                    if(mEditText1.getText().toString().equals("0")){
-                        mEditText1.setError(message);
+                    if (mWeightEditText.getText().toString().equals("0")) {
+                        mWeightEditText.setError(message);
                     }
                 }
 
@@ -146,29 +149,28 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
         });
     }
 
-
-    private void addOnFocusChangeListenerOnHeight(){
+    private void addOnFocusChangeListenerOnHeight() {
         mEditText1.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
-                if(!hasFocus){
+                if (!hasFocus) {
                     String message;
-                    if(WalkMorePreferences.isFeetNInch(EditActivity.this)) {
+                    if (WalkMorePreferences.isFeetNInch(EditActivity.this)) {
                         message = getString(R.string.feet_message);
-                    }else {
+                    } else {
                         message = getString(R.string.centimeter_message);
                     }
-                    if(mEditText1.getText().toString().equals("0")){
+                    if (mEditText1.getText().toString().equals("0")) {
                         mEditText1.setError(message);
                     }
-                }else {
+                } else {
                     getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
                 }
             }
         });
     }
 
-    private void setHeightAdapter(){
+    private void setHeightAdapter() {
         // Creating adapter for spinner
         SpinnerAdapter dataAdapter = new SpinnerAdapter(this, getResources().getStringArray(R.array.pref_height_options));
         // Drop down layout style - list view with radio button
@@ -177,78 +179,95 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
         HeightSpinner.setAdapter(dataAdapter);
     }
 
-    private void setWeightAdapter(){
+    private void setWeightAdapter() {
         SpinnerAdapter dataAdapter1 = new SpinnerAdapter(this, getResources().getStringArray(R.array.pref_weight_options));
         dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         WeightSpinner.setAdapter(dataAdapter1);
     }
 
-    private void setupToolBar(){
+    private void setupToolBar() {
         setSupportActionBar(mToolBar);
 
-            mToolBar.setTitle(getString(R.string.edit_profile));
+        mToolBar.setTitle(getString(R.string.edit_profile));
 
-            if(getSupportActionBar()!=null) {
-                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
-                mToolBar.setTitleTextColor(android.graphics.Color.WHITE);
-                getSupportActionBar().setHomeActionContentDescription(getString(R.string.a11y_previous_screen));
-            }
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
+            mToolBar.setTitleTextColor(android.graphics.Color.WHITE);
+            getSupportActionBar().setHomeActionContentDescription(getString(R.string.a11y_previous_screen));
+        }
 
     }
 
-    private void updateUserHeight(){
-        float height;
-        String message;
-        if(!heightInFeet.equals("") && !heightInFeet.equals("."))
-        {
+    private void updateUserHeight() {
+        float height = 0;
+        String message = "";
+        if (!heightInFeet.equals("") && !heightInFeet.equals(".")) {
             if (WalkMorePreferences.isFeetNInch(this)) {
                 //This check avoids the crash if user fills the height in inch as empty or .
-                if(heighInInch.equals("") && (mEditText2.isEnabled()) || (heighInInch.equals("."))){
+                if (heighInInch.equals("") && (mEditText2.isEnabled()) || (heighInInch.equals("."))) {
                     heighInInch = "0";
                 }
-                height = HeightUtils.convertFeetToInch(Float.parseFloat(heightInFeet), Float.parseFloat(heighInInch));
-                message = getString(R.string.feet_message);
-                mEditText2.setContentDescription(getString(R.string.a11_height_in_Inch,heighInInch));
+                if (feetRange.contains(Double.parseDouble(heightInFeet))) {
+                    height = HeightUtils.convertFeetToInch(Float.parseFloat(heightInFeet), Float.parseFloat(heighInInch));
+                    mEditText2.setContentDescription(getString(R.string.a11_height_in_Inch, heighInInch));
+                    WRONG_HEIGHT_VALUE = false;
+                } else {
+                    message = getString(R.string.feet_message);
+                    WRONG_HEIGHT_VALUE = true;
+                }
 
             } else {
-                height =  HeightUtils.convertCentimeterToInch(Float.parseFloat(heightInFeet));
-                message = getString(R.string.centimeter_message);
+                if (centimeterRange.contains(Double.parseDouble(heightInFeet))) {
+                    height = HeightUtils.convertCentimeterToInch(Float.parseFloat(heightInFeet));
+                    WRONG_HEIGHT_VALUE = false;
+                } else {
+                    message = getString(R.string.centimeter_message);
+                    WRONG_HEIGHT_VALUE = true;
+                }
             }
-            if(heightInFeet.equals("0")){
+            if (WRONG_HEIGHT_VALUE) {
                 mEditText1.setError(message);
-                WRONG_HEIGHT_VALUE = true;
             } else {
                 WalkMorePreferences.setUserHeight(this, height);
-                WRONG_HEIGHT_VALUE = false;
             }
-            mEditText1.setContentDescription(getString(R.string.a11_height_in_Feet,heightInFeet));
-        }
-        else {
+            mEditText1.setContentDescription(getString(R.string.a11_height_in_Feet, heightInFeet));
+        } else {
             mEditText1.setError("enter a valid value");
             WRONG_HEIGHT_VALUE = true;
         }
     }
 
     private void updateUserWeight() {
+        String message = "";
+        float weight = 0;
         String weightInPounds = mWeightEditText.getText().toString();
-        String message = getString(R.string.weight_message);
-        if(!weightInPounds.equals("") && !weightInPounds.equals(".")) {
-            float weight = (Float.parseFloat(weightInPounds));
-            mWeightEditText.setContentDescription(getString(R.string.a11_weight, Float.parseFloat(weightInPounds)));
-            if (!(WalkMorePreferences.isPound(this))) {
-                weight = WeightUtils.convertKiloToPounds(Float.parseFloat(weightInPounds));
-                message = getString(R.string.kg_message);
+        if (!weightInPounds.equals("") && !weightInPounds.equals(".")) {
+            if (WalkMorePreferences.isPound(this)) {
+                if (weightRange.contains(Double.parseDouble(weightInPounds))) {
+                    weight = (Float.parseFloat(weightInPounds));
+                    WRONG_WEIGHT_VALUE = false;
+                } else {
+                    message = getString(R.string.weight_message);
+                    WRONG_WEIGHT_VALUE = true;
+                }
+                mWeightEditText.setContentDescription(getString(R.string.a11_weight, weight));
+            } else {
+                if (kiloRange.contains(Double.parseDouble(weightInPounds))) {
+                    weight = WeightUtils.convertKiloToPounds(Float.parseFloat(weightInPounds));
+                    WRONG_WEIGHT_VALUE = false;
+                } else {
+                    message = getString(R.string.kg_message);
+                    WRONG_WEIGHT_VALUE = true;
+                }
                 mWeightEditText.setContentDescription(getString(R.string.a11_weight, weight));
             }
-            if(weightInPounds.equals("0")){
+            if (WRONG_WEIGHT_VALUE) {
                 mWeightEditText.setError(message);
-                WRONG_WEIGHT_VALUE = true;
-            }else {
+            } else {
                 WalkMorePreferences.setUserWeight(this, weight);
-                WRONG_WEIGHT_VALUE = false;
             }
-        }else {
+        } else {
             mWeightEditText.setError("enter a valid value");
             WRONG_WEIGHT_VALUE = true;
         }
@@ -257,19 +276,19 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String item = parent.getItemAtPosition(position).toString();
-        if(item.equals(getString(R.string.pref_units_label_centi))){
+        if (item.equals(getString(R.string.pref_units_label_centi))) {
             mEditText2.setVisibility(View.GONE);
             mEditText2.setEnabled(false);
             mEditText1.setWidth(getResources().getInteger(R.integer.centimeter_text));
-            WalkMorePreferences.setHeightUnit(this,getString(R.string.pref_units_Centimeter));
-        } else if(item.equals(getString(R.string.pref_units_label_feet))){
+            WalkMorePreferences.setHeightUnit(this, getString(R.string.pref_units_Centimeter));
+        } else if (item.equals(getString(R.string.pref_units_label_feet))) {
             mEditText1.setWidth(getResources().getInteger(R.integer.inch_text_width));
             mEditText2.setVisibility(View.VISIBLE);
             mEditText2.setEnabled(true);
-            WalkMorePreferences.setHeightUnit(this,getString(R.string.pref_units_feet));
-        } else if(item.equals(getString(R.string.pref_units_label_kg))){
-            WalkMorePreferences.setWeightUnit(this,getString(R.string.pref_units_kg));
-        }else if(item.equals(getString(R.string.pref_units_label_pound))) {
+            WalkMorePreferences.setHeightUnit(this, getString(R.string.pref_units_feet));
+        } else if (item.equals(getString(R.string.pref_units_label_kg))) {
+            WalkMorePreferences.setWeightUnit(this, getString(R.string.pref_units_kg));
+        } else if (item.equals(getString(R.string.pref_units_label_pound))) {
             WalkMorePreferences.setWeightUnit(this, getString(R.string.pref_units_pound));
         }
     }
@@ -288,20 +307,20 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        switch(id){
+        switch (id) {
             case R.id.action_save:
                 heightInFeet = mEditText1.getText().toString();
                 heighInInch = mEditText2.getText().toString();
                 updateUserHeight();
                 updateUserWeight();
-                if(!WRONG_WEIGHT_VALUE && !WRONG_HEIGHT_VALUE) {
+                if (!WRONG_WEIGHT_VALUE && !WRONG_HEIGHT_VALUE) {
                     finish();
                 }
                 return true;
             case android.R.id.home:
-                if(mFirstTimeInstallation) {
+                if (mFirstTimeInstallation) {
                     DialogueUtill.showHeightDialogue(this);
-                }else {
+                } else {
                     finish();
                 }
                 return true;
