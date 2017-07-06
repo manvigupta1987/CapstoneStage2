@@ -112,8 +112,6 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
                 mEditText1.setText(String.valueOf(cm));
                 HeightSpinner.setSelection(1);
             }
-
-
         float weightInPound = WalkMorePreferences.getUserWeight(this);
         Preconditions.checkArgument(weightInPound > 0, "weight should be more than 0");
             if (WalkMorePreferences.isPound(this)) {
@@ -226,6 +224,10 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
             }
             mEditText1.setContentDescription(getString(R.string.a11_height_in_Feet,heightInFeet));
         }
+        else {
+            mEditText1.setError("enter a valid value");
+            WRONG_HEIGHT_VALUE = true;
+        }
     }
 
     private void updateUserWeight() {
@@ -246,6 +248,9 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
                 WalkMorePreferences.setUserWeight(this, weight);
                 WRONG_WEIGHT_VALUE = false;
             }
+        }else {
+            mWeightEditText.setError("enter a valid value");
+            WRONG_WEIGHT_VALUE = true;
         }
     }
 
