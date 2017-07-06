@@ -33,6 +33,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.Range;
 
 public final class EditActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -202,7 +203,7 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
     private void updateUserHeight() {
         float height = 0;
         String message = "";
-        if (!heightInFeet.equals("") && !heightInFeet.equals(".")) {
+        if(!Strings.isNullOrEmpty(heightInFeet) && !heightInFeet.equals(".")) {
             if (WalkMorePreferences.isFeetNInch(this)) {
                 //This check avoids the crash if user fills the height in inch as empty or .
                 if (heighInInch.equals("") && (mEditText2.isEnabled()) || (heighInInch.equals("."))) {
@@ -242,7 +243,7 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
         String message = "";
         float weight = 0;
         String weightInPounds = mWeightEditText.getText().toString();
-        if (!weightInPounds.equals("") && !weightInPounds.equals(".")) {
+        if (!Strings.isNullOrEmpty(weightInPounds) && !weightInPounds.equals(".")) {
             if (WalkMorePreferences.isPound(this)) {
                 if (weightRange.contains(Double.parseDouble(weightInPounds))) {
                     weight = (Float.parseFloat(weightInPounds));

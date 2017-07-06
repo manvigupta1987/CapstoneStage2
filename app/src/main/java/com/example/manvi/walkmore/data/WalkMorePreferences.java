@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 
 import com.example.manvi.walkmore.R;
 import com.google.common.base.Optional;
+import com.google.common.base.Strings;
 
 /**
  * Created by manvi on 22/5/17.
@@ -243,20 +244,22 @@ public class WalkMorePreferences {
     }
 
     public static void storePersonformation(Context context, String personName) {
-        Optional<String> person = Optional.of(personName);
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putString(context.getString(R.string.person_name_key), person.get());
-        editor.apply();
+        if(!Strings.isNullOrEmpty(personName)) {
+            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putString(context.getString(R.string.person_name_key), personName);
+            editor.apply();
+        }
     }
 
 
     public static void storeEmailformation(Context context, String personEmail) {
-            Optional<String> email = Optional.of(personEmail);
-            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-            SharedPreferences.Editor editor = pref.edit();
-            editor.putString(context.getString(R.string.person_email_key), email.get());
-            editor.apply();
+            if(!Strings.isNullOrEmpty(personEmail)) {
+                SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putString(context.getString(R.string.person_email_key), personEmail);
+                editor.apply();
+            }
     }
 
     public static void storePhotoLinkformation(Context context, Uri personPhoto){

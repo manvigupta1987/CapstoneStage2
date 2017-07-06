@@ -68,6 +68,8 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
+import com.google.common.base.Throwables;
 import com.squareup.picasso.Picasso;
 import com.google.common.collect.Range;
 import java.util.Calendar;
@@ -206,7 +208,7 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
         String personName = bundle.getString(getString(R.string.person_name_key));
         String personEmail = bundle.getString(getString(R.string.person_email_key));
         String personPhoto =  bundle.getString(getString(R.string.person_photo_key));
-        if(personName!=null && !personName.isEmpty()) {
+        if(!Strings.isNullOrEmpty(personName)) {
             txtName.setText(personName);
             txtName.setContentDescription(getString(R.string.a11y_name, personName));
         } else{
@@ -214,14 +216,14 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
             txtName.setContentDescription(getString(R.string.a11y_name, ""));
         }
 
-        if(personEmail!=null && !personEmail.isEmpty()) {
+        if(!Strings.isNullOrEmpty(personEmail)) {
             txtEmail.setText(personEmail);
             txtEmail.setContentDescription(getString(R.string.a11y_emailId, personEmail));
         }else {
             txtEmail.setText("");
             txtEmail.setContentDescription(getString(R.string.a11y_emailId, ""));
         }
-        if(personPhoto!=null && !personPhoto.isEmpty()) {
+        if(!Strings.isNullOrEmpty(personPhoto)) {
             // Loading profile image
             Picasso.with(this).load(personPhoto)
                     .placeholder(R.drawable.profile_pic)

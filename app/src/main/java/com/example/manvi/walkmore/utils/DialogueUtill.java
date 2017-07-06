@@ -54,23 +54,6 @@ public class DialogueUtill {
     }
 
 
-    public static void showInvalidDialogue(final Context context, String message){
-        AlertDialog.Builder alert = new AlertDialog.Builder(context);
-        alert.setTitle(context.getString(R.string.invaild_value));
-        alert.setMessage(message);
-        alert.setPositiveButton(context.getString(R.string.Ok), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                //You will get as string input data in this variable.
-                // here we convert the input to a string and show in a toast.
-                dialog.cancel();
-            } // End of onClick(DialogInterface dialog, int whichButton)
-        }); //End of alert.setPositiveButton
-        AlertDialog alertDialog = alert.create();
-        if(alertDialog!=null) {
-            alertDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
-            alertDialog.show();
-        }
-    }
 
 
     public static void showNoInternetConnectivity(final Context context){

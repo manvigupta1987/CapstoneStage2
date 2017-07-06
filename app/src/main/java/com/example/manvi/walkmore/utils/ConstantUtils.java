@@ -7,6 +7,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v4.app.ActivityCompat;
 
+import com.google.common.base.Throwables;
+
 import timber.log.Timber;
 
 /**
@@ -43,7 +45,7 @@ public class ConstantUtils {
             }
             return false;
         } catch (Exception e) {
-            Timber.e("network Crash", e.getMessage());
+            Timber.e(e.getMessage(), "network crash");
             return false;
         }
     }

@@ -59,6 +59,7 @@ import com.google.android.gms.fitness.request.OnDataPointListener;
 import com.google.android.gms.fitness.request.SensorRequest;
 import com.google.android.gms.fitness.result.DailyTotalResult;
 import com.google.android.gms.fitness.result.DataSourcesResult;
+import com.google.common.base.Throwables;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -455,7 +456,7 @@ public class MainActivityFragment extends Fragment implements
                 authInProgress = true;
                 connectionResult.startResolutionForResult(getActivity(), REQUEST_OATH);
             }catch(IntentSender.SendIntentException e ) {
-
+                Timber.e(e.getMessage());
             }
         } else {
             Timber.e( "GoogleFit", "authInProgress" );

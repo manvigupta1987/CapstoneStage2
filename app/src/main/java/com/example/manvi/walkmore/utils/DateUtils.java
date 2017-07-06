@@ -3,6 +3,7 @@ package com.example.manvi.walkmore.utils;
 import android.content.Context;
 
 import com.example.manvi.walkmore.R;
+import com.google.common.base.Throwables;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,6 +11,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
+
+import timber.log.Timber;
 
 /**
  * Created by manvi on 22/5/17.
@@ -268,7 +271,7 @@ public class DateUtils {
             }
             return (newFormat.format(newDate.getTime()));
         } catch (ParseException e) {
-            e.printStackTrace();
+            Timber.e(e.getMessage(), "parsing error");
             return null;
         }
     }
