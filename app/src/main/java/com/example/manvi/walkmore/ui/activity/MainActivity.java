@@ -66,6 +66,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.common.base.Optional;
 import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
@@ -650,13 +651,18 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
                 txtEmail.setText(personEmail);
                 txtEmail.setContentDescription(getString(R.string.a11y_emailId, personEmail));
                 // Loading profile image
-                if(personPhoto!=null && !personPhoto.equals(Uri.EMPTY)) {
-                    Picasso.with(this).load(personPhoto)
-                            .placeholder(R.drawable.profile_pic)
-                            .error(R.drawable.profile_pic)
-                            .into(imgProfile);
-                }else {
-                    imgProfile.setImageResource(R.drawable.profile_pic);
+                try {
+                    Optional<Uri> photo = Optional.of(personPhoto);
+                    if (photo.isPresent()) {
+                        Picasso.with(this).load(personPhoto)
+                                .placeholder(R.drawable.profile_pic)
+                                .error(R.drawable.profile_pic)
+                                .into(imgProfile);
+                    } else {
+                        imgProfile.setImageResource(R.drawable.profile_pic);
+                    }
+                }catch (NullPointerException e){
+                    Timber.e(e.getMessage(), "Field should not be null");
                 }
             }
         } else {

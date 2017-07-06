@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 
-import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -26,11 +25,15 @@ import com.example.manvi.walkmore.utils.HeightUtils;
 import com.example.manvi.walkmore.utils.WeightUtils;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.google.common.base.Preconditions;
 
 import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
+
+import com.google.common.base.Preconditions;
 
 public final class EditActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
@@ -49,7 +52,8 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
 
     private static String heightInFeet = "";
     private static String heighInInch = "";
-    private static boolean WRONG_VALUE = false;
+    private static boolean WRONG_HEIGHT_VALUE = false;
+    private static boolean WRONG_WEIGHT_VALUE = false;
     private static boolean mFirstTimeInstallation = false;
 
 
@@ -67,15 +71,17 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
         Intent intent = getIntent();
-        if(intent!=null)
-        {
-            if(intent.getAction()!=null){
-                if(intent.getAction().equals(ConstantUtils.FIRST_TIME)){
+        try {
+            Preconditions.checkNotNull(intent, "intent can't be null");
+            if (intent.getAction() != null) {
+                if (intent.getAction().equals(ConstantUtils.FIRST_TIME)) {
                     mFirstTimeInstallation = true;
                 }
             } else {
                 mFirstTimeInstallation = false;
             }
+        }catch (NullPointerException e){
+            Timber.e(e.getMessage(), "intent can't be null");
         }
 
         HeightSpinner.setOnItemSelectedListener(this);
@@ -93,7 +99,8 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
 
     private void fetchPreviousEditTextData(){
         float heightInInch = WalkMorePreferences.getUserHeight(this);
-        if(heightInInch != 0) {
+        Preconditions.checkArgument(heightInInch > 0, "height should be more than 0");
+
             if (WalkMorePreferences.isFeetNInch(this)) {
                 int feet = (int)(heightInInch/ 12);
                 float inch = heightInInch % 12;
@@ -105,10 +112,10 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
                 mEditText1.setText(String.valueOf(cm));
                 HeightSpinner.setSelection(1);
             }
-        }
+
 
         float weightInPound = WalkMorePreferences.getUserWeight(this);
-        if(weightInPound!=0){
+        Preconditions.checkArgument(weightInPound > 0, "weight should be more than 0");
             if (WalkMorePreferences.isPound(this)) {
                 mWeightEditText.setText(String.format(Locale.getDefault(),"%.1f", weightInPound));
                 WeightSpinner.setSelection(0);
@@ -117,7 +124,7 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
                 mWeightEditText.setText(String.format(Locale.getDefault(),"%.1f",weight));
                 WeightSpinner.setSelection(1);
             }
-        }
+
     }
 
     private void addOnFocusChangeListenerOnWeight(){
@@ -133,7 +140,7 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
                         message = getString(R.string.kg_message);
                     }
                     if(mEditText1.getText().toString().equals("0")){
-                        DialogueUtill.showInvalidDialogue(EditActivity.this, message);
+                        mEditText1.setError(message);
                     }
                 }
 
@@ -154,7 +161,7 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
                         message = getString(R.string.centimeter_message);
                     }
                     if(mEditText1.getText().toString().equals("0")){
-                        DialogueUtill.showInvalidDialogue(EditActivity.this, message);
+                        mEditText1.setError(message);
                     }
                 }else {
                     getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
@@ -198,6 +205,7 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
         if(!heightInFeet.equals("") && !heightInFeet.equals("."))
         {
             if (WalkMorePreferences.isFeetNInch(this)) {
+                //This check avoids the crash if user fills the height in inch as empty or .
                 if(heighInInch.equals("") && (mEditText2.isEnabled()) || (heighInInch.equals("."))){
                     heighInInch = "0";
                 }
@@ -210,11 +218,11 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
                 message = getString(R.string.centimeter_message);
             }
             if(heightInFeet.equals("0")){
-                DialogueUtill.showInvalidDialogue(EditActivity.this, message);
-                WRONG_VALUE = true;
+                mEditText1.setError(message);
+                WRONG_HEIGHT_VALUE = true;
             } else {
                 WalkMorePreferences.setUserHeight(this, height);
-                WRONG_VALUE = false;
+                WRONG_HEIGHT_VALUE = false;
             }
             mEditText1.setContentDescription(getString(R.string.a11_height_in_Feet,heightInFeet));
         }
@@ -232,11 +240,11 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
                 mWeightEditText.setContentDescription(getString(R.string.a11_weight, weight));
             }
             if(weightInPounds.equals("0")){
-                DialogueUtill.showInvalidDialogue(EditActivity.this, message);
-                WRONG_VALUE = true;
+                mWeightEditText.setError(message);
+                WRONG_WEIGHT_VALUE = true;
             }else {
                 WalkMorePreferences.setUserWeight(this, weight);
-                WRONG_VALUE = false;
+                WRONG_WEIGHT_VALUE = false;
             }
         }
     }
@@ -281,7 +289,7 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
                 heighInInch = mEditText2.getText().toString();
                 updateUserHeight();
                 updateUserWeight();
-                if(!WRONG_VALUE) {
+                if(!WRONG_WEIGHT_VALUE && !WRONG_HEIGHT_VALUE) {
                     finish();
                 }
                 return true;

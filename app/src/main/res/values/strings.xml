@@ -105,10 +105,10 @@
     <string name="invaild_value">Invalid value</string>
     <string name="no_internet">Please check your settings.</string>
     <string name="no_Connectivity">No Internet Connection</string>
-    <string name="feet_message">Enter a value for feet between 1 and 8</string>
-    <string name="weight_message">Enter a value for weight between 1 and 1000</string>
-    <string name="centimeter_message">Enter a value for centimeter between 30 and 272</string>
-    <string name="kg_message">Enter a value for kilogram between 1 and 450</string>
+    <string name="feet_message">Enter value between 1 and 8</string>
+    <string name="weight_message">Enter value between 1 and 1000</string>
+    <string name="centimeter_message">Enter value between 30 and 272</string>
+    <string name="kg_message">Enter value between 1 and 450</string>
     <string name="enter_mandatory_info">Below information is mandatory for app to work </string>
 
 

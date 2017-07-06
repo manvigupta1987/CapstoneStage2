@@ -262,12 +262,10 @@ public class WalkMorePreferences {
     public static void storePhotoLinkformation(Context context, Uri personPhoto){
         Optional<Uri> photo =Optional.of(personPhoto);
         if(photo.isPresent()) {
-            //if (personPhoto != null && !personPhoto.equals(Uri.EMPTY)) {
                 SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
                 SharedPreferences.Editor editor = pref.edit();
                 editor.putString(context.getString(R.string.person_photo_key), photo.get().toString());
                 editor.apply();
-            //}
         }
     }
 
