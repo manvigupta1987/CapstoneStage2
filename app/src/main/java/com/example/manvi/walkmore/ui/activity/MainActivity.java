@@ -638,10 +638,13 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
                 String personName = acct.getDisplayName();
                 String personEmail = acct.getEmail();
                 Uri personPhoto = acct.getPhotoUrl();
-                WalkMorePreferences.storePersonformation(this, personName);
-                WalkMorePreferences.storeEmailformation(this, personEmail);
-                WalkMorePreferences.storePhotoLinkformation(this, personPhoto);
-
+                try {
+                    WalkMorePreferences.storePersonformation(this, personName);
+                    WalkMorePreferences.storeEmailformation(this, personEmail);
+                    WalkMorePreferences.storePhotoLinkformation(this, personPhoto);
+                }catch (NullPointerException e){
+                    Timber.e(e.getMessage(),"Field cant be null");
+                }
                 txtName.setText(personName);
                 txtName.setContentDescription(getString(R.string.a11y_name, personName));
                 txtEmail.setText(personEmail);

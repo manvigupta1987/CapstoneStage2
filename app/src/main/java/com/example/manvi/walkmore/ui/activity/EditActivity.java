@@ -295,6 +295,5 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
 }

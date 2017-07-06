@@ -7,8 +7,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 
 import com.example.manvi.walkmore.R;
-import com.google.common.base.Preconditions;
-
+import com.google.common.base.Optional;
 
 /**
  * Created by manvi on 22/5/17.
@@ -18,8 +17,6 @@ import com.google.common.base.Preconditions;
 public class WalkMorePreferences {
 
     public static final String PREF_DAILY_GOAL = "daily_goal";
-    private static final String PREF_TOTAL_STEPS_VALUE = "total_steps";
-    private static final String PREF_LAST_TOTAL_STEPS_VALUE = "last_total_steps";
 
     /**
      * Helper method to handle setting location details in Preferences (city name, latitude,
@@ -246,30 +243,31 @@ public class WalkMorePreferences {
     }
 
     public static void storePersonformation(Context context, String personName) {
-        if (!personName.equals("")) {
-            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-            SharedPreferences.Editor editor = pref.edit();
-            editor.putString(context.getString(R.string.person_name_key), personName);
-            editor.apply();
-        }
+        Optional<String> person = Optional.of(personName);
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(context.getString(R.string.person_name_key), person.get());
+        editor.apply();
     }
 
 
     public static void storeEmailformation(Context context, String personEmail) {
-        if (!personEmail.equals("")) {
+            Optional<String> email = Optional.of(personEmail);
             SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
             SharedPreferences.Editor editor = pref.edit();
-            editor.putString(context.getString(R.string.person_email_key), personEmail);
+            editor.putString(context.getString(R.string.person_email_key), email.get());
             editor.apply();
-        }
     }
 
     public static void storePhotoLinkformation(Context context, Uri personPhoto){
-        if(personPhoto!=null && !personPhoto.equals(Uri.EMPTY)){
-            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-            SharedPreferences.Editor editor = pref.edit();
-            editor.putString(context.getString(R.string.person_photo_key), personPhoto.toString());
-            editor.apply();
+        Optional<Uri> photo =Optional.of(personPhoto);
+        if(photo.isPresent()) {
+            //if (personPhoto != null && !personPhoto.equals(Uri.EMPTY)) {
+                SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putString(context.getString(R.string.person_photo_key), photo.get().toString());
+                editor.apply();
+            //}
         }
     }
 
