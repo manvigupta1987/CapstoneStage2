@@ -22,7 +22,7 @@ public class HeightUtils {
 
     public static float convertFeetToInch(float feet, float inch){
         Preconditions.checkArgument(feet>0.0, "feet should be in positive");
-        Preconditions.checkArgument(inch>0.0, "inch should be in positive");
+        Preconditions.checkArgument(inch>=0.0, "inch should be in positive");
         return (float) ((feet * feetToInchConversion) + inch);
     }
 

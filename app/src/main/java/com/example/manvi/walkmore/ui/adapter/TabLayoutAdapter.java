@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.example.manvi.walkmore.ui.fragment.GraphFragment;
+import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
 
 @SuppressWarnings("DefaultFileTemplate")
 public class TabLayoutAdapter extends FragmentPagerAdapter {
-    private final List<String> mFragmentTitleList = new ArrayList<>();
+    private final List<String> mFragmentTitleList = Lists.newArrayList();
 
     /**
      * Create a new {@link TabLayoutAdapter} object.

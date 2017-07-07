@@ -25,6 +25,7 @@ import com.example.manvi.walkmore.utils.HeightUtils;
 import com.example.manvi.walkmore.utils.WeightUtils;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.google.android.gms.flags.impl.FlagProviderImpl;
 import com.google.common.base.Preconditions;
 
 import java.util.Locale;
@@ -56,10 +57,10 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
     private static boolean WRONG_HEIGHT_VALUE = false;
     private static boolean WRONG_WEIGHT_VALUE = false;
     private static boolean mFirstTimeInstallation = false;
-    Range<Double> feetRange = Range.closed(1.0, 8.0);
-    Range<Double> weightRange = Range.closed(1.0, 1000.0);
-    Range<Double> centimeterRange = Range.closed(30.0, 272.0);
-    Range<Double> kiloRange = Range.closed(1.0, 450.0);
+    Range<Float> feetRange = Range.closed(1f, 8f);
+    Range<Float> weightRange = Range.closed(1f, 1000f);
+    Range<Float> centimeterRange = Range.closed(30f, 272f);
+    Range<Float> kiloRange = Range.closed(1f, 450f);
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -204,13 +205,14 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
         float height = 0;
         String message = "";
         if(!Strings.isNullOrEmpty(heightInFeet) && !heightInFeet.equals(".")) {
+            float heightFeet = Float.parseFloat(heightInFeet);
             if (WalkMorePreferences.isFeetNInch(this)) {
                 //This check avoids the crash if user fills the height in inch as empty or .
                 if (heighInInch.equals("") && (mEditText2.isEnabled()) || (heighInInch.equals("."))) {
                     heighInInch = "0";
                 }
-                if (feetRange.contains(Double.parseDouble(heightInFeet))) {
-                    height = HeightUtils.convertFeetToInch(Float.parseFloat(heightInFeet), Float.parseFloat(heighInInch));
+                if (feetRange.contains(heightFeet)) {
+                    height = HeightUtils.convertFeetToInch(heightFeet, Float.parseFloat(heighInInch));
                     mEditText2.setContentDescription(getString(R.string.a11_height_in_Inch, heighInInch));
                     WRONG_HEIGHT_VALUE = false;
                 } else {
@@ -219,8 +221,8 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
                 }
 
             } else {
-                if (centimeterRange.contains(Double.parseDouble(heightInFeet))) {
-                    height = HeightUtils.convertCentimeterToInch(Float.parseFloat(heightInFeet));
+                if (centimeterRange.contains(heightFeet)) {
+                    height = HeightUtils.convertCentimeterToInch(heightFeet);
                     WRONG_HEIGHT_VALUE = false;
                 } else {
                     message = getString(R.string.centimeter_message);
@@ -244,9 +246,10 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
         float weight = 0;
         String weightInPounds = mWeightEditText.getText().toString();
         if (!Strings.isNullOrEmpty(weightInPounds) && !weightInPounds.equals(".")) {
+            Float weightFloat = Float.parseFloat(weightInPounds);
             if (WalkMorePreferences.isPound(this)) {
-                if (weightRange.contains(Double.parseDouble(weightInPounds))) {
-                    weight = (Float.parseFloat(weightInPounds));
+                if (weightRange.contains(weightFloat)) {
+                    weight = weightFloat;
                     WRONG_WEIGHT_VALUE = false;
                 } else {
                     message = getString(R.string.weight_message);
@@ -254,8 +257,8 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
                 }
                 mWeightEditText.setContentDescription(getString(R.string.a11_weight, weight));
             } else {
-                if (kiloRange.contains(Double.parseDouble(weightInPounds))) {
-                    weight = WeightUtils.convertKiloToPounds(Float.parseFloat(weightInPounds));
+                if (kiloRange.contains(weightFloat)) {
+                    weight = WeightUtils.convertKiloToPounds(weightFloat);
                     WRONG_WEIGHT_VALUE = false;
                 } else {
                     message = getString(R.string.kg_message);
