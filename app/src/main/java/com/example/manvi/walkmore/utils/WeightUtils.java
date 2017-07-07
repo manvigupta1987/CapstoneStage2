@@ -1,6 +1,8 @@
 package com.example.manvi.walkmore.utils;
 
 
+import com.google.common.base.Preconditions;
+
 /**
  * Created by manvi on 23/5/17.
  */
@@ -23,6 +25,7 @@ public class WeightUtils {
     //https://www.beachbodyondemand.com/blog/how-many-steps-walk-per-mile
 
     public static int countCalories(float weighInPounds, float heightInInch, int stepsCount){
+        Preconditions.checkArgument(weighInPounds > 0.0, "Weight cant be negative");
         float calPerMile = (float)(calorieBurnPerMileConversion * weighInPounds);
         float avgStrideLength = (float)(heightInInch * avgStrideFactor)/inchPerFeet;
         int stepsPerMile = (int)(feetInMile/avgStrideLength);
@@ -31,6 +34,7 @@ public class WeightUtils {
     }
 
     public static double calculateDistanceFromSteps(int steps, float heightInInch, boolean isKilos){
+        Preconditions.checkArgument(heightInInch > 0.0, "heightInInch cant be negative");
         float avgStrideLength = (float)(heightInInch * avgStrideFactor)/inchPerFeet;
         int stepsPerMile = (int)(feetInMile/avgStrideLength);
         float distanceInMiles = (float)((steps * 1.0)/stepsPerMile);
@@ -42,10 +46,12 @@ public class WeightUtils {
     }
 
     public static int convertKiloToPounds(double weightInKg){
+        Preconditions.checkArgument(weightInKg > 0.0, "weightInKg cant be negative");
         return (int)((weightInKg * kgtoPound));
     }
 
     public static float convertPoundsToKilo(float weightInPound){
+        Preconditions.checkArgument(weightInPound > 0.0, "weightInKg cant be negative");
         return (float) (weightInPound /kgtoPound);
     }
 }

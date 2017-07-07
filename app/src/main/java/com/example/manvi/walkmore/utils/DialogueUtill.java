@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.example.manvi.walkmore.R;
 import com.example.manvi.walkmore.data.WalkMorePreferences;
+import com.google.common.base.Preconditions;
 
 /**
  * Created by manvi on 25/5/17.
@@ -19,6 +20,7 @@ import com.example.manvi.walkmore.data.WalkMorePreferences;
 public class DialogueUtill {
 
     public static void showDialogue(final Context context){
+        Preconditions.checkNotNull(context, "context is null");
         AlertDialog.Builder alert = new AlertDialog.Builder(context);
         alert.setTitle(context.getString(R.string.daily_goal));
         //alert.setMessage("Enter your goal here");
@@ -57,6 +59,7 @@ public class DialogueUtill {
 
 
     public static void showNoInternetConnectivity(final Context context){
+        Preconditions.checkNotNull(context, "context is null");
         AlertDialog.Builder alert = new AlertDialog.Builder(context);
         alert.setTitle(context.getString(R.string.no_Connectivity));
         alert.setMessage(context.getString(R.string.no_internet));
@@ -75,6 +78,7 @@ public class DialogueUtill {
     }
 
     public static void showHeightDialogue(final Context context){
+        Preconditions.checkNotNull(context, "context is null");
         AlertDialog.Builder alert = new AlertDialog.Builder(context);
         //alert.setTitle(context.getString(R.string.enter_mandatory_info));
         alert.setMessage(context.getString(R.string.enter_mandatory_info));

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.example.manvi.walkmore.utils.ConstantUtils;
+import com.google.common.base.Preconditions;
 
 /**
  * Implementation of App Widget functionality.

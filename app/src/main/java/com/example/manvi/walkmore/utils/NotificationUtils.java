@@ -6,6 +6,7 @@ import com.example.manvi.walkmore.R;
 import com.example.manvi.walkmore.ui.activity.MainActivity;
 import com.example.manvi.walkmore.ui.service.NotificationService;
 import com.example.manvi.walkmore.ui.service.ReminderTask;
+import com.google.common.base.Preconditions;
 
 
 /*
@@ -60,6 +61,7 @@ public class NotificationUtils {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public static void sendNotification(Context context) {
 
+        Preconditions.checkNotNull(context, "Context should not be null");
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
                 .setColor(ContextCompat.getColor(context, R.color.primary))
                 .setSmallIcon(R.drawable.ic_footsteps)
@@ -85,6 +87,7 @@ public class NotificationUtils {
 
 
     private static Action ignoreNotification(Context context) {
+        Preconditions.checkNotNull(context, "Context should not be null");
         Intent ignoreReminderIntent = new Intent(context, NotificationService.class);
         ignoreReminderIntent.setAction(ReminderTask.ACTION_DISMISS_NOTIFICATION);
         PendingIntent ignoreReminderPendingIntent = PendingIntent.getService(
@@ -98,6 +101,7 @@ public class NotificationUtils {
     }
 
     private static Action increaseDailyGoal(Context context) {
+        Preconditions.checkNotNull(context, "Context should not be null");
         Intent goalIncrementIntent = new Intent(context, NotificationService.class);
         goalIncrementIntent.setAction(ReminderTask.ACTION_INCREMENT_GOAL);
         PendingIntent incrementWaterPendingIntent = PendingIntent.getService(
@@ -112,6 +116,7 @@ public class NotificationUtils {
     }
 
     private static PendingIntent contentIntent(Context context) {
+        Preconditions.checkNotNull(context, "Context should not be null");
         Intent startActivityIntent = new Intent(context, MainActivity.class);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
 // Adds the back stack for the Intent (but not the Intent itself)
@@ -122,6 +127,7 @@ public class NotificationUtils {
     }
 
     private static Bitmap largeIcon(Context context) {
+        Preconditions.checkNotNull(context, "Context should not be null");
         Resources res = context.getResources();
         return BitmapFactory.decodeResource(res, R.drawable.ic_pedestrian_walking);
     }

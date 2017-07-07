@@ -3,6 +3,9 @@ package com.example.manvi.walkmore.data;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
+import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
+
 import timber.log.Timber;
 
 import static android.content.ContentResolver.*;
@@ -44,10 +47,15 @@ public class FitnessContract {
 
         public static Uri buildFitnessDataUriWithDate(String date) {
             Timber.d("==================================Date is ======================" + date);
-            return CONTENT_URI.buildUpon().appendPath(date).build();
+            if(!Strings.isNullOrEmpty(date)) {
+                return CONTENT_URI.buildUpon().appendPath(date).build();
+            }else {
+                return null;
+            }
         }
 
         public static Uri buildFitnessDataUriWithTabID(int tab_id) {
+            Preconditions.checkArgument(tab_id >=0, "tab id should not be negative");
             return CONTENT_URI.buildUpon().appendPath(Integer.toString(tab_id)).build();
         }
 
