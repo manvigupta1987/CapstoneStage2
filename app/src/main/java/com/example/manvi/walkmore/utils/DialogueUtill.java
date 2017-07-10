@@ -77,6 +77,25 @@ public class DialogueUtill {
         }
     }
 
+
+    public static void showNoPlayServices(final Context context){
+        Preconditions.checkNotNull(context, "context is null");
+        AlertDialog.Builder alert = new AlertDialog.Builder(context);
+        alert.setMessage(context.getString(R.string.no_play_service));
+        alert.setPositiveButton(context.getString(R.string.Ok), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //You will get as string input data in this variable.
+                // here we convert the input to a string and show in a toast.
+                dialog.cancel();
+            } // End of onClick(DialogInterface dialog, int whichButton)
+        }); //End of alert.setPositiveButton
+        AlertDialog alertDialog = alert.create();
+        if(alertDialog!=null) {
+            alertDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
+            alertDialog.show();
+        }
+    }
+
     public static void showHeightDialogue(final Context context){
         Preconditions.checkNotNull(context, "context is null");
         AlertDialog.Builder alert = new AlertDialog.Builder(context);

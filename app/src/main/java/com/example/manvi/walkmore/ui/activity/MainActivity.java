@@ -63,10 +63,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.security.ProviderInstaller;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
@@ -87,7 +90,7 @@ import timber.log.Timber;
 import static com.example.manvi.walkmore.R.id.drawer_layout;
 
 
-public final class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
+public final class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, ProviderInstaller.ProviderInstallListener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -128,6 +131,7 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
 
     private static boolean mPermissionGranted = false;
     private static int REQUEST_OATH = 1;
+    private Context mContext;
 
 
     @Override
@@ -136,26 +140,9 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        Context mContext = MainActivity.this;
+        mContext = MainActivity.this;
         setupToolBar();
-        mPermissionGranted = ConstantUtils.checkPermissions(mContext);
-        buildGoogleClient();
-        mHandler = new Handler();
 
-        // Navigation view header
-        View navHeader = navigationView.getHeaderView(0);
-        txtName = (TextView) navHeader.findViewById(R.id.name);
-        txtEmail = (TextView) navHeader.findViewById(R.id.email);
-        imgProfile = (CircleImageView) navHeader.findViewById(R.id.img_profile);
-        // load toolbar titles from string resources
-        activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
-        scheduleAlarms(this);
-
-        IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
-        filter.addAction(Intent.ACTION_SCREEN_OFF);
-        registerBroadcastReceiver();
-
-        showAlterDiaglogueBox(getIntent());
         if(savedInstanceState!=null){
             if(savedInstanceState.containsKey(TAG_HOME)){
                 saveInstance = true;
@@ -184,18 +171,16 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
         } else {
             saveInstance = false;
         }
-        //This code requires to load the navigation drawer and home fragment from onCreate() function
-        // when login is not required. When login is required, this functionaliy is handled by handleInSignIn function.
-        if(!WalkMorePreferences.loginRequired(this)) {
-            SetupEditUserProfileActivity();
-            setUpNavigationView();
-            if (!saveInstance) {
-                navItemIndex = 0;
-                CURRENT_TAG = TAG_HOME;
-            }
-            loadHomeFragment();
-            updateNavigationHeader();
-        }
+        mHandler = new Handler();
+
+        // Navigation view header
+        View navHeader = navigationView.getHeaderView(0);
+        txtName = (TextView) navHeader.findViewById(R.id.name);
+        txtEmail = (TextView) navHeader.findViewById(R.id.email);
+        imgProfile = (CircleImageView) navHeader.findViewById(R.id.img_profile);
+        // load toolbar titles from string resources
+        activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
+        ProviderInstaller.installIfNeededAsync(this, this);
     }
 
     private void showAlterDiaglogueBox(Intent intent){
@@ -318,7 +303,7 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         if (requestCode == REQUEST_PERMISSIONS_REQUEST_CODE) {
-            Preconditions.checkArgument(grantResults.length<=0, "Array is empty");
+            Preconditions.checkArgument(grantResults.length >0, "Array is empty");
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 mPermissionGranted = true;
                 SetupEditUserProfileActivity();
@@ -390,25 +375,6 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
     protected void onStart() {
         super.onStart();
         //This is required for slient sign In. This will be called only once until user un-install the app.
-        if(WalkMorePreferences.loginRequired(this)) {
-            OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
-            if (opr.isDone()) {
-                // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
-                // and the GoogleSignInResult will be available instantly.
-                GoogleSignInResult result = opr.get();
-                handleSignInResult(result);
-            } else {
-                // If the user has not previously signed in on this device or the sign-in has expired,
-                // this asynchronous branch will attempt to sign in the user silently.  Cross-device
-                // single sign-on will occur in this branch.
-                opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
-                    @Override
-                    public void onResult(@NonNull GoogleSignInResult googleSignInResult) {
-                        handleSignInResult(googleSignInResult);
-                    }
-                });
-            }
-        }
     }
 
 
@@ -813,4 +779,61 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
                 navItemIndex =0;
         }
     }
+
+    @Override
+    public void onProviderInstalled() {
+        mPermissionGranted = ConstantUtils.checkPermissions(mContext);
+        buildGoogleClient();
+        scheduleAlarms(this);
+
+        IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
+        filter.addAction(Intent.ACTION_SCREEN_OFF);
+        registerBroadcastReceiver();
+
+        showAlterDiaglogueBox(getIntent());
+
+        //This code requires to load the navigation drawer and home fragment from onCreate() function
+        // when login is not required. When login is required, this functionaliy is handled by handleInSignIn function.
+        if(WalkMorePreferences.loginRequired(this)) {
+            OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
+            if (opr.isDone()) {
+                // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
+                // and the GoogleSignInResult will be available instantly.
+                GoogleSignInResult result = opr.get();
+                handleSignInResult(result);
+            } else {
+                // If the user has not previously signed in on this device or the sign-in has expired,
+                // this asynchronous branch will attempt to sign in the user silently.  Cross-device
+                // single sign-on will occur in this branch.
+                opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
+                    @Override
+                    public void onResult(@NonNull GoogleSignInResult googleSignInResult) {
+                        handleSignInResult(googleSignInResult);
+                    }
+                });
+            }
+        } else {
+            SetupEditUserProfileActivity();
+            setUpNavigationView();
+            if (!saveInstance) {
+                navItemIndex = 0;
+                CURRENT_TAG = TAG_HOME;
+            }
+            loadHomeFragment();
+            updateNavigationHeader();
+        }
+    }
+
+    @Override
+    public void onProviderInstallFailed(int errorCode, Intent intent) {
+        if (GoogleApiAvailability.getInstance().isUserResolvableError(errorCode)) {
+// Retry to install update in case of recoverable error.
+            ProviderInstaller.installIfNeededAsync(this, this);
+        } else {
+// Please update your Google Play Services.
+            DialogueUtill.showNoPlayServices(mContext);
+            finish();
+        }
+    }
+
 }

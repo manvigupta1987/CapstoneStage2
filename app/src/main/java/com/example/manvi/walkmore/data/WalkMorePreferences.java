@@ -126,13 +126,13 @@ public class WalkMorePreferences {
 
     public static float getUserHeight(Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        return (sp.getFloat(context.getString(R.string.pref_height_value_key), 0));
+        return (sp.getFloat(context.getString(R.string.pref_height_value_key), 1));
     }
 
 
     public static float getUserWeight(Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        return (sp.getFloat(context.getString(R.string.pref_weight_value_key), 0));
+        return (sp.getFloat(context.getString(R.string.pref_weight_value_key), 1));
     }
 
 
