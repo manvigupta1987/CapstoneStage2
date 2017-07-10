@@ -56,6 +56,7 @@ import com.example.manvi.walkmore.ui.fragment.MainActivityFragment;
 import com.example.manvi.walkmore.ui.fragment.SettingsFragment;
 import com.example.manvi.walkmore.ui.service.ReminderTask;
 import com.example.manvi.walkmore.utils.ConstantUtils;
+import com.example.manvi.walkmore.utils.DateUtils;
 import com.example.manvi.walkmore.utils.DialogueUtill;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -72,7 +73,12 @@ import com.google.common.base.Strings;
 import com.google.common.base.Throwables;
 import com.squareup.picasso.Picasso;
 import com.google.common.collect.Range;
+
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -354,12 +360,12 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
 
     //This function schedules an alarm manager to trigger an event at midnight to reset the daily step counts.
     public static void scheduleAlarms(Context context) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
+        Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
         calendar.set(Calendar.SECOND, ConstantUtils.TIME_SEC);
         calendar.set(Calendar.MINUTE, ConstantUtils.TIME_MIN);
         calendar.set(Calendar.HOUR, ConstantUtils.TIME_HOUR);
         calendar.set(Calendar.AM_PM, Calendar.AM);
+
 
         AlarmManager mgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, ReminderAlarm.class);

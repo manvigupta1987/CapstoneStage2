@@ -25,7 +25,6 @@ import com.example.manvi.walkmore.utils.HeightUtils;
 import com.example.manvi.walkmore.utils.WeightUtils;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
-import com.google.android.gms.flags.impl.FlagProviderImpl;
 import com.google.common.base.Preconditions;
 
 import java.util.Locale;
@@ -57,10 +56,7 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
     private static boolean WRONG_HEIGHT_VALUE = false;
     private static boolean WRONG_WEIGHT_VALUE = false;
     private static boolean mFirstTimeInstallation = false;
-    Range<Float> feetRange = Range.closed(1f, 8f);
-    Range<Float> weightRange = Range.closed(1f, 1000f);
-    Range<Float> centimeterRange = Range.closed(30f, 272f);
-    Range<Float> kiloRange = Range.closed(1f, 450f);
+
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -204,6 +200,9 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
     private void updateUserHeight() {
         float height = 0;
         String message = "";
+        Range<Float> feetRange = Range.closed(1f, 8f);
+        Range<Float> centimeterRange = Range.closed(30f, 272f);
+
         if(!Strings.isNullOrEmpty(heightInFeet) && !heightInFeet.equals(".")) {
             float heightFeet = Float.parseFloat(heightInFeet);
             if (WalkMorePreferences.isFeetNInch(this)) {
@@ -244,6 +243,10 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
     private void updateUserWeight() {
         String message = "";
         float weight = 0;
+
+        Range<Float> weightRange = Range.closed(1f, 1000f);
+        Range<Float> kiloRange = Range.closed(1f, 450f);
+
         String weightInPounds = mWeightEditText.getText().toString();
         if (!Strings.isNullOrEmpty(weightInPounds) && !weightInPounds.equals(".")) {
             Float weightFloat = Float.parseFloat(weightInPounds);
