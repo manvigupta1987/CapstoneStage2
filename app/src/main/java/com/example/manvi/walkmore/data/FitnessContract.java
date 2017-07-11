@@ -6,7 +6,7 @@ import android.provider.BaseColumns;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 
-import timber.log.Timber;
+
 
 import static android.content.ContentResolver.*;
 
@@ -46,7 +46,6 @@ public class FitnessContract {
 
 
         public static Uri buildFitnessDataUriWithDate(String date) {
-            Timber.d("==================================Date is ======================" + date);
             if(!Strings.isNullOrEmpty(date)) {
                 return CONTENT_URI.buildUpon().appendPath(date).build();
             }else {

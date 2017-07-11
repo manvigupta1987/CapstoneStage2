@@ -29,7 +29,7 @@ android {
         // Defines the version number of your app.
         versionCode 1
         // Defines a user-friendly version name for your app.
-        versionName "1.0"
+        versionName "v1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

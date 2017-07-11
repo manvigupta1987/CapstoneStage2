@@ -43,9 +43,6 @@ import com.google.common.base.Preconditions;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import timber.log.Timber;
-
-
 /**
  * Created by manvi on 8/6/17.
  */
@@ -152,30 +149,17 @@ public class FitnessWidgetIntentService extends IntentService implements OnDataP
                 .setDataType(dataType)
                 .setSamplingRate(30, TimeUnit.SECONDS)
                 .build();
-        Fitness.SensorsApi.add(mApiClient, request, this)
-                .setResultCallback(new ResultCallback<Status>() {
-                    @Override
-                    public void onResult(@NonNull Status status) {
-                        if (status.isSuccess()) {
-                            Timber.e("GoogleFit", "SensorApi successfully added");
-                        }
-                    }
-                });
+        Fitness.SensorsApi.add(mApiClient, request, this);
     }
 
     @Override
     public void onConnectionSuspended(int i) {
-        Timber.d("=======================================onConnectionSuspended()=========================" + i);
-        if (i == GoogleApiClient.ConnectionCallbacks.CAUSE_NETWORK_LOST) {
-            Timber.i("Connection lost.  Cause: Network Lost.");
-        } else if (i == GoogleApiClient.ConnectionCallbacks.CAUSE_SERVICE_DISCONNECTED) {
-            Timber.i("Connection lost.  Reason: Service Disconnected");
-        }
+        WalkMorePreferences.updateLoginRequired(this, true);
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Timber.d(""+ connectionResult.getErrorCode());
+        WalkMorePreferences.updateLoginRequired(this, true);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)

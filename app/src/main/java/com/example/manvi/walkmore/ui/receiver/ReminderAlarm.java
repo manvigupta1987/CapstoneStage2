@@ -13,9 +13,6 @@ import com.example.manvi.walkmore.utils.DateUtils;
 import com.example.manvi.walkmore.utils.WeightUtils;
 
 import java.util.Date;
-
-import timber.log.Timber;
-
 import static com.example.manvi.walkmore.utils.WeightUtils.calculateDistanceFromSteps;
 
 /**
@@ -32,7 +29,6 @@ public final class ReminderAlarm extends BroadcastReceiver {
         WalkMorePreferences.setLastDayTotalSteps(context,stepsCountToday);
         updateWidgetsForStartGoogleService(context);
         WalkMorePreferences.setNotificationSent(context,false);
-        Timber.d("======================================Manvi--------onReceive()======================================"+ stepsCountToday);
     }
 
     private void insertData(final Context context, final int stepsCount) {

@@ -363,8 +363,6 @@ public class MainActivityFragment extends Fragment implements
         if (dataSet != null) {
             for (DataPoint dp : dataSet.getDataPoints()) {
                 for (Field field : dp.getDataType().getFields()) {
-                    Timber.i("\tField: " + field.getName() +
-                            " Value: " + dp.getValue(field));
                     if (dp.getValue(Field.FIELD_DISTANCE) != null) {
                         mTotalDailyDistance = DistanceUtils.covertMetersToKiloMeters(dp.getValue(Field.FIELD_DISTANCE).asFloat(), isKilos);
                         if (isKilos) {
@@ -418,25 +416,12 @@ public class MainActivityFragment extends Fragment implements
                 .setSamplingRate(30, TimeUnit.SECONDS)
                 .build();
 
-        Fitness.SensorsApi.add(mApiClient, request, mListenerSteps)
-                .setResultCallback(new ResultCallback<Status>() {
-                    @Override
-                    public void onResult(@NonNull Status status) {
-                        if (status.isSuccess()) {
-                            Timber.i("GoogleFit", "SensorApi successfully added");
-                        }
-                    }
-                });
+        Fitness.SensorsApi.add(mApiClient, request, mListenerSteps);
     }
 
     @Override
     public void onConnectionSuspended(int i) {
         WalkMorePreferences.updateLoginRequired(getActivity(), true);
-        if (i == GoogleApiClient.ConnectionCallbacks.CAUSE_NETWORK_LOST) {
-            Timber.i("Connection lost.  Cause: Network Lost.");
-        } else if (i == GoogleApiClient.ConnectionCallbacks.CAUSE_SERVICE_DISCONNECTED) {
-            Timber.i("Connection lost.  Reason: Service Disconnected");
-        }
     }
 
     @Override
@@ -517,22 +502,7 @@ public class MainActivityFragment extends Fragment implements
      * a special success code
      */
     private void subscribe() {
-        Fitness.RecordingApi.subscribe(mApiClient, DataType.TYPE_DISTANCE_CUMULATIVE)
-                .setResultCallback(new ResultCallback<Status>() {
-                    @Override
-                    public void onResult(@NonNull Status status) {
-                        if (status.isSuccess()) {
-                            if (status.getStatusCode()
-                                    == FitnessStatusCodes.SUCCESS_ALREADY_SUBSCRIBED) {
-                                Timber.i("Existing subscription for activity detected.");
-                            } else {
-                                Timber.i("Successfully subscribed!");
-                            }
-                        } else {
-                            Timber.i("There was a problem subscribing.");
-                        }
-                    }
-                });
+        Fitness.RecordingApi.subscribe(mApiClient, DataType.TYPE_DISTANCE_CUMULATIVE);
     }
 
 
