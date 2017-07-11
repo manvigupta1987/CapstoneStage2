@@ -26,19 +26,17 @@ android {
         applicationId "com.example.manvi.walkmore"
         minSdkVersion 18
         targetSdkVersion 25
+        // Defines the version number of your app.
         versionCode 1
+        // Defines a user-friendly version name for your app.
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true // Enables code shrinking for the release build type.
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
-        }
-        shrunk {
-            minifyEnabled true
-            shrinkResources true
         }
     }
     compileOptions {
