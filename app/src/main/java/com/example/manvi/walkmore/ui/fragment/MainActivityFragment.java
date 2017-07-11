@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -59,7 +58,6 @@ import com.google.android.gms.fitness.request.OnDataPointListener;
 import com.google.android.gms.fitness.request.SensorRequest;
 import com.google.android.gms.fitness.result.DailyTotalResult;
 import com.google.android.gms.fitness.result.DataSourcesResult;
-import com.google.common.base.Throwables;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -325,11 +323,7 @@ public class MainActivityFragment extends Fragment implements
             }
         } else if (key.equals(getString(R.string.pref_distance_key))) {
             String distanceValue = sharedPreferences.getString(key, getString(R.string.pref_units_km));
-            if (distanceValue.equals(getString(R.string.pref_units_km))) {
-                isKilos = true;
-            } else {
-                isKilos = false;
-            }
+            isKilos = distanceValue.equals(getString(R.string.pref_units_km));
         } else if (key.equals(getString(R.string.pref_weight_value_key)) ||
                 key.equals(getString(R.string.pref_height_value_key))) {
             mHeightInInch = sharedPreferences.getFloat(key, 0);

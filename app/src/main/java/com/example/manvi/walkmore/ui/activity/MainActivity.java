@@ -56,7 +56,6 @@ import com.example.manvi.walkmore.ui.fragment.MainActivityFragment;
 import com.example.manvi.walkmore.ui.fragment.SettingsFragment;
 import com.example.manvi.walkmore.ui.service.ReminderTask;
 import com.example.manvi.walkmore.utils.ConstantUtils;
-import com.example.manvi.walkmore.utils.DateUtils;
 import com.example.manvi.walkmore.utils.DialogueUtill;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -64,7 +63,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
@@ -73,14 +71,9 @@ import com.google.android.gms.security.ProviderInstaller;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
-import com.google.common.base.Throwables;
 import com.squareup.picasso.Picasso;
-import com.google.common.collect.Range;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 import butterknife.BindView;
@@ -130,7 +123,6 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
     private boolean saveInstance = false;
 
     private static boolean mPermissionGranted = false;
-    private static int REQUEST_OATH = 1;
     private Context mContext;
 
 
@@ -355,8 +347,16 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
         AlarmManager mgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, ReminderAlarm.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        mgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                AlarmManager.INTERVAL_DAY, pendingIntent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            //This is required for the android doze feature where device goes to doze mode to reduce the battery consumption.
+            //Device goes into doze mode only if it is unplugged from power outlet, not in motion and not in the use by the user.
+            //In doze period, device doesn't do sync operation, wifi scans, alarm manager operations, network updates etc. These will be
+            // scheduled in the small maintaince window supported by doze feature.
+            mgr.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        }else {
+            mgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                    AlarmManager.INTERVAL_DAY, pendingIntent);
+        }
 
         ComponentName receiver = new ComponentName(context, BootReceiver.class);
         PackageManager pm = context.getPackageManager();
@@ -370,13 +370,6 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        //This is required for slient sign In. This will be called only once until user un-install the app.
-    }
-
 
     /***
      * Returns respected fragment that user
@@ -571,6 +564,7 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        int REQUEST_OATH = 1;
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK) {
                 GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
@@ -586,7 +580,7 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
                 CURRENT_TAG = TAG_HOME;
             }
             loadHomeFragment();
-        } else if(requestCode == REQUEST_OATH ) {
+        } else if(requestCode == REQUEST_OATH) {
             if(mMainFragment!=null){
                 mMainFragment.onActivityResult(requestCode, resultCode, data);
             }
@@ -626,18 +620,18 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
                 txtEmail.setContentDescription(getString(R.string.a11y_emailId, personEmail));
                 // Loading profile image
                 try {
-                    Optional<Uri> photo = Optional.of(personPhoto);
-                    if (photo.isPresent()) {
-                        Picasso.with(this).load(personPhoto)
-                                .placeholder(R.drawable.profile_pic)
-                                .error(R.drawable.profile_pic)
-                                .into(imgProfile);
-                    } else {
-                        imgProfile.setImageResource(R.drawable.profile_pic);
+                        Optional<Uri> photo = Optional.of(personPhoto);
+                        if (photo.isPresent()) {
+                            Picasso.with(this).load(personPhoto)
+                                    .placeholder(R.drawable.profile_pic)
+                                    .error(R.drawable.profile_pic)
+                                    .into(imgProfile);
+                        } else {
+                            imgProfile.setImageResource(R.drawable.profile_pic);
+                        }
+                    }catch(NullPointerException e){
+                        Timber.e(e.getMessage(), "Field should not be null");
                     }
-                }catch (NullPointerException e){
-                    Timber.e(e.getMessage(), "Field should not be null");
-                }
             }
         } else {
             if(ConstantUtils.isConnectedToInternet(this)) {

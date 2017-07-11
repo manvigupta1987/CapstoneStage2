@@ -102,7 +102,6 @@
     <string name="enter_height">Enter Height</string>
     <string name="enter_weight">Enter Weight</string>
 
-    <string name="invaild_value">Invalid value</string>
     <string name="no_internet">Please check your settings.</string>
     <string name="no_Connectivity">No Internet Connection</string>
     <string name="feet_message">Enter value between 1 and 8</string>
@@ -192,15 +191,11 @@
     <string name="wait">Wait.....</string>
     <string name="steps_key" translatable="false">steps</string>
 
-    <string name="ActivityPREF1_key" translatable="false">ActivityPREF1</string>
-    <string name="firstTimeValue_key" translatable="false">firstTimeValue</string>
     <string name="firstTimeLogin_key" translatable="false">firstTimeLogin</string>
 
     <string name="daily_goal_key" translatable="false">daily_goal</string>
     <string name="total_steps_key" translatable="false">total_steps</string>
     <string name="last_total_steps_key" translatable="false">last_total_steps</string>
-    <string name="ActivityPREF_key" translatable="false">ActivityPREF</string>
-    <string name="firstRun_key" translatable="false">firstRun</string>
 
     <string name="jan">Jan</string>
     <string name="feb">Feb</string>

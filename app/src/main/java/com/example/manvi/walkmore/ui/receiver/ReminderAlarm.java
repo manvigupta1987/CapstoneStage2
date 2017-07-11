@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.example.manvi.walkmore.R;
-import com.example.manvi.walkmore.WalkMore;
 import com.example.manvi.walkmore.data.FitnessContract;
 import com.example.manvi.walkmore.data.WalkMorePreferences;
 import com.example.manvi.walkmore.utils.ConstantUtils;

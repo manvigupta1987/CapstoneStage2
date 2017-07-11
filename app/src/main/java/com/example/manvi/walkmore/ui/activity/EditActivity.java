@@ -94,8 +94,9 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
 
         addOnFocusChangeListenerOnHeight();
         addOnFocusChangeListenerOnWeight();
-
-        fetchPreviousEditTextData();
+        if(!mFirstTimeInstallation) {
+            fetchPreviousEditTextData();
+        }
     }
 
     private void fetchPreviousEditTextData() {

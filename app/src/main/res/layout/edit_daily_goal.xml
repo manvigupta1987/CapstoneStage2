@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -11,12 +12,15 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:layout_marginLeft="@dimen/margin_left"
+        android:layout_marginStart="@dimen/margin_left"
         android:layout_marginRight="@dimen/margin_right"
+        android:layout_marginEnd="@dimen/margin_right"
         android:layout_marginTop="@dimen/margin_top"
         android:hint="@string/Edit_goal_hint"
         android:digits="0123456789"
         android:ems="15"
         android:typeface="sans"
         android:inputType="number"
-        android:maxLines="1"/>
+        android:maxLines="1"
+        tools:ignore="RtlHardcoded" />
 </LinearLayout>

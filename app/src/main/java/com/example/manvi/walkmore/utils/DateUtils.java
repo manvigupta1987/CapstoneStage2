@@ -3,7 +3,6 @@ package com.example.manvi.walkmore.utils;
 import android.content.Context;
 
 import com.example.manvi.walkmore.R;
-import com.google.common.base.Throwables;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

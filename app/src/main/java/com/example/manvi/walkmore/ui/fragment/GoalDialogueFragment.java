@@ -2,15 +2,12 @@ package com.example.manvi.walkmore.ui.fragment;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.graphics.Point;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
-import android.view.Display;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -19,9 +16,6 @@ import android.widget.Toast;
 
 import com.example.manvi.walkmore.R;
 import com.example.manvi.walkmore.data.WalkMorePreferences;
-import com.google.common.base.Preconditions;
-
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -30,6 +24,7 @@ public class GoalDialogueFragment extends DialogFragment {
     @BindView(R.id.dialog_goal)
     EditText mDailyGoals;
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
@@ -59,32 +54,35 @@ public class GoalDialogueFragment extends DialogFragment {
                         WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
             }
         }
-        alertDialog.setOnShowListener(new DialogInterface.OnShowListener(){
+        if(alertDialog!=null) {
+            alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
 
-            @Override
-            public void onShow(DialogInterface dialogInterface) {
-                Button position = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                Button negative = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
-                position.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        String srt = mDailyGoals.getEditableText().toString();
-                        if (srt != "" && srt.length() != 0) {
-                            int dailyGoal = Integer.parseInt(srt);
-                            if (dailyGoal > 0) {
-                                //Preconditions.checkArgument(dailyGoal > 0, "Illegal Argument passed: value %s.", dailyGoal);
-                                WalkMorePreferences.editDailyGoal(getActivity(), dailyGoal);
-                                Toast.makeText(getActivity(), getString(R.string.goal_updated), Toast.LENGTH_SHORT).show();
-                                dismissAllowingStateLoss();
-                            } else {
+                @Override
+                public void onShow(DialogInterface dialogInterface) {
+                    Button position = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    position.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String srt = mDailyGoals.getEditableText().toString();
+                            if (!srt.equals("") && srt.length() != 0) {
+                                int dailyGoal = Integer.parseInt(srt);
+                                if (dailyGoal > 0) {
+                                    //Preconditions.checkArgument(dailyGoal > 0, "Illegal Argument passed: value %s.", dailyGoal);
+                                    WalkMorePreferences.editDailyGoal(getActivity(), dailyGoal);
+                                    Toast.makeText(getActivity(), getString(R.string.goal_updated), Toast.LENGTH_SHORT).show();
+                                    dismissAllowingStateLoss();
+                                } else {
+                                    mDailyGoals.setError(getString(R.string.enter_goal_error));
+                                }
+                            }else {
                                 mDailyGoals.setError(getString(R.string.enter_goal_error));
                             }
-                        }
 
-                    }
-                });
-            }
-        });
+                        }
+                    });
+                }
+            });
+        }
         return alertDialog;
     }
 }

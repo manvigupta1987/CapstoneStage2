@@ -28,8 +28,6 @@ import com.example.manvi.walkmore.ui.activity.AnalyzeDataActivity;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
-import timber.log.Timber;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,7 +37,6 @@ import timber.log.Timber;
  * create an instance of this fragment.
  */
 public class HistoryFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
-    private RecyclerView mRecyclerView;
     private HistoryAdapter mHistoryAdapter;
     private final static int HISTORY_LOADER = 2000;
 
@@ -92,7 +89,7 @@ public class HistoryFragment extends Fragment implements LoaderManager.LoaderCal
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_history, container, false);
-        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.fitness_recyclerview);
+        RecyclerView mRecyclerView = (RecyclerView) rootView.findViewById(R.id.fitness_recyclerview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         //Empty View

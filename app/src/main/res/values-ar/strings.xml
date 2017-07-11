@@ -50,7 +50,6 @@
     <string name="enter_height">أدخل الارتفاع</string>
     <string name="enter_weight">أدخل الوزن</string>
 
-    <string name="invaild_value">قيمة غير صالحة</string>
     <string name="feet_message">أدخل قيمة للقدم بين 1 و 8</string>
     <string name="weight_message">أدخل قيمة للوزن بين 1 و 1000</string>
     <string name="centimeter_message">أدخل قيمة تتراوح بين 30 و 272 سنتيمتر</string>
@@ -138,4 +137,5 @@
     <string name="yes">نعم حقا</string>
     <string name="Edit_goal_hint">أدخل الخطوات اليومية المستهدفة.</string>
     <string name="enter_goal_error">يرجى إدخال الهدف أكبر من 0</string>
+    <string name="no_play_service">لم يتم العثور على خدمات غوغل بلاي. يرجى تحديث خدمات غوغل بلاي</string>
 </resources>
