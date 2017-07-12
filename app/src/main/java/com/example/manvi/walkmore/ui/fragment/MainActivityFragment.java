@@ -389,12 +389,18 @@ public class MainActivityFragment extends Fragment implements
                             public void run() {
                                 if (field.getName().equals(getString(R.string.steps_key))) {
                                     int steps = value.asInt();
-                                    WalkMorePreferences.updateLastDaySteps(getActivity(), steps);
-                                    WalkMorePreferences.setTotalSteps(getActivity(), steps);
-                                    int lastDaySteps = WalkMorePreferences.getLastDayTotalSteps(getActivity());
-                                    mDailyStepsCount = (steps - lastDaySteps);
-                                    if (mDailyStepsCount < 0) {
-                                        mDailyStepsCount = steps;
+                                    if(steps == 0){
+                                        int lastDaySteps = WalkMorePreferences.getLastDayTotalSteps(getActivity());
+                                        int todaySteps = WalkMorePreferences.getTotalSteps(getActivity());
+                                        mDailyStepsCount = todaySteps - lastDaySteps;
+                                    }else {
+                                        WalkMorePreferences.updateLastDaySteps(getActivity(), steps);
+                                        WalkMorePreferences.setTotalSteps(getActivity(), steps);
+                                        int lastDaySteps = WalkMorePreferences.getLastDayTotalSteps(getActivity());
+                                        mDailyStepsCount = (steps - lastDaySteps);
+                                        if (mDailyStepsCount < 0) {
+                                            mDailyStepsCount = steps;
+                                        }
                                     }
                                     UpdateUI();
                                     insertData();

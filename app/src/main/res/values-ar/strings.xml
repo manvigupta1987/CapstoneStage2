@@ -54,7 +54,7 @@
     <string name="weight_message">أدخل قيمة للوزن بين 1 و 1000</string>
     <string name="centimeter_message">أدخل قيمة تتراوح بين 30 و 272 سنتيمتر</string>
     <string name="kg_message">أدخل قيمة للكيلوغرام بين 1 و 450</string>
-    <string name="enter_mandatory_info">المعلومات أدناه إلزامية للتطبيق للعمل </string>
+    <string name="enter_mandatory_info">يرجى ملء المعلومات أدناه كما هو إلزامي لل والكمور.</string>
 
     <string name="send_to">إرسال نص إلى ..</string>
     <string name="graph_description">خطوات على مدار الفترة</string>

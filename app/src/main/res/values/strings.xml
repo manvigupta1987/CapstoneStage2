@@ -108,7 +108,7 @@
     <string name="weight_message">Enter value between 1 and 1000</string>
     <string name="centimeter_message">Enter value between 30 and 272</string>
     <string name="kg_message">Enter value between 1 and 450</string>
-    <string name="enter_mandatory_info">Below information is mandatory for app to work </string>
+    <string name="enter_mandatory_info">Please fill the below information as it is mandatory for the Walkmore.</string>
 
 
     <string name="ad_unitId" translatable="false">ca-app-pub-4862241919033566/2684536934</string>
