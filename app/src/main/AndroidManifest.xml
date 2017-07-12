@@ -18,7 +18,7 @@
         android:resizeable="true"
         android:xlargeScreens="false"
         android:anyDensity="true"
-        android:largestWidthLimitDp="500"/>
+        android:largestWidthLimitDp="590"/>
 
     <application
         android:name=".WalkMore"
