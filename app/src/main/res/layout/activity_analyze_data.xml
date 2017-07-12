@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.manvi.walkmore.ui.activity.AnalyzeDataActivity">
+    tools:context="com.fitness.manvi.walkmore.ui.activity.AnalyzeDataActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar1"

@@ -47,7 +47,7 @@
     <string name="string_year">Year</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="content_authority" translatable="false">com.example.manvi.walkmore</string>
+    <string name="content_authority" translatable="false">com.fitness.manvi.walkmore</string>
     <string name="yAxis_string">Steps</string>
     <string name="setting_title">Units</string>
     <string name="setting_history">History Data</string>

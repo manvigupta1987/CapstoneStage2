@@ -23,7 +23,7 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
     defaultConfig {
-        applicationId "com.example.manvi.walkmore"
+        applicationId "com.fitness.manvi.walkmore"
         minSdkVersion 18
         targetSdkVersion 25
         // Defines the version number of your app.

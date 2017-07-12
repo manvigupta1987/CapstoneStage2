@@ -13,7 +13,7 @@
         android:layout_marginEnd="@dimen/eight_dp"
         tools:context="com.udacity.stockhawk.ui.DetailActivity">
 
-        <com.example.manvi.walkmore.other.VerticalTextView
+        <com.fitness.manvi.walkmore.other.VerticalTextView
             android:id="@+id/tvYMax"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
