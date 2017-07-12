@@ -154,8 +154,6 @@ public class MainActivityFragment extends Fragment implements
         if (mAdView != null) {
             MobileAds.initialize(getActivity(), "ca-app-pub-4862241919033566~1207803733");
             AdRequest adRequest = new AdRequest.Builder()
-                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                    .addTestDevice("F25625F1EFDE643493C690D0DF425130")
                     .build();
             mAdView.loadAd(adRequest);
         }
