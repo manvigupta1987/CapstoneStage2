@@ -1,34 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:orientation="vertical"
-    android:layout_weight=".55"
-    tools:context="com.example.manvi.walkmore.ui.activity.MainActivity">
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context="com.example.manvi.walkmore.ui.activity.MainActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
 
     <TextView
         android:layout_marginTop="@dimen/four_dp"
-        android:layout_marginBottom="@dimen/four_dp"
         android:id="@+id/today_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_gravity="center_vertical|center_horizontal|clip_horizontal"
         android:textStyle="bold"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         tools:text="Date" />
 
     <FrameLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal|clip_horizontal">
 
         <com.example.manvi.walkmore.other.SwagPoints
             xmlns:swagpoints="http://schemas.android.com/apk/res-auto"
             android:id="@+id/seekbar_point"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/circle_height"
-            android:layout_gravity="center"
+            android:layout_gravity="center_vertical|center_horizontal|clip_horizontal"
             android:elevation="@dimen/eight_dp"
             android:paddingLeft="@dimen/margin_left"
             android:paddingStart="@dimen/margin_left"
@@ -49,28 +48,22 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal|clip_horizontal"
             android:layout_marginTop="@dimen/line_margin_top"
-            android:text="@string/remainingSteps1" />
+            tools:text="@string/remainingSteps1" />
 
         <ImageView
             android:id="@+id/imageFlag"
             android:layout_width="@dimen/target_image_height"
             android:layout_height="@dimen/target_image_height"
-            android:layout_gravity="center"
             android:contentDescription="@string/a11y_target_acheived"
             android:src="@drawable/ic_flag"
             android:visibility="invisible" />
     </FrameLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:orientation="vertical">
-
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:adjustViewBounds="true"
+            android:layout_gravity="center_vertical|center_horizontal|clip_horizontal"
             android:contentDescription="@string/total"
             android:scaleType="centerCrop"
             android:src="@drawable/round_shape" />
@@ -79,9 +72,8 @@
             android:id="@+id/total_Steps"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="center_vertical|center_horizontal|clip_horizontal"
             android:textStyle="bold"
             android:text="@string/totalSteps1"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
     </LinearLayout>
-</LinearLayout>
