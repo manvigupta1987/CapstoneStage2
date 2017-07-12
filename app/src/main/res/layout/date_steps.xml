@@ -2,80 +2,86 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="0dp"
+    android:orientation="vertical"
+    android:layout_weight=".55"
     tools:context="com.example.manvi.walkmore.ui.activity.MainActivity">
 
+    <TextView
+        android:layout_marginTop="@dimen/four_dp"
+        android:layout_marginBottom="@dimen/four_dp"
+        android:id="@+id/today_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        tools:text="Date" />
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.example.manvi.walkmore.other.SwagPoints
+            xmlns:swagpoints="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/seekbar_point"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/circle_height"
+            android:layout_gravity="center"
+            android:elevation="@dimen/eight_dp"
+            android:paddingLeft="@dimen/margin_left"
+            android:paddingStart="@dimen/margin_left"
+            android:paddingTop="@dimen/line_margin_top"
+            swagpoints:arcColor="@color/color_arc"
+            swagpoints:arcWidth="@dimen/arc_progress_width"
+            swagpoints:min="0"
+            swagpoints:progressColor="@color/color_progress"
+            swagpoints:progressWidth="@dimen/arc_progress_width"
+            swagpoints:step="1"
+            swagpoints:textColor="@color/progressColor"
+            swagpoints:textSize="50sp"
+            tools:ignore="RtlHardcoded,RtlSymmetry,UnusedAttribute" />
+
         <TextView
+            android:id="@+id/remainingSteps_Count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Date"
-            android:id="@+id/today_date"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center_vertical|center_horizontal|clip_horizontal"
+            android:layout_marginTop="@dimen/line_margin_top"
+            android:text="@string/remainingSteps1" />
 
-        <FrameLayout
+        <ImageView
+            android:id="@+id/imageFlag"
+            android:layout_width="@dimen/target_image_height"
+            android:layout_height="@dimen/target_image_height"
+            android:layout_gravity="center"
+            android:contentDescription="@string/a11y_target_acheived"
+            android:src="@drawable/ic_flag"
+            android:visibility="invisible" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <com.example.manvi.walkmore.other.SwagPoints
-                xmlns:swagpoints="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/seekbar_point"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/circle_height"
-                android:layout_gravity="center"
-                android:paddingTop="@dimen/line_margin_top"
-                android:paddingLeft="@dimen/margin_left"
-                android:paddingStart="@dimen/margin_left"
-                android:elevation="@dimen/eight_dp"
-                swagpoints:min="0"
-                swagpoints:step="1"
-                swagpoints:progressColor="@color/color_progress"
-                swagpoints:progressWidth="@dimen/arc_progress_width"
-                swagpoints:arcColor="@color/color_arc"
-                swagpoints:arcWidth="@dimen/arc_progress_width"
-                swagpoints:textSize="50sp"
-                swagpoints:textColor="@color/progressColor"
-                tools:ignore="RtlHardcoded,RtlSymmetry,UnusedAttribute" />
+            android:layout_height="30dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/total"
+            android:scaleType="centerCrop"
+            android:src="@drawable/round_shape" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/remainingSteps_Count"
-                android:layout_marginTop="@dimen/line_margin_top"
-                android:text="@string/remainingSteps1"
-                android:layout_gravity="center_vertical|center_horizontal|clip_horizontal"/>
-
-            <ImageView
-                android:id="@+id/imageFlag"
-                android:layout_width="@dimen/target_image_height"
-                android:layout_height="@dimen/target_image_height"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_flag"
-                android:contentDescription="@string/a11y_target_acheived"
-                android:visibility="invisible"/>
-        </FrameLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center_horizontal">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
-                android:src="@drawable/round_shape"
-                android:contentDescription="@string/total"/>
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/total_Steps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textStyle="bold"
             android:text="@string/totalSteps1"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:layout_gravity="center"/>
-        </LinearLayout>
-
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
     </LinearLayout>
+</LinearLayout>
