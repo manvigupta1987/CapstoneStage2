@@ -133,7 +133,6 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
         ButterKnife.bind(this);
 
         mContext = MainActivity.this;
-        setupToolBar();
 
         if(savedInstanceState!=null){
             if(savedInstanceState.containsKey(TAG_HOME)){
@@ -232,12 +231,14 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
     }
 
     private void setupToolBar(){
-        setSupportActionBar(toolbar);
-        if(getSupportActionBar()!=null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowTitleEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
+
+            setSupportActionBar(toolbar);
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setDisplayShowTitleEnabled(true);
+                getSupportActionBar().setDisplayShowHomeEnabled(true);
+            }
+
     }
 
 
@@ -476,6 +477,7 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
     }
 
     private void setUpNavigationView() {
+        setupToolBar();
         //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
