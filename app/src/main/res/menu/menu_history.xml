@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
         <item
             android:id="@+id/action_analyze"
-            android:icon="@drawable/ic_graphs"
+            android:icon="@drawable/ic_bar_chart"
             android:title="@string/action_history"
             app:showAsAction="always" />
 </menu>

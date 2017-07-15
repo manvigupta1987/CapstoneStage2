@@ -101,7 +101,6 @@ public class NotificationUtils {
     }
 
     private static Action increaseDailyGoal(Context context) {
-        Preconditions.checkNotNull(context, "Context should not be null");
         Intent goalIncrementIntent = new Intent(context, NotificationService.class);
         goalIncrementIntent.setAction(ReminderTask.ACTION_INCREMENT_GOAL);
         PendingIntent incrementWaterPendingIntent = PendingIntent.getService(
@@ -116,7 +115,6 @@ public class NotificationUtils {
     }
 
     private static PendingIntent contentIntent(Context context) {
-        Preconditions.checkNotNull(context, "Context should not be null");
         Intent startActivityIntent = new Intent(context, MainActivity.class);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
 // Adds the back stack for the Intent (but not the Intent itself)
@@ -127,7 +125,6 @@ public class NotificationUtils {
     }
 
     private static Bitmap largeIcon(Context context) {
-        Preconditions.checkNotNull(context, "Context should not be null");
         Resources res = context.getResources();
         return BitmapFactory.decodeResource(res, R.drawable.ic_pedestrian_walking);
     }

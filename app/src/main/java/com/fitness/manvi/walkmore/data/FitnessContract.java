@@ -54,7 +54,6 @@ public class FitnessContract {
         }
 
         public static Uri buildFitnessDataUriWithTabID(int tab_id) {
-            Preconditions.checkArgument(tab_id >=0, "tab id should not be negative");
             return CONTENT_URI.buildUpon().appendPath(Integer.toString(tab_id)).build();
         }
 

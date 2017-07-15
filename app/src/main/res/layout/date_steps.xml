@@ -55,6 +55,7 @@
             android:layout_width="@dimen/target_image_height"
             android:layout_height="@dimen/target_image_height"
             android:contentDescription="@string/a11y_target_acheived"
+            android:layout_gravity="center_vertical|center_horizontal|clip_horizontal"
             android:src="@drawable/ic_flag"
             android:visibility="invisible" />
     </FrameLayout>

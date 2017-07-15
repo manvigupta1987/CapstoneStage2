@@ -1,8 +1,5 @@
 package com.fitness.manvi.walkmore.utils;
 
-
-import com.google.common.base.Preconditions;
-
 /**
  * Created by manvi on 23/5/17.
  */
@@ -25,33 +22,37 @@ public class WeightUtils {
     //https://www.beachbodyondemand.com/blog/how-many-steps-walk-per-mile
 
     public static int countCalories(float weighInPounds, float heightInInch, int stepsCount){
-        Preconditions.checkArgument(weighInPounds > 0.0, "Weight cant be negative");
-        float calPerMile = (float)(calorieBurnPerMileConversion * weighInPounds);
-        float avgStrideLength = (float)(heightInInch * avgStrideFactor)/inchPerFeet;
-        int stepsPerMile = (int)(feetInMile/avgStrideLength);
-        double conversionFac = calPerMile/stepsPerMile;
-        return (int) (stepsCount * conversionFac);
+        if(weighInPounds > 0) {
+            float calPerMile = (float) (calorieBurnPerMileConversion * weighInPounds);
+            float avgStrideLength = (float) (heightInInch * avgStrideFactor) / inchPerFeet;
+            int stepsPerMile = (int) (feetInMile / avgStrideLength);
+            double conversionFac = calPerMile / stepsPerMile;
+            return (int) (stepsCount * conversionFac);
+        }else {
+            return 0;
+        }
     }
 
     public static double calculateDistanceFromSteps(int steps, float heightInInch, boolean isKilos){
-        Preconditions.checkArgument(heightInInch > 0.0, "heightInInch cant be negative");
-        float avgStrideLength = (float)(heightInInch * avgStrideFactor)/inchPerFeet;
-        int stepsPerMile = (int)(feetInMile/avgStrideLength);
-        float distanceInMiles = (float)((steps * 1.0)/stepsPerMile);
-        if(!isKilos){
-            return distanceInMiles;
+        if(heightInInch > 0) {
+            float avgStrideLength = (float) (heightInInch * avgStrideFactor) / inchPerFeet;
+            int stepsPerMile = (int) (feetInMile / avgStrideLength);
+            float distanceInMiles = (float) ((steps * 1.0) / stepsPerMile);
+            if (!isKilos) {
+                return distanceInMiles;
+            } else {
+                return DistanceUtils.convertMilesToKiloMeter(distanceInMiles);
+            }
         }else {
-            return DistanceUtils.convertMilesToKiloMeter(distanceInMiles);
+            return 0;
         }
     }
 
     public static int convertKiloToPounds(double weightInKg){
-        Preconditions.checkArgument(weightInKg > 0.0, "weightInKg cant be negative");
         return (int)((weightInKg * kgtoPound));
     }
 
     public static float convertPoundsToKilo(float weightInPound){
-        Preconditions.checkArgument(weightInPound > 0.0, "weightInKg cant be negative");
         return (float) (weightInPound /kgtoPound);
     }
 }

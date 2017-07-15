@@ -175,8 +175,7 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
     }
 
     private void showAlterDiaglogueBox(Intent intent){
-        Preconditions.checkNotNull(intent, "intent cant be null");
-        if (intent.getAction() != null)
+        if (intent!=null && intent.getAction() != null)
         {
             if(intent.getAction().equals(ReminderTask.ACTION_INCREMENT_GOAL)){
                 DialogueUtill.showDialogue(MainActivity.this);
@@ -296,42 +295,44 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         if (requestCode == REQUEST_PERMISSIONS_REQUEST_CODE) {
-            Preconditions.checkArgument(grantResults.length >0, "Array is empty");
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                mPermissionGranted = true;
-                SetupEditUserProfileActivity();
-            } else {
-                // Permission denied.
+            if(grantResults.length > 0) {
 
-                // In this Activity we've chosen to notify the user that they
-                // have rejected a core permission for the app since it makes the Activity useless.
-                // We're communicating this message in a Snackbar since this is a sample app, but
-                // core permissions would typically be best requested during a welcome-screen flow.
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mPermissionGranted = true;
+                    SetupEditUserProfileActivity();
+                } else {
+                    // Permission denied.
 
-                // Additionally, it is important to remember that a permission might have been
-                // rejected without asking the user for permission (device policy or "Never ask
-                // again" prompts). Therefore, a user interface affordance is typically implemented
-                // when permissions are denied. Otherwise, your app could appear unresponsive to
-                // touches or interactions which have required permissions.
-                Snackbar.make(
-                        mMainActivity,
-                        R.string.permission_denied_explanation,
-                        Snackbar.LENGTH_INDEFINITE)
-                        .setAction(R.string.settings, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                // Build intent that displays the App settings screen.
-                                Intent intent = new Intent();
-                                intent.setAction(
-                                        Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                Uri uri = Uri.fromParts("package",
-                                        BuildConfig.APPLICATION_ID, null);
-                                intent.setData(uri);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                startActivity(intent);
-                            }
-                        })
-                        .show();
+                    // In this Activity we've chosen to notify the user that they
+                    // have rejected a core permission for the app since it makes the Activity useless.
+                    // We're communicating this message in a Snackbar since this is a sample app, but
+                    // core permissions would typically be best requested during a welcome-screen flow.
+
+                    // Additionally, it is important to remember that a permission might have been
+                    // rejected without asking the user for permission (device policy or "Never ask
+                    // again" prompts). Therefore, a user interface affordance is typically implemented
+                    // when permissions are denied. Otherwise, your app could appear unresponsive to
+                    // touches or interactions which have required permissions.
+                    Snackbar.make(
+                            mMainActivity,
+                            R.string.permission_denied_explanation,
+                            Snackbar.LENGTH_INDEFINITE)
+                            .setAction(R.string.settings, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    // Build intent that displays the App settings screen.
+                                    Intent intent = new Intent();
+                                    intent.setAction(
+                                            Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                    Uri uri = Uri.fromParts("package",
+                                            BuildConfig.APPLICATION_ID, null);
+                                    intent.setData(uri);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(intent);
+                                }
+                            })
+                            .show();
+                }
             }
         }
     }
@@ -407,14 +408,14 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
                     findPrevIndex();
                     setToolbarTitle();
                 } else {
-                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    Preconditions.checkNotNull(fragment, "fragment can't be null");
-                        Slide slide = new Slide(Gravity.RIGHT | Gravity.END);
-                        slide.setDuration(500);
-                        fragment.setEnterTransition(slide);
-                        fragmentTransaction.replace(R.id.frame, fragment, CURRENT_TAG);
-
-                    fragmentTransaction.commitAllowingStateLoss();
+                        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        if(fragmentTransaction!=null) {
+                            Slide slide = new Slide(Gravity.RIGHT | Gravity.END);
+                            slide.setDuration(500);
+                            fragment.setEnterTransition(slide);
+                            fragmentTransaction.replace(R.id.frame, fragment, CURRENT_TAG);
+                            fragmentTransaction.commitAllowingStateLoss();
+                        }
                 }
             }
         };
@@ -468,8 +469,9 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
     }
 
     private void setToolbarTitle() {
-        Preconditions.checkNotNull(getSupportActionBar(),"Cant be null");
-        getSupportActionBar().setTitle(activityTitles[navItemIndex]);
+       if(getSupportActionBar()!=null) {
+           getSupportActionBar().setTitle(activityTitles[navItemIndex]);
+       }
     }
 
     private void selectNavMenu() {

@@ -37,7 +37,6 @@ import com.google.android.gms.fitness.request.DataSourcesRequest;
 import com.google.android.gms.fitness.request.OnDataPointListener;
 import com.google.android.gms.fitness.request.SensorRequest;
 import com.google.android.gms.fitness.result.DataSourcesResult;
-import com.google.common.base.Preconditions;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -69,11 +68,10 @@ public class FitnessWidgetIntentService extends IntentService implements OnDataP
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-        Preconditions.checkNotNull(intent, "intent should not be null");
         appWidgetManager = AppWidgetManager.getInstance(this);
         mAppWidgetIDs = appWidgetManager.getAppWidgetIds(new ComponentName(this, FitnessAppWidget.class));
         mGoal = WalkMorePreferences.getDailyGoal(this);
-        if (intent.getAction() != null) {
+        if (intent!= null && intent.getAction() != null) {
             if (intent.getAction().equals(ConstantUtils.ACTION_DATA_UPDATED)) {
                 Date date = new Date();
                 String dateString = DateUtils.simpleDateFormat.format(date);

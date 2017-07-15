@@ -172,12 +172,12 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/image_height"
+            android:layout_height="45dp"
             android:layout_gravity="center"
             android:adjustViewBounds="true"
             android:contentDescription="@string/a11y_content_bmi"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_body_mass_index" />
+            android:src="@mipmap/ic_bmi" />
 
         <LinearLayout
             android:layout_width="wrap_content"

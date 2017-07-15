@@ -101,7 +101,6 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
 
     private void fetchPreviousEditTextData() {
         float heightInInch = WalkMorePreferences.getUserHeight(this);
-        Preconditions.checkArgument(heightInInch > 0, "height should be more than 0");
 
         if (WalkMorePreferences.isFeetNInch(this)) {
             int feet = (int) (heightInInch / 12);
@@ -115,7 +114,6 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
             HeightSpinner.setSelection(1);
         }
         float weightInPound = WalkMorePreferences.getUserWeight(this);
-        Preconditions.checkArgument(weightInPound > 0, "weight should be more than 0");
         if (WalkMorePreferences.isPound(this)) {
             mWeightEditText.setText(String.format(Locale.getDefault(), "%.1f", weightInPound));
             WeightSpinner.setSelection(0);

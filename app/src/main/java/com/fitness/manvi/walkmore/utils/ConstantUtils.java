@@ -7,8 +7,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v4.app.ActivityCompat;
 
-import com.google.common.base.Preconditions;
-
 /**
  * Created by manvi on 2/6/17.
  */
@@ -36,7 +34,6 @@ public class ConstantUtils {
 
     public static boolean isConnectedToInternet(Context context) {
         //noinspection ResultOfMethodCallIgnored
-        Preconditions.checkNotNull(context, "context is null");
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         return networkInfo != null && networkInfo.isConnected();
