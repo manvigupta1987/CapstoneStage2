@@ -4,8 +4,10 @@ import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 
 import com.fitness.manvi.walkmore.R;
+import com.fitness.manvi.walkmore.WalkMore;
 import com.fitness.manvi.walkmore.data.FitnessContract;
 import com.fitness.manvi.walkmore.data.WalkMorePreferences;
 import com.fitness.manvi.walkmore.utils.ConstantUtils;
@@ -24,17 +26,20 @@ public final class ReminderAlarm extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        int stepsCountToday = WalkMorePreferences.getTotalSteps(context);
-        insertData(context, stepsCountToday);
-        WalkMorePreferences.setLastDayTotalSteps(context,stepsCountToday);
+        int totalStepsCount = WalkMorePreferences.getTotalSteps(context);
+        int stepsCountToday = (totalStepsCount - WalkMorePreferences.getLastDayTotalSteps(context));
+        WalkMorePreferences.setLastDayTotalSteps(context,totalStepsCount);
         updateWidgetsForStartGoogleService(context);
         WalkMorePreferences.setNotificationSent(context,false);
+        insertData(context, stepsCountToday);
     }
 
     private void insertData(final Context context, final int stepsCount) {
-        new Thread(new Runnable() {
+        final PendingResult pendingResult = goAsync();
+        AsyncTask<Void, Void, Void> asyncTask = new AsyncTask<Void, Void, Void>() {
+
             @Override
-            public void run() {
+            protected Void doInBackground(Void... voids) {
                 Date date = new Date();
                 String dateString = DateUtils.simpleDateFormat.format(date);
 
@@ -50,8 +55,11 @@ public final class ReminderAlarm extends BroadcastReceiver {
                 cv.put(FitnessContract.fitnessDataEntry.COLUMN_DATE, dateString);
                 cv.put(FitnessContract.fitnessDataEntry.COLUMN_DURATION, timeInMin);
                 context.getContentResolver().insert(FitnessContract.fitnessDataEntry.CONTENT_URI, cv);
+                pendingResult.finish();
+                return null;
             }
-        }).start();
+        };
+        asyncTask.execute();
     }
 
     private void updateWidgetsForStartGoogleService(Context context) {

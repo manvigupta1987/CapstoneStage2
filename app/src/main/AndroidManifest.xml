@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.fitness.manvi.walkmore"
-    android:versionCode="1"
-    android:versionName="v1.0">
+    android:versionCode="2"
+    android:versionName="v1.1">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -53,8 +53,8 @@
 
         <receiver
             android:name="com.fitness.manvi.walkmore.ui.receiver.BootReceiver"
-            android:enabled="false"
-            android:exported="false">
+            android:enabled="true"
+            android:exported="true"> <!--The receiver does not receive broadcasts from sources outside of the app if this is set to false.-->
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
@@ -63,7 +63,8 @@
 
         <activity
             android:name="com.fitness.manvi.walkmore.ui.activity.EditActivity"
-            android:parentActivityName="com.fitness.manvi.walkmore.ui.activity.MainActivity">
+            android:parentActivityName="com.fitness.manvi.walkmore.ui.activity.MainActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.fitness.manvi.walkmore.ui.activity.MainActivity" />

@@ -32,7 +32,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.menu.MenuBuilder;
-
 import android.support.v7.view.menu.MenuPopupHelper;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
@@ -45,15 +44,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fitness.manvi.walkmore.data.WalkMorePreferences;
-import com.fitness.manvi.walkmore.ui.fragment.GoalDialogueFragment;
-import com.fitness.manvi.walkmore.ui.receiver.BootReceiver;
 import com.fitness.manvi.walkmore.BuildConfig;
 import com.fitness.manvi.walkmore.R;
-import com.fitness.manvi.walkmore.ui.receiver.ReminderAlarm;
+import com.fitness.manvi.walkmore.data.WalkMorePreferences;
+import com.fitness.manvi.walkmore.ui.fragment.GoalDialogueFragment;
 import com.fitness.manvi.walkmore.ui.fragment.HistoryFragment;
 import com.fitness.manvi.walkmore.ui.fragment.MainActivityFragment;
 import com.fitness.manvi.walkmore.ui.fragment.SettingsFragment;
+import com.fitness.manvi.walkmore.ui.receiver.BootReceiver;
+import com.fitness.manvi.walkmore.ui.receiver.ReminderAlarm;
 import com.fitness.manvi.walkmore.ui.service.ReminderTask;
 import com.fitness.manvi.walkmore.utils.ConstantUtils;
 import com.fitness.manvi.walkmore.utils.DialogueUtill;
@@ -69,7 +68,6 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.security.ProviderInstaller;
 import com.google.common.base.Optional;
-import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.squareup.picasso.Picasso;
 
@@ -80,6 +78,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 import timber.log.Timber;
+
 import static com.fitness.manvi.walkmore.R.id.drawer_layout;
 
 
@@ -96,19 +95,19 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
 
     private CircleImageView imgProfile;
     private TextView txtName, txtEmail;
-    private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 34;
-    private static final int RC_SIGN_IN = 2;
+    private  final int REQUEST_PERMISSIONS_REQUEST_CODE = 34;
+    private  final int RC_SIGN_IN = 2;
     // index to identify current nav menu item
-    private static int navItemIndex = 0;
+    private int navItemIndex = 0;
 
     // tags used to attach the fragments
-    private static final String TAG_HOME = "home";
-    private static final String TAG_DATA = "history-data";
-    private static final String TAG_GOAL = "goal-fragment";
-    private static final String TAG_SETTINGS = "settings";
-    private static String CURRENT_TAG = TAG_HOME;
-    private static String PREV_TAG = CURRENT_TAG;
-    private static int INSTRUCTIONS_CODE = 1;
+    private final String TAG_HOME = "home";
+    private final String TAG_DATA = "history-data";
+    private final String TAG_GOAL = "goal-fragment";
+    private final String TAG_SETTINGS = "settings";
+    private String CURRENT_TAG = TAG_HOME;
+    private String PREV_TAG = CURRENT_TAG;
+    private int INSTRUCTIONS_CODE = 1;
 
     // toolbar titles respected to selected nav menu item
     private String[] activityTitles;
@@ -177,7 +176,7 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
     private void showAlterDiaglogueBox(Intent intent){
         if (intent!=null && intent.getAction() != null)
         {
-            if(intent.getAction().equals(ReminderTask.ACTION_INCREMENT_GOAL)){
+            if(ReminderTask.ACTION_INCREMENT_GOAL.equals(intent.getAction())){
                 DialogueUtill.showDialogue(MainActivity.this);
                 drawer.closeDrawers();
             }
@@ -740,7 +739,7 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
             @Override
             public void onReceive(Context context, Intent intent) {
                 String strAction = intent.getAction();
-                if (strAction.equals(Intent.ACTION_SCREEN_ON)) {
+                if (Intent.ACTION_SCREEN_ON.equals(strAction)) {
                     Intent intent1 = new Intent(ConstantUtils.ACTION_DATA_STARTED).setPackage(context.getPackageName());
                     context.sendBroadcast(intent1);
                 }
@@ -751,7 +750,7 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+
         //Save the fragment's instance
         Fragment currentFragment = getSupportFragmentManager().findFragmentByTag(CURRENT_TAG);
 
@@ -760,6 +759,8 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
             String currentFragmentTag = currentFragment.getTag();
             getSupportFragmentManager().putFragment(outState, currentFragmentTag, currentFragment);
         }
+
+        super.onSaveInstanceState(outState);
     }
 
     private void findPrevIndex(){
@@ -783,6 +784,9 @@ public final class MainActivity extends AppCompatActivity implements GoogleApiCl
         mPermissionGranted = ConstantUtils.checkPermissions(mContext);
         buildGoogleClient();
         scheduleAlarms(this);
+
+        //TODO: This is Context registered receiver which is vaild only for the validity of the activtity context or when app is
+        //running. Need to change it to the Manifest Declared broadcast.
 
         IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
         filter.addAction(Intent.ACTION_SCREEN_OFF);

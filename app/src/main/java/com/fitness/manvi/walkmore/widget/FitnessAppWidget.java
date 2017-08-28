@@ -19,6 +19,7 @@ public final class FitnessAppWidget extends AppWidgetProvider {
         context.startService(serviceIntent);
     }
 
+
     @Override
     public void onEnabled(Context context) {
         // Enter relevant functionality for when the first widget is created

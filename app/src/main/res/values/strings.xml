@@ -9,7 +9,6 @@
     <string name="list_item_distance">Walked <xliff:g example="1000" id="steps">%1$s</xliff:g> km</string>
     <string name="list_item_steps">Steps: <xliff:g example="1000" id="steps">%1$d</xliff:g>;</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="today">Today</string>
     <string name="total">Total Steps</string>
 
@@ -46,7 +45,6 @@
     <string name="string_months">Month</string>
     <string name="string_year">Year</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="content_authority" translatable="false">com.fitness.manvi.walkmore</string>
     <string name="yAxis_string">Steps</string>
     <string name="setting_title">Units</string>

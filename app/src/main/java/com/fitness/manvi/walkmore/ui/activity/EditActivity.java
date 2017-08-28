@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Switch;
 
 import com.fitness.manvi.walkmore.R;
 import com.fitness.manvi.walkmore.WalkMore;
@@ -36,7 +37,7 @@ import timber.log.Timber;
 import com.google.common.base.Strings;
 import com.google.common.collect.Range;
 
-public final class EditActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public final class EditActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar1)
     Toolbar mToolBar;
@@ -47,14 +48,14 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
     @BindView(R.id.weight_edit_Text)
     EditText mWeightEditText;
     @BindView(R.id.HeightSpinner)
-    Spinner HeightSpinner;
+    Spinner mHeightSpinner;
     @BindView(R.id.WeightSpinner)
-    Spinner WeightSpinner;
+    Spinner mWeightSpinner;
 
-    private static String heightInFeet = "";
-    private static String heighInInch = "";
-    private static boolean WRONG_HEIGHT_VALUE = false;
-    private static boolean WRONG_WEIGHT_VALUE = false;
+    private String heightInFeet = "";
+    private String heighInInch = "";
+    private boolean WRONG_HEIGHT_VALUE = false;
+    private boolean WRONG_WEIGHT_VALUE = false;
     private static boolean mFirstTimeInstallation = false;
 
 
@@ -75,7 +76,7 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
         try {
             Preconditions.checkNotNull(intent, "intent can't be null");
             if (intent.getAction() != null) {
-                if (intent.getAction().equals(ConstantUtils.FIRST_TIME)) {
+                if (ConstantUtils.FIRST_TIME.equals(intent.getAction())) {
                     mFirstTimeInstallation = true;
                 }
             } else {
@@ -84,9 +85,6 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
         } catch (NullPointerException e) {
             Timber.e(e.getMessage(), "intent can't be null");
         }
-
-        HeightSpinner.setOnItemSelectedListener(this);
-        WeightSpinner.setOnItemSelectedListener(this);
 
         setHeightAdapter();
         setWeightAdapter();
@@ -107,20 +105,20 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
             float inch = heightInInch % 12;
             mEditText1.setText(String.valueOf(feet));
             mEditText2.setText(String.valueOf(inch));
-            HeightSpinner.setSelection(0);
+            mHeightSpinner.setSelection(0);
         } else {
             float cm = HeightUtils.convertInchToCentimeter(heightInInch);
             mEditText1.setText(String.valueOf(cm));
-            HeightSpinner.setSelection(1);
+            mHeightSpinner.setSelection(1);
         }
         float weightInPound = WalkMorePreferences.getUserWeight(this);
         if (WalkMorePreferences.isPound(this)) {
             mWeightEditText.setText(String.format(Locale.getDefault(), "%.1f", weightInPound));
-            WeightSpinner.setSelection(0);
+            mWeightSpinner.setSelection(0);
         } else {
             float weight = WeightUtils.convertPoundsToKilo(weightInPound);
             mWeightEditText.setText(String.format(Locale.getDefault(), "%.1f", weight));
-            WeightSpinner.setSelection(1);
+            mWeightSpinner.setSelection(1);
         }
 
     }
@@ -173,13 +171,60 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // attaching data adapter to spinner
-        HeightSpinner.setAdapter(dataAdapter);
+        mHeightSpinner.setAdapter(dataAdapter);
+        mHeightSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                switch (position){
+                    case 0:
+                        mEditText1.setWidth(getResources().getInteger(R.integer.inch_text_width));
+                        mEditText2.setVisibility(View.VISIBLE);
+                        mEditText2.setEnabled(true);
+                        WalkMorePreferences.setHeightUnit(EditActivity.this, getString(R.string.pref_units_feet));
+                        break;
+                    case 1:
+                        mEditText2.setVisibility(View.GONE);
+                        mEditText2.setEnabled(false);
+                        mEditText1.setWidth(getResources().getInteger(R.integer.centimeter_text));
+                        WalkMorePreferences.setHeightUnit(EditActivity.this, getString(R.string.pref_units_Centimeter));
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     private void setWeightAdapter() {
         SpinnerAdapter dataAdapter1 = new SpinnerAdapter(this, getResources().getStringArray(R.array.pref_weight_options));
         dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        WeightSpinner.setAdapter(dataAdapter1);
+        mWeightSpinner.setAdapter(dataAdapter1);
+        mWeightSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+
+                switch(position){
+                    case 0:
+                        WalkMorePreferences.setWeightUnit(EditActivity.this, getString(R.string.pref_units_pound));
+                        break;
+                    case 1:
+                        WalkMorePreferences.setWeightUnit(EditActivity.this, getString(R.string.pref_units_kg));
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     private void setupToolBar() {
@@ -277,31 +322,6 @@ public final class EditActivity extends AppCompatActivity implements AdapterView
             mWeightEditText.setError("enter a valid value");
             WRONG_WEIGHT_VALUE = true;
         }
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String item = parent.getItemAtPosition(position).toString();
-        if (item.equals(getString(R.string.pref_units_label_centi))) {
-            mEditText2.setVisibility(View.GONE);
-            mEditText2.setEnabled(false);
-            mEditText1.setWidth(getResources().getInteger(R.integer.centimeter_text));
-            WalkMorePreferences.setHeightUnit(this, getString(R.string.pref_units_Centimeter));
-        } else if (item.equals(getString(R.string.pref_units_label_feet))) {
-            mEditText1.setWidth(getResources().getInteger(R.integer.inch_text_width));
-            mEditText2.setVisibility(View.VISIBLE);
-            mEditText2.setEnabled(true);
-            WalkMorePreferences.setHeightUnit(this, getString(R.string.pref_units_feet));
-        } else if (item.equals(getString(R.string.pref_units_label_kg))) {
-            WalkMorePreferences.setWeightUnit(this, getString(R.string.pref_units_kg));
-        } else if (item.equals(getString(R.string.pref_units_label_pound))) {
-            WalkMorePreferences.setWeightUnit(this, getString(R.string.pref_units_pound));
-        }
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
     }
 
     @Override

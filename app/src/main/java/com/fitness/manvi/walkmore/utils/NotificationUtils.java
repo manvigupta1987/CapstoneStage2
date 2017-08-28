@@ -34,7 +34,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationCompat.Action;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
 
@@ -76,7 +75,7 @@ public class NotificationUtils {
                 .setAutoCancel(true);
 
 
-        notificationBuilder.setPriority(Notification.PRIORITY_HIGH);
+        notificationBuilder.setPriority(NotificationCompat.PRIORITY_HIGH);
 
         NotificationManager notificationManager = (NotificationManager)
                 context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -86,7 +85,7 @@ public class NotificationUtils {
     }
 
 
-    private static Action ignoreNotification(Context context) {
+    private static NotificationCompat.Action ignoreNotification(Context context) {
         Preconditions.checkNotNull(context, "Context should not be null");
         Intent ignoreReminderIntent = new Intent(context, NotificationService.class);
         ignoreReminderIntent.setAction(ReminderTask.ACTION_DISMISS_NOTIFICATION);
@@ -95,12 +94,12 @@ public class NotificationUtils {
                 ACTION_IGNORE_PENDING_INTENT_ID,
                 ignoreReminderIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
-        return new Action(R.drawable.ic_cancel,
+        return new NotificationCompat.Action(R.drawable.ic_cancel,
                 context.getString(R.string.no_thanks),
                 ignoreReminderPendingIntent);
     }
 
-    private static Action increaseDailyGoal(Context context) {
+    private static NotificationCompat.Action increaseDailyGoal(Context context) {
         Intent goalIncrementIntent = new Intent(context, NotificationService.class);
         goalIncrementIntent.setAction(ReminderTask.ACTION_INCREMENT_GOAL);
         PendingIntent incrementWaterPendingIntent = PendingIntent.getService(
@@ -109,7 +108,7 @@ public class NotificationUtils {
                 goalIncrementIntent,
                 PendingIntent.FLAG_CANCEL_CURRENT);
 
-        return new Action(R.drawable.ic_target,
+        return new NotificationCompat.Action(R.drawable.ic_target,
                 context.getString(R.string.yes),
                 incrementWaterPendingIntent);
     }

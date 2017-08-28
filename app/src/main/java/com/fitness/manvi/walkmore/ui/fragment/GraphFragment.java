@@ -46,7 +46,7 @@ import java.util.Collections;
  * create an instance of this fragment.
  */
 public class GraphFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
-    private final static int GRAPH_LOADER  = 2001;
+    private final int GRAPH_LOADER  = 2001;
     private static final String[] PROJECTION = new String[] {
             FitnessContract.fitnessDataEntry.COLUMN_DATE,
             FitnessContract.fitnessDataEntry.COLUMN_STEPS
@@ -68,7 +68,6 @@ public class GraphFragment extends Fragment implements LoaderManager.LoaderCallb
      *
      * @return A new instance of fragment GraphFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static GraphFragment newInstance(int param1) {
         GraphFragment fragment = new GraphFragment();
         Bundle args = new Bundle();

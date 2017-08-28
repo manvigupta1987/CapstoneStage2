@@ -80,7 +80,7 @@ public class MainActivityFragment extends Fragment implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private static final String AUTH_PENDING = "auth_state_pending";
+    private final String AUTH_PENDING = "auth_state_pending";
     @BindView(R.id.today_date)
     TextView mTodayDate;
     @BindView(R.id.imageFlag)
@@ -113,8 +113,8 @@ public class MainActivityFragment extends Fragment implements
     private float mHeightInInch;
     private float mWeightInPounds;
     private Context mContext;
-    private static boolean isKilos;
-    private static final int REQUEST_OATH = 1;
+    private boolean isKilos;
+    private final int REQUEST_OATH = 1;
     private boolean authInProgress = false;
 
     private OnDataPointListener mListenerSteps;
@@ -129,7 +129,6 @@ public class MainActivityFragment extends Fragment implements
      *
      * @return A new instance of fragment MainActivityFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static MainActivityFragment newInstance() {
         return new MainActivityFragment();
     }
@@ -304,7 +303,7 @@ public class MainActivityFragment extends Fragment implements
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(WalkMorePreferences.PREF_DAILY_GOAL)) {
+        if (WalkMorePreferences.PREF_DAILY_GOAL.equals(key)) {
             mDailyStepsGoal = sharedPreferences.getInt(key, getResources().getInteger(R.integer.default_daily_goal));
 
             //if daily goal is greater than daily walled step count, update the remaining steps and circle progress.

@@ -24,28 +24,33 @@ public class GoalDialogueFragment extends DialogFragment {
     @BindView(R.id.dialog_goal)
     EditText mDailyGoals;
 
+    //Empty constructor is required to re-instantiate the fragment class during the state restore. if this is not present
+    //run time exception will occur.
+    public GoalDialogueFragment() {
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         final View custom = inflater.inflate(R.layout.edit_daily_goal, null);
 
         ButterKnife.bind(this, custom);
-        alert.setView(custom);
-        alert.setTitle(getActivity().getString(R.string.daily_goal));
-        alert.setPositiveButton(android.R.string.ok, null);
-        alert.setNegativeButton(android.R.string.cancel, null);
-        alert.setCancelable(false);
+        builder.setView(custom);
+        builder.setTitle(getActivity().getString(R.string.daily_goal));
+        builder.setPositiveButton(android.R.string.ok, null);
+        builder.setNegativeButton(android.R.string.cancel, null);
+        builder.setCancelable(false);
 
-        alert.setNegativeButton(getActivity().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 // Canceled.
                 dialog.cancel();
             }
         }); //End of alert.setNegativeButton
 
-        final AlertDialog alertDialog = alert.create();
+        final AlertDialog alertDialog = builder.create();
         if (alertDialog != null) {
             Window window = alertDialog.getWindow();
             if (window != null) {
@@ -53,8 +58,6 @@ public class GoalDialogueFragment extends DialogFragment {
                 window.setSoftInputMode(
                         WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
             }
-        }
-        if(alertDialog!=null) {
             alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
 
                 @Override

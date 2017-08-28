@@ -38,7 +38,7 @@ import com.google.android.gms.analytics.Tracker;
  */
 public class HistoryFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
     private HistoryAdapter mHistoryAdapter;
-    private final static int HISTORY_LOADER = 2000;
+    private final int HISTORY_LOADER = 2000;
 
     public HistoryFragment() {
         // Required empty public constructor
@@ -50,7 +50,6 @@ public class HistoryFragment extends Fragment implements LoaderManager.LoaderCal
      *
      * @return A new instance of fragment HistoryFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static HistoryFragment newInstance() {
         return new HistoryFragment();
     }
