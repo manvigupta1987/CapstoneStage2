@@ -65,17 +65,17 @@ public final class FitnessDataProvider extends ContentProvider {
                 switch (tab_Id) {
                     case ConstantUtils.WEEK_TAB:
                         fitnessQuery = "SELECT * FROM " + FitnessContract.fitnessDataEntry.TABLE_NAME + " WHERE " + FitnessContract.fitnessDataEntry.COLUMN_DATE
-                                + " BETWEEN datetime('now', '-6 days') AND datetime('now', 'localtime')" +
+                                + " BETWEEN datetime('now', '-7 days') AND datetime('now', 'localtime')" +
                                 " ORDER BY " + FitnessContract.fitnessDataEntry.COLUMN_DATE;
                         break;
                     case ConstantUtils.MONTH_TAB:
                         fitnessQuery = "SELECT * FROM " + FitnessContract.fitnessDataEntry.TABLE_NAME + " WHERE " + FitnessContract.fitnessDataEntry.COLUMN_DATE
-                                + " BETWEEN datetime('now', '-29 days') AND datetime('now', 'localtime')" +
+                                + " BETWEEN datetime('now', '-30 days') AND datetime('now', 'localtime')" +
                                 " ORDER BY " + FitnessContract.fitnessDataEntry.COLUMN_DATE;
                         break;
                     case ConstantUtils.YEAR_TAB:
                         fitnessQuery = "SELECT strftime('%m', " + FitnessContract.fitnessDataEntry.COLUMN_DATE + " ) as " + FitnessContract.fitnessDataEntry.COLUMN_DATE + " , SUM(" + FitnessContract.fitnessDataEntry.COLUMN_STEPS + " ) as " + FitnessContract.fitnessDataEntry.COLUMN_STEPS + " FROM " + FitnessContract.fitnessDataEntry.TABLE_NAME + " WHERE " + FitnessContract.fitnessDataEntry.COLUMN_DATE
-                                + " BETWEEN datetime('now', '-364 days') AND datetime('now', 'localtime')" + " GROUP BY strftime('%m', " + FitnessContract.fitnessDataEntry.COLUMN_DATE + " )";
+                                + " BETWEEN datetime('now', '-365 days') AND datetime('now', 'localtime')" + " GROUP BY strftime('%m', " + FitnessContract.fitnessDataEntry.COLUMN_DATE + " )";
                         break;
                     default:
                         throw new IllegalArgumentException("Illegal position");

@@ -29,7 +29,6 @@ public class WalkMorePreferences {
      * @param dailyGoal Number of daily Steps
      */
 
-
     public static void editDailyGoal(Context context, int dailyGoal) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sp.edit();
