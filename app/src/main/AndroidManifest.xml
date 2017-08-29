@@ -47,8 +47,8 @@
                 android:value="com.fitness.manvi.walkmore.ui.activity.MainActivity" />
         </activity>
         <provider
-            android:name="com.fitness.manvi.walkmore.data.FitnessDataProvider"
-            android:authorities="@string/content_authority"
+            android:name="com.fitness.manvi.walkmore.data.generated.fitnessDataProvider"
+            android:authorities="com.fitness.manvi.walkmore.data.fitnessDataProvider"
             android:exported="false" />
 
         <receiver

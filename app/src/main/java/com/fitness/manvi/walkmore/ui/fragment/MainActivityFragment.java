@@ -22,8 +22,9 @@ import android.widget.TextView;
 
 import com.fitness.manvi.walkmore.R;
 import com.fitness.manvi.walkmore.WalkMore;
-import com.fitness.manvi.walkmore.data.FitnessContract;
 import com.fitness.manvi.walkmore.data.WalkMorePreferences;
+import com.fitness.manvi.walkmore.data.fitnessColumns;
+import com.fitness.manvi.walkmore.data.fitnessDataProvider;
 import com.fitness.manvi.walkmore.other.SwagPoints;
 import com.fitness.manvi.walkmore.utils.ConstantUtils;
 import com.fitness.manvi.walkmore.utils.DateUtils;
@@ -522,16 +523,15 @@ public class MainActivityFragment extends Fragment implements
                 String dateString = DateUtils.simpleDateFormat.format(date);
 
                 ContentValues cv = new ContentValues();
-                cv.put(FitnessContract.fitnessDataEntry.COLUMN_DISTANCE, mTotalDailyDistance);
-                cv.put(FitnessContract.fitnessDataEntry.COLUMN_CALORIES, mTotalCalorieCount);
-                cv.put(FitnessContract.fitnessDataEntry.COLUMN_STEPS, mDailyStepsCount);
-                cv.put(FitnessContract.fitnessDataEntry.COLUMN_DATE, dateString);
-                cv.put(FitnessContract.fitnessDataEntry.COLUMN_DURATION, mDuration.getText().toString());
-                getActivity().getContentResolver().insert(FitnessContract.fitnessDataEntry.CONTENT_URI, cv);
+                cv.put(fitnessColumns.COLUMN_DISTANCE, mTotalDailyDistance);
+                cv.put(fitnessColumns.COLUMN_CALORIES, mTotalCalorieCount);
+                cv.put(fitnessColumns.COLUMN_STEPS, mDailyStepsCount);
+                cv.put(fitnessColumns.COLUMN_DATE, dateString);
+                cv.put(fitnessColumns.COLUMN_DURATION, mDuration.getText().toString());
+                getActivity().getContentResolver().insert(fitnessDataProvider.fitness.CONTENT_URI, cv);
             }
         }).start();
     }
-
     private void updateWidgets() {
         Context context = getContext();
         Intent intent = new Intent(ConstantUtils.ACTION_DATA_UPDATED).setPackage(context.getPackageName());

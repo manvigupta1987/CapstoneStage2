@@ -7,14 +7,15 @@ import android.content.Intent;
 import android.os.AsyncTask;
 
 import com.fitness.manvi.walkmore.R;
-import com.fitness.manvi.walkmore.WalkMore;
-import com.fitness.manvi.walkmore.data.FitnessContract;
 import com.fitness.manvi.walkmore.data.WalkMorePreferences;
+import com.fitness.manvi.walkmore.data.fitnessColumns;
+import com.fitness.manvi.walkmore.data.fitnessDataProvider;
 import com.fitness.manvi.walkmore.utils.ConstantUtils;
 import com.fitness.manvi.walkmore.utils.DateUtils;
 import com.fitness.manvi.walkmore.utils.WeightUtils;
 
 import java.util.Date;
+
 import static com.fitness.manvi.walkmore.utils.WeightUtils.calculateDistanceFromSteps;
 
 /**
@@ -49,12 +50,12 @@ public final class ReminderAlarm extends BroadcastReceiver {
                 double distance = calculateDistanceFromSteps(stepsCount, height, WalkMorePreferences.isKiloMeter(context));
                 int calorie = WeightUtils.countCalories(weight, height, stepsCount);
                 ContentValues cv = new ContentValues();
-                cv.put(FitnessContract.fitnessDataEntry.COLUMN_DISTANCE, distance);
-                cv.put(FitnessContract.fitnessDataEntry.COLUMN_CALORIES, calorie);
-                cv.put(FitnessContract.fitnessDataEntry.COLUMN_STEPS, stepsCount);
-                cv.put(FitnessContract.fitnessDataEntry.COLUMN_DATE, dateString);
-                cv.put(FitnessContract.fitnessDataEntry.COLUMN_DURATION, timeInMin);
-                context.getContentResolver().insert(FitnessContract.fitnessDataEntry.CONTENT_URI, cv);
+                cv.put(fitnessColumns.COLUMN_DISTANCE, distance);
+                cv.put(fitnessColumns.COLUMN_CALORIES, calorie);
+                cv.put(fitnessColumns.COLUMN_STEPS, stepsCount);
+                cv.put(fitnessColumns.COLUMN_DATE, dateString);
+                cv.put(fitnessColumns.COLUMN_DURATION, timeInMin);
+                context.getContentResolver().insert(fitnessDataProvider.fitness.CONTENT_URI, cv);
                 pendingResult.finish();
                 return null;
             }

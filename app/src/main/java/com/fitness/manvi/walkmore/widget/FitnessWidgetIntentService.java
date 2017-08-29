@@ -6,7 +6,6 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,9 +14,10 @@ import android.support.annotation.RequiresApi;
 import android.widget.RemoteViews;
 
 import com.fitness.manvi.walkmore.data.WalkMorePreferences;
+import com.fitness.manvi.walkmore.data.fitnessColumns;
+import com.fitness.manvi.walkmore.data.fitnessDataProvider;
 import com.fitness.manvi.walkmore.ui.activity.MainActivity;
 import com.fitness.manvi.walkmore.R;
-import com.fitness.manvi.walkmore.data.FitnessContract;
 import com.fitness.manvi.walkmore.utils.ConstantUtils;
 import com.fitness.manvi.walkmore.utils.DateUtils;
 import com.fitness.manvi.walkmore.utils.NotificationUtils;
@@ -41,6 +41,7 @@ import com.google.android.gms.fitness.result.DataSourcesResult;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+
 /**
  * Created by manvi on 8/6/17.
  */
@@ -52,8 +53,7 @@ public class FitnessWidgetIntentService extends IntentService implements OnDataP
 
     private static int mStepsCount = 0;
     private static int mCalorieCount = 0;
-    private final String[] projection = {FitnessContract.fitnessDataEntry.COLUMN_STEPS,
-            FitnessContract.fitnessDataEntry.COLUMN_CALORIES};
+    private final String[] projection = {fitnessColumns.COLUMN_STEPS, fitnessColumns.COLUMN_CALORIES};
 
     private static final int INDEX_STEPS = 0;
     private static final int INDEX_CALORIES = 1;
@@ -75,8 +75,8 @@ public class FitnessWidgetIntentService extends IntentService implements OnDataP
             if (intent.getAction().equals(ConstantUtils.ACTION_DATA_UPDATED)) {
                 Date date = new Date();
                 String dateString = DateUtils.simpleDateFormat.format(date);
-                Uri urlWithDate = FitnessContract.fitnessDataEntry.buildFitnessDataUriWithDate(dateString);
-                Cursor cursor = getContentResolver().query(urlWithDate, projection, null, null, FitnessContract.fitnessDataEntry.COLUMN_DATE + " ASC");
+                //Uri urlWithDate = fitnessColumns(dateString);
+                Cursor cursor = getContentResolver().query(fitnessDataProvider.fitness.WithDate(dateString), projection, null, null, fitnessColumns.COLUMN_DATE + " ASC");
 
                 if (cursor == null) {
                     return;

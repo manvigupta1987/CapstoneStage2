@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.fitness.manvi.walkmore.R;
-import com.fitness.manvi.walkmore.data.FitnessContract;
+import com.fitness.manvi.walkmore.data.fitnessColumns;
 
 import java.util.Locale;
 
@@ -68,12 +68,12 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.historyA
     @Override
     public void onBindViewHolder(historyAdapterViewHolder AdapterViewHolder, int position) {
         mCursor.moveToPosition(position);
-        String distance = String.format(Locale.getDefault(),"%.2f", mCursor.getDouble(mCursor.getColumnIndex(FitnessContract.fitnessDataEntry.COLUMN_DISTANCE)));
-        int calories = mCursor.getInt(mCursor.getColumnIndex(FitnessContract.fitnessDataEntry.COLUMN_CALORIES));
-        int steps = mCursor.getInt(mCursor.getColumnIndex(FitnessContract.fitnessDataEntry.COLUMN_STEPS));
+        String distance = String.format(Locale.getDefault(),"%.2f", mCursor.getDouble(mCursor.getColumnIndex(fitnessColumns.COLUMN_DISTANCE)));
+        int calories = mCursor.getInt(mCursor.getColumnIndex(fitnessColumns.COLUMN_CALORIES));
+        int steps = mCursor.getInt(mCursor.getColumnIndex(fitnessColumns.COLUMN_STEPS));
         // Read date from cursor
-        String dateInMillis = mCursor.getString(mCursor.getColumnIndex(FitnessContract.fitnessDataEntry.COLUMN_DATE));
-        int idIndex = mCursor.getColumnIndex(FitnessContract.fitnessDataEntry._ID);
+        String dateInMillis = mCursor.getString(mCursor.getColumnIndex(fitnessColumns.COLUMN_DATE));
+        int idIndex = mCursor.getColumnIndex(fitnessColumns._ID);
 
         AdapterViewHolder.itemView.setTag(mCursor.getInt(idIndex));
         AdapterViewHolder.mDistanceView.setText(mContext.getString(R.string.list_item_distance, distance));

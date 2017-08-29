@@ -1,7 +1,6 @@
 package com.fitness.manvi.walkmore.ui.fragment;
 
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,7 +15,8 @@ import android.view.ViewGroup;
 
 import com.fitness.manvi.walkmore.R;
 import com.fitness.manvi.walkmore.WalkMore;
-import com.fitness.manvi.walkmore.data.FitnessContract;
+import com.fitness.manvi.walkmore.data.fitnessColumns;
+import com.fitness.manvi.walkmore.data.fitnessDataProvider;
 import com.fitness.manvi.walkmore.utils.ConstantUtils;
 import com.fitness.manvi.walkmore.utils.DateUtils;
 import com.github.mikephil.charting.charts.BarChart;
@@ -48,8 +48,8 @@ import java.util.Collections;
 public class GraphFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
     private final int GRAPH_LOADER  = 2001;
     private static final String[] PROJECTION = new String[] {
-            FitnessContract.fitnessDataEntry.COLUMN_DATE,
-            FitnessContract.fitnessDataEntry.COLUMN_STEPS
+            fitnessColumns.COLUMN_DATE,
+            fitnessColumns.COLUMN_STEPS
     };
 
     private static final String ARG_FRAGMENT_NAME = "fragment_name";
@@ -161,13 +161,44 @@ public class GraphFragment extends Fragment implements LoaderManager.LoaderCallb
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        Uri uri = FitnessContract.fitnessDataEntry.buildFitnessDataUriWithTabID(mTabPosition);
-        return new CursorLoader(getActivity(),uri,
-                PROJECTION,
-                null,
-                null,
-                FitnessContract.fitnessDataEntry.COLUMN_DATE + " DESC");
+        String selection;
+        switch (mTabPosition) {
+            case 0:
+                selection = fitnessColumns.COLUMN_DATE
+                        + " BETWEEN datetime('now', '-6 days') AND datetime('now', 'localtime')";
+                return new CursorLoader(getActivity(), fitnessDataProvider.fitness.CONTENT_URI,
+                        PROJECTION,
+                        selection,
+                        null,
+                        fitnessColumns.COLUMN_DATE + " DESC");
+            case 1:
+                selection = fitnessColumns.COLUMN_DATE
+                        + " BETWEEN datetime('now', '-29 days') AND datetime('now', 'localtime')";
+                return new CursorLoader(getActivity(), fitnessDataProvider.fitness.CONTENT_URI,
+                        PROJECTION,
+                        selection,
+                        null,
+                        fitnessColumns.COLUMN_DATE + " DESC");
+            case 2:
+                String[] projection = {"strftime('%m', "
+                        + fitnessColumns.COLUMN_DATE + " ) as "
+                        + fitnessColumns.COLUMN_DATE
+                        + " , SUM(" + fitnessColumns.COLUMN_STEPS
+                        + " ) as " + fitnessColumns.COLUMN_STEPS};
+                selection = fitnessColumns.COLUMN_DATE
+                        + " BETWEEN datetime('now', '-364 days') AND datetime('now', 'localtime') )"
+                        + " GROUP BY strftime('%m', " + fitnessColumns.COLUMN_DATE;
+
+                return new CursorLoader(getActivity(), fitnessDataProvider.fitness.CONTENT_URI,
+                        projection,
+                        selection,
+                        null,
+                        null);
+            default:
+                return null;
+        }
     }
+
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
@@ -177,13 +208,13 @@ public class GraphFragment extends Fragment implements LoaderManager.LoaderCallb
             int i = 0;
             try {
                 while (data.moveToNext()) {
-                    String date = data.getString(data.getColumnIndex(FitnessContract.fitnessDataEntry.COLUMN_DATE));
+                    String date = data.getString(data.getColumnIndex(fitnessColumns.COLUMN_DATE));
                     if(mTabPosition!= ConstantUtils.YEAR_TAB) {
                         datesList.add(DateUtils.changeDateFormat(date, mTabPosition));
                     }else {
                         datesList.add(DateUtils.changeMonthFormat(getActivity(),date));
                     }
-                    barEntriesList.add(new BarEntry(i++, data.getInt(data.getColumnIndex(FitnessContract.fitnessDataEntry.COLUMN_STEPS))));
+                    barEntriesList.add(new BarEntry(i++, data.getInt(data.getColumnIndex(fitnessColumns.COLUMN_STEPS))));
                 }
             } finally {
                 data.close();

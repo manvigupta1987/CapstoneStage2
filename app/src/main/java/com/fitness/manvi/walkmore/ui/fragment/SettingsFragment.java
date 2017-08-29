@@ -12,7 +12,7 @@ import android.support.v7.preference.PreferenceScreen;
 
 import com.fitness.manvi.walkmore.R;
 import com.fitness.manvi.walkmore.WalkMore;
-import com.fitness.manvi.walkmore.data.FitnessContract;
+import com.fitness.manvi.walkmore.data.fitnessDataProvider;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
@@ -94,7 +94,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
             }
             if(key.equals(getString(R.string.pref_history_key))){
                 if(sharedPreferences.getBoolean(key, getResources().getBoolean(R.bool.pref_history_default))) {
-                    getContext().getContentResolver().delete(FitnessContract.fitnessDataEntry.CONTENT_URI, null, null);
+                    getContext().getContentResolver().delete(fitnessDataProvider.fitness.CONTENT_URI, null, null);
                 }
             }
         }

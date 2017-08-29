@@ -21,9 +21,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.fitness.manvi.walkmore.WalkMore;
+import com.fitness.manvi.walkmore.data.fitnessColumns;
+import com.fitness.manvi.walkmore.data.fitnessDataProvider;
 import com.fitness.manvi.walkmore.ui.adapter.HistoryAdapter;
 import com.fitness.manvi.walkmore.R;
-import com.fitness.manvi.walkmore.data.FitnessContract;
 import com.fitness.manvi.walkmore.ui.activity.AnalyzeDataActivity;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
@@ -109,7 +110,7 @@ public class HistoryFragment extends Fragment implements LoaderManager.LoaderCal
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 // Retrieve the id of the task to delete
                 int id = (int) viewHolder.itemView.getTag();
-                Uri uri = ContentUris.withAppendedId(FitnessContract.fitnessDataEntry.CONTENT_URI, id);
+                Uri uri = ContentUris.withAppendedId(fitnessDataProvider.fitness.CONTENT_URI, id);
                 getContext().getContentResolver().delete(uri, null, null);
             }
         }).attachToRecyclerView(mRecyclerView);
@@ -135,11 +136,11 @@ public class HistoryFragment extends Fragment implements LoaderManager.LoaderCal
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(getActivity(), FitnessContract.fitnessDataEntry.CONTENT_URI,
+        return new CursorLoader(getActivity(), fitnessDataProvider.fitness.CONTENT_URI,
                 null,
                 null,
                 null,
-                FitnessContract.fitnessDataEntry.COLUMN_DATE + " DESC");
+                fitnessColumns.COLUMN_DATE + " DESC");
     }
 
     @Override
