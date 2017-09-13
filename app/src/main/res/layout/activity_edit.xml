@@ -62,7 +62,8 @@
             android:layout_marginTop="@dimen/margin_top"
             android:digits="0123456789."
             android:hint="@string/hint"
-            android:imeOptions="actionDone"
+            android:maxLines="1"
+            android:imeOptions="actionNext"
             android:inputType="numberDecimal" />
 
         <EditText
@@ -72,7 +73,8 @@
             android:layout_marginTop="@dimen/margin_top"
             android:digits="0123456789."
             android:hint="@string/hint"
-            android:imeOptions="actionDone"
+            android:maxLines="1"
+            android:imeOptions="actionNext"
             android:inputType="numberDecimal" />
 
         <View
@@ -125,6 +127,7 @@
             android:layout_marginTop="@dimen/margin_top"
             android:digits="0123456789."
             android:imeOptions="actionDone"
+            android:maxLines="1"
             android:inputType="numberDecimal"/>
 
         <View

@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -58,10 +57,17 @@ import com.google.android.gms.fitness.result.DailyTotalResult;
 import com.google.android.gms.fitness.result.DataSourcesResult;
 
 import java.util.Date;
+import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.Observer;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 import timber.log.Timber;
 
 import static android.app.Activity.RESULT_CANCELED;
@@ -118,6 +124,7 @@ public class MainActivityFragment extends Fragment implements
     private boolean authInProgress = false;
 
     private OnDataPointListener mListenerSteps;
+    private CompositeSubscription mSubscription = new CompositeSubscription();;
 
     public MainActivityFragment() {
         // Required empty public constructor
@@ -298,7 +305,7 @@ public class MainActivityFragment extends Fragment implements
 
         Fitness.SensorsApi.findDataSources(mApiClient, dataSourceRequest)
                 .setResultCallback(dataSourcesResultCallback);
-        new FetchDistanceDataTask().execute();
+        createDistanceObservable();
     }
 
     @Override
@@ -329,28 +336,53 @@ public class MainActivityFragment extends Fragment implements
         }
     }
 
-    //Read Daily Distance from the Google Fit API.
-    private class FetchDistanceDataTask extends AsyncTask<Void, Void, DataSet> {
-        protected DataSet doInBackground(Void... params) {
-            PendingResult<DailyTotalResult> result =
-                    Fitness.HistoryApi.readDailyTotal(mApiClient, DataType.TYPE_DISTANCE_DELTA);
+    private void createDistanceObservable() {
 
-            DailyTotalResult totalCalorieResult = result.await(30, TimeUnit.SECONDS);
-            if (totalCalorieResult.getStatus().isSuccess()) {
-                DataSet totalSet = totalCalorieResult.getTotal();
-                if (totalSet == null || totalSet.isEmpty()) {
-                    return null;
+        Observable<DataSet> distanceDataSetObservable = Observable.fromCallable(new Callable<DataSet>() {
+            @Override
+            public DataSet call() {
+                PendingResult<DailyTotalResult> result =
+                        Fitness.HistoryApi.readDailyTotal(mApiClient, DataType.TYPE_DISTANCE_DELTA);
+                DailyTotalResult totalCalorieResult = result.await(30, TimeUnit.SECONDS);
+                if (totalCalorieResult.getStatus().isSuccess()) {
+                    DataSet totalSet = totalCalorieResult.getTotal();
+                    if (totalSet == null || totalSet.isEmpty()) {
+                        return null;
+                    }
+                    return totalSet;
                 }
-                return totalSet;
+                return null;
             }
-            return null;
-        }
+        });
 
-        @Override
-        protected void onPostExecute(DataSet aLong) {
-            super.onPostExecute(aLong);
-            showDataSet(aLong);
-            mDataSet = aLong;
+        Subscription subscription = distanceDataSetObservable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<DataSet>() {
+
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onNext(DataSet aLong) {
+                        showDataSet(aLong);
+                        mDataSet = aLong;
+                    }
+                });
+        mSubscription.add(subscription);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mSubscription.clear();
+        if(mSubscription!=null && mSubscription.isUnsubscribed()){
+            mSubscription.unsubscribe();
         }
     }
 
@@ -386,11 +418,11 @@ public class MainActivityFragment extends Fragment implements
                             public void run() {
                                 if (field.getName().equals(getString(R.string.steps_key))) {
                                     int steps = value.asInt();
-                                    if(steps == 0){
+                                    if (steps == 0) {
                                         int lastDaySteps = WalkMorePreferences.getLastDayTotalSteps(getActivity());
                                         int todaySteps = WalkMorePreferences.getTotalSteps(getActivity());
                                         mDailyStepsCount = todaySteps - lastDaySteps;
-                                    }else {
+                                    } else {
                                         WalkMorePreferences.updateLastDaySteps(getActivity(), steps);
                                         WalkMorePreferences.setTotalSteps(getActivity(), steps);
                                         int lastDaySteps = WalkMorePreferences.getLastDayTotalSteps(getActivity());
@@ -431,15 +463,15 @@ public class MainActivityFragment extends Fragment implements
         if (!connectionResult.hasResolution()) {
             mApiAvailability.getErrorDialog(getActivity(), connectionResult.getErrorCode(), 0).show();
         }
-        if( !authInProgress ) {
+        if (!authInProgress) {
             try {
                 authInProgress = true;
                 connectionResult.startResolutionForResult(getActivity(), REQUEST_OATH);
-            }catch(IntentSender.SendIntentException e ) {
+            } catch (IntentSender.SendIntentException e) {
                 Timber.e(e.getMessage());
             }
         } else {
-            Timber.e( "GoogleFit", "authInProgress" );
+            Timber.e("GoogleFit", "authInProgress");
         }
     }
 
@@ -544,14 +576,14 @@ public class MainActivityFragment extends Fragment implements
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if( requestCode == REQUEST_OATH ) {
+        if (requestCode == REQUEST_OATH) {
             authInProgress = false;
-            if( resultCode == RESULT_OK ) {
-                if( !mApiClient.isConnecting() && !mApiClient.isConnected() ) {
+            if (resultCode == RESULT_OK) {
+                if (!mApiClient.isConnecting() && !mApiClient.isConnected()) {
                     mApiClient.connect();
                 }
-            } else if( resultCode == RESULT_CANCELED ) {
-                Timber.e( "GoogleFit", "RESULT_CANCELED" );
+            } else if (resultCode == RESULT_CANCELED) {
+                Timber.e("GoogleFit", "RESULT_CANCELED");
             }
         } else {
             Timber.e("GoogleFit", "requestCode NOT request_oauth");

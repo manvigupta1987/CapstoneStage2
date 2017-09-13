@@ -62,7 +62,7 @@ public class GoalDialogueFragment extends DialogFragment {
 
                 @Override
                 public void onShow(DialogInterface dialogInterface) {
-                    Button position = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    final Button position = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
                     position.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -74,11 +74,14 @@ public class GoalDialogueFragment extends DialogFragment {
                                     WalkMorePreferences.editDailyGoal(getActivity(), dailyGoal);
                                     Toast.makeText(getActivity(), getString(R.string.goal_updated), Toast.LENGTH_SHORT).show();
                                     dismissAllowingStateLoss();
+                                    position.setEnabled(true);
                                 } else {
                                     mDailyGoals.setError(getString(R.string.enter_goal_error));
+                                    position.setEnabled(false);
                                 }
                             }else {
                                 mDailyGoals.setError(getString(R.string.enter_goal_error));
+                                position.setEnabled(false);
                             }
 
                         }
