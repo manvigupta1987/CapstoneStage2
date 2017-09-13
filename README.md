@@ -4,6 +4,8 @@ WalkMore is a simple app to record and display: the number of steps, calories, d
 and BMI. WalkMore App supports English and Arabic languages. The app uses Google Fit API to record the number of steps. This App
 stores the information in a client side database. 
 
+## Schematic Version of APP:
+* [WalkMore](https://github.com/manvigupta1987/WalkMore/tree/Walkmore_schematic)
 
 ## Detailed Documentation
 * [Documentaion](https://github.com/manvigupta1987/Capstone-Project/blob/master/Capstone_Stage1.pdf)
@@ -20,6 +22,7 @@ stores the information in a client side database.
 * [Google Analytics](https://analytics.google.com/analytics/web/)
 * [Picasso](http://square.github.io/picasso/)
 * [Guava](https://github.com/google/guava)
+* [Schematic](https://github.com/SimonVT/schematic)
 
 
 ## UI Component
@@ -32,7 +35,6 @@ stores the information in a client side database.
 * [SwagPoints](https://github.com/enginebai/SwagPoints)
 * [CordinatorLayout](https://developer.android.com/reference/android/support/design/widget/CoordinatorLayout.html)
 * [SnackBar](https://developer.android.com/reference/android/support/design/widget/Snackbar.html)
-
 
 ## Screens
 
