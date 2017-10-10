@@ -33,10 +33,14 @@ public class WalkMore extends Application {
      * Gets the default {@link Tracker} for this {@link Application}.
      * @return tracker
      */
-    synchronized public Tracker getDefaultTracker() {
+    public Tracker getDefaultTracker() {
         // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
         if (sTracker == null) {
-            sTracker = sAnalytics.newTracker(R.xml.analytics_tracker);
+            synchronized (WalkMore.class) {
+                if(sTracker == null) {
+                    sTracker = sAnalytics.newTracker(R.xml.analytics_tracker);
+                }
+            }
         }
         return sTracker;
     }
